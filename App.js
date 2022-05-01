@@ -15,12 +15,13 @@ import { backgroundColor } from 'react-native/Libraries/Components/View/ReactNat
 import AvailableServicesScreen from './Screens/AvailableServicesScreen';
 import MessagesScreen from './Screens/MessagesScreen';
 import SearchScreen from './Screens/SearchScreen';
-import MyRequestScreen from './Screens/MyRequestsScreen';
+import MyRequestsScreen from './Screens/MyRequestsScreen';
 import MyBookingsScreen from './Screens/MyBookingsScreen';
 import CompletedTasksScreen from './Screens/CompletedTasksScreen';
 import CreateAccountForm_Recruiter from './Screens/CreateAccountForm_Recruiter';
 import CreateAccountForm_Worker from './Screens/CreateAccountForm_Worker';
 import Worker_ServiceOfferedSelection from './Screens/Worker_ServiceOfferedSelection';
+import DisplayListOfServices from './Screens/DisplayListOfServices';
 
 
 function CustomDrawerContent(props){
@@ -46,7 +47,7 @@ function CustomDrawerContent(props){
 
           <TouchableOpacity 
           style={{marginBottom: 25, flexDirection:'row', alignItems: 'center'}}
-          onPress={() => props.navigation.navigate("MyRequests")}
+          onPress={() => props.navigation.navigate("Requests")}
           >
             <Image source={require('./assets/icons/request.png')} style={{width: 20, height: 20, marginRight: 15}}/>
             <Text style={{}}>My Requests</Text>
@@ -54,7 +55,7 @@ function CustomDrawerContent(props){
 
           <TouchableOpacity 
           style={{marginBottom: 25, flexDirection:'row', alignItems: 'center'}}
-          onPress={() => props.navigation.navigate("MyBookings")}
+          onPress={() => props.navigation.navigate("Bookings")}
           >
             <Image source={require('./assets/icons/bookings.png')} style={{width: 20, height: 20, marginRight: 15}}/>
             <Text style={{}}>My Bookings</Text>
@@ -94,6 +95,8 @@ function HomeStack(){
       <StackHome.Screen name="Home" component={HomeScreen} options={navOptionHandler} />
       <StackHome.Screen name="AccountTypeScreen" component={Create_AccountTypeScreen} options={navOptionHandler}/>
       <StackHome.Screen name="Notifications" component={NotificationsScreen} options={navOptionHandler} />
+      <StackHome.Screen name="ServicesScreen" component={DisplayListOfServices} options={navOptionHandler} />
+      
     </StackHome.Navigator>
   )
 }
@@ -102,7 +105,7 @@ const StackLogin = createNativeStackNavigator();
 
 function LoginStack(){
   return(
-    <StackLogin.Navigator initialRouteName="Login">
+    <StackLogin.Navigator initialRouteName="LoginStack">
       <StackLogin.Screen name="LoginStack" component={LoginScreen} options={navOptionHandler}/>
       <StackLogin.Screen name="AccountTypeScreen" component={Create_AccountTypeScreen} options={navOptionHandler} />
       <StackLogin.Screen name="CAF_Recruiter" component={CreateAccountForm_Recruiter} options={navOptionHandler} />
@@ -113,13 +116,14 @@ function LoginStack(){
   )
 }
 
+
 function TabNivagator(){
   return(
     <Tab.Navigator
         screenOptions={({ route }) => ({
           headerShown: false,
           tabBarShowLabel: false,
-          tabBarIcon: ({ focused, color, size }) => {
+          tabBarIcon: ({ focused }) => {
             let iconName;
 
             if (route.name === 'Home') {
@@ -127,8 +131,8 @@ function TabNivagator(){
                 ? require('./assets/icons/home-filled.png')
                 : require('./assets/icons/home-outline.png')
             } else if (route.name === 'AvailableServices') {
-              iconName = focused ? require('./assets/icons/user-filled.png') 
-              : require('./assets/icons/user-outline.png');
+              iconName = focused ? require('./assets/icons/helmet-filled.png') 
+              : require('./assets/icons/helmet-outline.png');
             } else if (route.name === "Search") {
               iconName = focused ? require('./assets/icons/search-filled.png') 
               : require('./assets/icons/search-outline.png');
@@ -151,6 +155,19 @@ function TabNivagator(){
         <Tab.Screen name="Search" component={SearchScreen} />
         <Tab.Screen name="Messages" component={MessagesScreen} />
         <Tab.Screen name="Notifications" component={NotificationsScreen} options={{tabBarBadge: 5}}/>
+
+        {/* is hidden */}
+        <Tab.Screen name="Requests" component={MyRequestsScreen} options={{tabBarButton: () => (
+            <View style={{width:0, height:0}}></View>
+        ),}}/>
+        <Tab.Screen name="Bookings" component={MyBookingsScreen} options={{tabBarButton: () => (
+            <View style={{width:0, height:0}}></View>
+        ),}}/>
+        <Tab.Screen name="ServicesScreen" component={DisplayListOfServices} options={{tabBarButton: () => (
+            <View style={{width:0, height:0}}></View>
+        ), }}/>
+
+
         
       </Tab.Navigator>
   )
@@ -163,7 +180,7 @@ function DrawerNavigator(){
     <Drawer.Navigator options={{headerShown: false}} 
       drawerContent={props => CustomDrawerContent(props)}>
         <Drawer.Screen name="MenuTab" component={TabNivagator} options={{headerShown: false}} />
-        <Drawer.Screen name="MyRequests" component={MyRequestScreen} options={{headerShown: false}} />
+        <Drawer.Screen name="MyRequests" component={MyRequestsScreen} options={{headerShown: false}} />
         <Drawer.Screen name="MyBookings" component={MyBookingsScreen} options={{headerShown:false}} />
         <Drawer.Screen name="CompletedTasks" component={CompletedTasksScreen} options={{headerShown:false}} />
       </Drawer.Navigator>

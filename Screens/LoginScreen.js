@@ -60,14 +60,14 @@ function LoginScreen({navigation}) {
             </View>
 
             <View style={{alignItems: 'flex-end'}}>
-              <TouchableOpacity style={{width: 120}} onPress={() => alert('forgot password😿')}>
-                <Text>Forgot Password?</Text>
+              <TouchableOpacity onPress={() => alert('forgot password😿')}>
+                <Text style={{}}>Forgot Password?</Text>
               </TouchableOpacity>
             </View>
           </View>
 
           {/* SIGN IN & CREATE NEW ACCOUNT BUTTON */}
-          <View style={{width: '100%', alignItems: 'center', paddingTop: 80}}>
+          <View style={{flex: 1, width: '100%', alignItems: 'center', justifyContent: 'flex-end'}}>
             <TouchableOpacity 
               style={styles.btn}
               onPress={() => navigation.navigate("HomeApp")}
