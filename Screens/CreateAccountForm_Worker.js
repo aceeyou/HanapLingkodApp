@@ -23,7 +23,7 @@ function CreateAccountForm_Worker({navigation}) {
     return (
       <SafeAreaView style={{ flex: 1, marginTop: StatusBar.currentHeight}}>
         <ScrollView style={{}}>
-            <CustomHeader title="" navigation={navigation} />
+            <CustomHeader title="" navigation={navigation} isCreateAccount={true} />
             <View style={{flex: 1, flexDirection: 'column', alignItems: 'center', paddingHorizontal: 30, paddingTop: 30}}>
                 <Text style={{textAlign: 'center', fontSize: 23, fontWeight: '700', marginBottom: 0}}>Worker Information</Text>
 

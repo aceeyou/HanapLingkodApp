@@ -31,9 +31,13 @@ function CustomHeader(props){
           <Text style={{textAlign: 'left', fontSize: 20, fontWeight: '700', color: '#0d0d0c'}}>{props.title}</Text>
         </View>
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'flex-end'}}>
-            <TouchableOpacity>
-                <Image source={require('../assets/bg.png')} style={{width: 30, height: 30, borderRadius: 15}}/>
-            </TouchableOpacity>
+            {
+                !props.isCreateAccount ?
+                <TouchableOpacity>
+                    <Image source={require('../assets/bg.png')} style={{width: 30, height: 30, borderRadius: 15}}/>
+                </TouchableOpacity>
+                : null
+            }
         </View>
       </View>
     )

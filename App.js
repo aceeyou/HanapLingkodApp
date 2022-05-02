@@ -72,7 +72,7 @@ function CustomDrawerContent(props){
       <View style={{marginLeft: 30, marginTop: 40}}>
         <TouchableOpacity style={{marginTop: '100%', flexDirection:'row', alignItems: 'center'}}
           onPress={() => {props.navigation.navigate("LoginStack"); props.navigation.closeDrawer()}}>
-          <Image source={require('./assets/icons/user-filled.png')} style={{width: 20, height: 20, marginRight: 15}}/>
+          <Image source={require('./assets/icons/logout-filled.png')} style={{width: 20, height: 20, marginRight: 15}}/>
           <Text>Logout</Text>
         </TouchableOpacity>
       </View>

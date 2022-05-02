@@ -1,10 +1,13 @@
-import React, { useState, useEffect }  from 'react';
+import React, { useState, useEffect, useRef }  from 'react';
 import { Text, View, SafeAreaView, Image, TouchableOpacity, StatusBar, StyleSheet, ScrollView } from 'react-native';
 
 import { FloatingLabelInput } from 'react-native-floating-label-input';
 import { borderBottomColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 
 import CustomHeader from '../components/CustomerHeader';
+import ImagePicker from "react-native-image-picker";
+import ImagePickerButton from '../components/ImagePickerButton';
+
 
 function CreateAccountForm_Recruiter({navigation}) {
     // gets the value from the input box/textbox on the screen
@@ -19,10 +22,18 @@ function CreateAccountForm_Recruiter({navigation}) {
     // shows and hides the text of the password input
     const [show, setShow] = useState(false);
 
+    ref_pass = useRef();
+    ref_fullname = useRef();
+    ref_bday = useRef();
+    ref_age = useRef();
+    ref_gender = useRef();
+    ref_homeAdd = useRef();
+    ref_phoneNum = useRef();
+
     return (
       <SafeAreaView style={{ flex: 1, marginTop: StatusBar.currentHeight}}>
         <ScrollView style={{}}>
-            <CustomHeader title="" navigation={navigation} />
+            <CustomHeader title="" navigation={navigation} isCreateAccount={true} />
             <View style={{flex: 1, flexDirection: 'column', alignItems: 'center', paddingHorizontal: 30, paddingTop: 30}}>
                 <Text style={{textAlign: 'center', fontSize: 23, fontWeight: '700', marginBottom: 0}}>Recruiter Information</Text>
 
@@ -33,7 +44,9 @@ function CreateAccountForm_Recruiter({navigation}) {
                     <FloatingLabelInput
                         label={'Username'}
                         value={username}
-                        keyboarType="text"
+                        keyboardType="default"
+                        returnKeyType="next"
+                        onSubmitEditing={() => ref_pass.current.focus()}
                         labelStyle={{colorFocused: '#000'}}
                         onChangeText={value => setUsername(value)}
                         containerStyles={{borderWidth: 0, borderBottomWidth: 1, borderBottomColor: 'darkgray'}}
@@ -49,7 +62,10 @@ function CreateAccountForm_Recruiter({navigation}) {
                         isPassword
                         togglePassword={show}
                         value={password}
-                        keyboarType="text"
+                        ref={ref_pass}
+                        keyboardType="default"
+                        returnKeyType="next"
+                        onSubmitEditing={() => ref_fullname.current.focus()}
                         onChangeText={value => setPassword(value)}
                         containerStyles={{borderWidth: 0, borderBottomWidth: 1, borderBottomColor: 'darkgray'}}
                         customLabelStyles={{color: 'black', colorFocused: 'black', colorBlurred: 'black', fontSizeFocused: 12,}}
@@ -62,11 +78,13 @@ function CreateAccountForm_Recruiter({navigation}) {
 
                     {/* FULL NAME */}
                     <View style={{marginBottom: 20}}>
-                        {/* TEXTBOX FOR USERNAME */}
                     <FloatingLabelInput
                         label={'Full Name'}
                         value={fullname}
-                        keyboarType="text"
+                        keyboardType="default"
+                        returnKeyType="next"
+                        onSubmitEditing={() => ref_bday.current.focus()}
+                        ref={ref_fullname}
                         labelStyle={{colorFocused: '#000'}}
                         onChangeText={value => setFullname(value)}
                         containerStyles={{borderWidth: 0, borderBottomWidth: 1, borderBottomColor: 'darkgray'}}
@@ -77,12 +95,16 @@ function CreateAccountForm_Recruiter({navigation}) {
 
                     {/* BIRTHDATE */}
                     <View style={{flexDirection:'row', width: '100%',marginBottom: 20}}>
-                        {/* TEXTBOX FOR USERNAME */}
-                        <View style={{flex: 3, width: '100%', marginRight: 8}}>
+                        <View style={{flex: 2.5, width: '100%', marginRight: 8}}>
                             <FloatingLabelInput
                                 label={'Birthday'}
                                 value={birthdate}
-                                keyboarType="text"
+                                mask="99/99/9999"
+                                keyboardType="numeric"
+                                hint="01/01/1900"
+                                returnKeyType="next"
+                                onSubmitEditing={() => ref_age.current.focus()}
+                                ref={ref_bday}
                                 labelStyle={{colorFocused: '#000'}}
                                 onChangeText={value => setbirthdate(value)}
                                 containerStyles={{borderWidth: 0, borderBottomWidth: 1, borderBottomColor: 'darkgray'}}
@@ -95,7 +117,11 @@ function CreateAccountForm_Recruiter({navigation}) {
                             <FloatingLabelInput
                                 label={'Age'}
                                 value={age}
-                                keyboarType="text"
+                                mask="999"
+                                keyboardType="numeric"
+                                returnKeyType="next"
+                                onSubmitEditing={() => ref_gender.current.focus()}
+                                ref={ref_age}
                                 labelStyle={{colorFocused: '#000'}}
                                 onChangeText={value => setAge(value)}
                                 containerStyles={{borderWidth: 0, borderBottomWidth: 1, borderBottomColor: 'darkgray'}}
@@ -104,11 +130,14 @@ function CreateAccountForm_Recruiter({navigation}) {
                             />
                         </View>
                         {/* SEX | GENDER */}
-                        <View style={{flex: 1, width: '100%'}}>
+                        <View style={{flex: 1.3, width: '100%'}}>
                             <FloatingLabelInput
                                 label={'Gender'}
                                 value={gender}
-                                keyboarType="text"
+                                keyboardType="default"
+                                returnKeyType="next"
+                                onSubmitEditing={() => ref_homeAdd.current.focus()}
+                                ref={ref_gender}
                                 labelStyle={{colorFocused: '#000'}}
                                 onChangeText={value => setGender(value)}
                                 containerStyles={{borderWidth: 0, borderBottomWidth: 1, borderBottomColor: 'darkgray'}}
@@ -120,11 +149,13 @@ function CreateAccountForm_Recruiter({navigation}) {
 
                     {/* HOME ADDRESS */}
                     <View style={{marginBottom: 20}}>
-                        {/* TEXTBOX FOR USERNAME */}
                     <FloatingLabelInput
                         label={'Home Address'}
                         value={homeAdd}
-                        keyboarType="text"
+                        keyboardType="default"
+                        returnKeyType="next"
+                        onSubmitEditing={() => ref_phoneNum.current.focus()}
+                        ref={ref_homeAdd}
                         labelStyle={{colorFocused: '#000'}}
                         onChangeText={value => setHomeAdd(value)}
                         containerStyles={{borderWidth: 0, borderBottomWidth: 1, borderBottomColor: 'darkgray'}}
@@ -135,11 +166,13 @@ function CreateAccountForm_Recruiter({navigation}) {
 
                     {/* PHONE NUMBER */}
                     <View style={{marginBottom: 20}}>
-                        {/* TEXTBOX FOR USERNAME */}
                     <FloatingLabelInput
                         label={'Phone Number'}
                         value={phoneNumber}
-                        keyboarType="text"
+                        mask="9999-999-9999"
+                        keyboardType="phone-pad"
+                        returnKeyType="next"
+                        ref={ref_phoneNum}
                         labelStyle={{colorFocused: '#000'}}
                         onChangeText={value => setPhoneNumber(value)}
                         containerStyles={{borderWidth: 0, borderBottomWidth: 1, borderBottomColor: 'darkgray',}}
@@ -151,9 +184,12 @@ function CreateAccountForm_Recruiter({navigation}) {
                     {/* BUTTON FOR PHOTO ATTACHMENTS */}
                     <View style={{marginTop: 15}}>
                         <Text>Government-issued ID(s):</Text>
-                        <TouchableOpacity style={{backgroundColor: '#c4c4c4', paddingVertical: 8, alignItems: 'center', marginTop: 15, borderRadius: 5}}>
+                        <TouchableOpacity style={{backgroundColor: '#c4c4c4', paddingVertical: 8, alignItems: 'center', marginTop: 15, borderRadius: 5}}
+                            onPress={() => alert('hi')}
+                        >
                             <Text style={{fontWeight: '700'}}>Attach photos here</Text>
                         </TouchableOpacity>
+                        <ImagePickerButton />
                     </View>
                     
                 </View>

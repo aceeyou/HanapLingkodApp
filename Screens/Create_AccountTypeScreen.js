@@ -5,7 +5,7 @@ import CustomHeader from '../components/CustomerHeader';
 function Create_AccountTypeScreen({navigation}) {
     return (
       <SafeAreaView style={{ flex: 1, marginTop: StatusBar.currentHeight}}>
-        <CustomHeader title="" navigation={navigation}/>
+        <CustomHeader title="" navigation={navigation} isCreateAccount={true}/>
         <View style={{flex: 1, width: '100%', padding: 30}}>
           <Text style={styles.textHeader}>Choose your Account</Text>
           <TouchableOpacity style={styles.btn}
