@@ -15,18 +15,20 @@ app.use(bodyParser.json());
 mongoose.connect("mongodb://localhost:27017/hanapLingkod");
 
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cd(null, "./Uploads");
+  //destination for files
+  destination: function (request, file, callback) {
+    callback(null, "./public/uploads");
   },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(null, file.fieldname + "-" + uniqueSuffix);
+
+  //add back the extension
+  filename: function (request, file, callback) {
+    callback(null, Date.now() + file.originalname);
   },
 });
+//upload the image
+const upload = multer({ storage: storage });
 
-const upload = multer({ storage: storage }).single("image");
-
-app.post("/signup/worker", (req, res) => {
+app.post("/signup/worker", upload.single("image"), (req, res) => {
   const worker = new Worker({
     username: req.body.username,
     password: req.body.password,
@@ -36,7 +38,7 @@ app.post("/signup/worker", (req, res) => {
     age: req.body.age,
     sex: req.body.sex,
     address: req.body.address,
-    //GovId: req.file.filename,
+    GovId: req.file.filename,
   });
   worker.save((err) => {
     if (err) {
