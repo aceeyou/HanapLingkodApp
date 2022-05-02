@@ -23,20 +23,20 @@ function HomeScreen({navigation}) {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
-                <CustomHeader title="Home" isHome={true} navigation={navigation}/>
-                <Text style={{fontSize:22, fontWeight: '700', paddingHorizontal: 36, marginTop: 36}}>Welcome, Recruiter!</Text>
+                <CustomHeader title="Home" isHome={true} dp={require('../assets/bg.png')} navigation={navigation}/>
+                <Text style={{fontSize: 22, fontWeight: 'bold', color: '#0d0d0c', paddingHorizontal: 40, paddingTop: 30}}>Welcome, Recruiter!</Text>
                 <View style={styles.btnContainer}>
-                    <TouchableOpacity style={[styles.btnItem, styles.btnRequests]}>
+                    <TouchableOpacity style={[styles.btnItem, styles.btnRequests]} onPress={() => navigation.navigate('Requests')}>
                         <Text style={styles.btnText}>Requests (2)</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.btnItem, styles.btnBookings]}>
+                    <TouchableOpacity style={[styles.btnItem, styles.btnBookings]} onPress={() => navigation.navigate('Bookings')}>
                         <Text style={styles.btnText}>Bookings (1)</Text>
                     </TouchableOpacity>
                 </View>
 
                 {/* Button for every category of avialable jobs */}
                 <View style={styles.categoryContainer}>
-                    <CategoryButton categoryImage={require('../assets/icons/Janitor.png')} title="Cleaning" navigation={navigation} />
+                    <CategoryButton categoryImage={require('../assets/icons/Janitor.png')} title="Cleaning" navigation={navigation}/>
                     <CategoryButton categoryImage={require('../assets/icons/Drill.png')} title="Mounting" navigation={navigation}/>
                     <CategoryButton categoryImage={require('../assets/icons/Plumbing.png')} title="Plumbing" navigation={navigation}/>
                     <CategoryButton categoryImage={require('../assets/icons/Electrical.png')} title="Electrical" navigation={navigation}/>
@@ -83,13 +83,16 @@ const styles = StyleSheet.create({
   },
   btnRequests:{
       marginRight: 11,
+      backgroundColor: '#f7ad19'
   },
   btnBookings:{
       marginLeft: 11,
+      backgroundColor: '#338CF4'
   },
   btnText:{
-      fontSize: 15, 
+      fontSize: 15.8, 
       fontWeight: '700',
+      color: '#fff'
   },
   categoryContainer:{
       flex: 1,
@@ -98,8 +101,11 @@ const styles = StyleSheet.create({
       alignItems: 'flex-start',
       justifyContent: 'space-around',
       padding: 40,
-      borderRadius: 30,
-      backgroundColor: '#F8F3F3'
+      paddingBottom: 50,
+      borderTopRightRadius: 30,
+      borderTopLeftRadius: 30,
+    //   backgroundColor: '#F8F3F3'
+    backgroundColor: '#2387fc',
   },
 });
 
