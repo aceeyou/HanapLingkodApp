@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema({
   GovId: String,
   Certificates: String,
   profilePic: String,
+  role: String,
 });
 
 module.exports = mongoose.model("Worker", userSchema);

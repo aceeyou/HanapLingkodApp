@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
   address: String,
   GovId: String,
   profilePic: String,
+  role: String,
 });
 
 module.exports = mongoose.model("Recuiter", userSchema);
