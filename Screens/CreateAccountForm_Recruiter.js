@@ -6,7 +6,7 @@ import { borderBottomColor } from 'react-native/Libraries/Components/View/ReactN
 
 import CustomHeader from '../components/CustomerHeader';
 import ImagePicker from "react-native-image-picker";
-import ImagePickerButton from '../components/ImagePickerButton';
+import ImageUploadButton from '../components/ImageUploadButton';
 
 
 function CreateAccountForm_Recruiter({navigation}) {
@@ -19,6 +19,8 @@ function CreateAccountForm_Recruiter({navigation}) {
     const [gender, setGender] = useState('');
     const [homeAdd, setHomeAdd] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
+
+    // const [image, setUri] = useState('');
     // shows and hides the text of the password input
     const [show, setShow] = useState(false);
 
@@ -184,12 +186,8 @@ function CreateAccountForm_Recruiter({navigation}) {
                     {/* BUTTON FOR PHOTO ATTACHMENTS */}
                     <View style={{marginTop: 15}}>
                         <Text>Government-issued ID(s):</Text>
-                        <TouchableOpacity style={{backgroundColor: '#c4c4c4', paddingVertical: 8, alignItems: 'center', marginTop: 15, borderRadius: 5}}
-                            onPress={() => alert('hi')}
-                        >
-                            <Text style={{fontWeight: '700'}}>Attach photos here</Text>
-                        </TouchableOpacity>
-                        <ImagePickerButton />
+                        <ImageUploadButton />
+                        {/* <Image source={uri(image)} /> */}
                     </View>
                     
                 </View>
