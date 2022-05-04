@@ -50,33 +50,28 @@ app.post("/signup/worker", upload.single("govId"), (req, res) => {
   });
 });
 
-app.post(
-  "/signup/Recruiter",
-  upload.fields([{ name: "govId" }, { name: "profilePic" }]),
-  (req, res) => {
-    console.log(req.body);
-    const recuiter = new Recuiter({
-      username: req.body.username,
-      password: req.body.password,
-      firstname: req.body.firstname,
-      lastname: req.body.lastname,
-      birthday: req.body.birthday,
-      age: req.body.age,
-      sex: req.body.sex,
-      address: req.body.address,
-      //GovId: req.files["govId"][0].filename,
-      //profilePic: req.files["profilePic"][0].filename,
-      role: "recuiter",
-    });
-    recuiter.save((err) => {
-      if (err) {
-        res.json({ message: err.message, type: "danger" });
-      } else {
-        res.send("Recuiter account created");
-      }
-    });
-  }
-);
+app.post("/signup/Recruiter", upload.single("govId"), (req, res) => {
+  console.log(req.body);
+  const recuiter = new Recuiter({
+    username: req.body.username,
+    password: req.body.password,
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    birthday: req.body.birthday,
+    age: req.body.age,
+    sex: req.body.sex,
+    address: req.body.address,
+    GovId: req.file.filename,
+    role: "recuiter",
+  });
+  recuiter.save((err) => {
+    if (err) {
+      res.json({ message: err.message, type: "danger" });
+    } else {
+      res.send("Recuiter account created");
+    }
+  });
+});
 
 app.post("/login", (req, res) => {
   Recuiter.findOne(

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import FormData from "form-data";
 
 import {
   Text,
@@ -29,6 +30,7 @@ function CreateAccountForm_Recruiter({ navigation }) {
   const [gender, setGender] = useState("");
   const [homeAdd, setHomeAdd] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [image, setImage] = useState("");
 
   // const [image, setUri] = useState('');
   // shows and hides the text of the password input
@@ -286,7 +288,7 @@ function CreateAccountForm_Recruiter({ navigation }) {
             {/* BUTTON FOR PHOTO ATTACHMENTS */}
             <View style={{ marginTop: 15 }}>
               <Text>Government-issued ID(s):</Text>
-              <ImageUploadButton />
+              <ImageUploadButton changeWord={(image) => setImage(image)} />
               {/* <Image source={uri(image)} /> */}
             </View>
           </View>
@@ -296,27 +298,32 @@ function CreateAccountForm_Recruiter({ navigation }) {
             <TouchableOpacity
               style={styles.btn}
               onPress={() => {
-                axios({
-                  method: "post",
-                  url: "http://192.168.1.15:3000/signup/Recruiter",
-                  data: {
-                    username: username,
-                    password: password,
-                    birthday: birthdate,
-                  },
+                let localUri = image;
+                let filename = localUri.split("/").pop();
+
+                // Infer the type of the image
+                let match = /\.(\w+)$/.exec(filename);
+                let type = match ? `image/${match[1]}` : `image`;
+
+                // Upload the image using the fetch and FormData APIs
+                let formData = new FormData();
+
+                // Assume "photo" is the name of the form field the server expects
+                formData.append("govId", {
+                  uri: localUri,
+                  name: filename,
+                  type,
                 });
 
-                // fetch("http://192.168.1.15:3000/signup/Recruiter", {
-                //   method: "POST",
-                //   headers: {
-                //     Accept: "application/json",
-                //     "Content-Type": "application/json",
-                //   },
-                //   body: JSON.stringify({
-                //     username: username,
-                //     password: password,
-                //   }),
-                // });
+                formData.append("username", username);
+
+                fetch("http://192.168.1.15:3000/signup/Recruiter", {
+                  method: "POST",
+                  body: formData,
+                  headers: {
+                    "content-type": "multipart/form-data",
+                  },
+                });
               }}
             >
               <Text
