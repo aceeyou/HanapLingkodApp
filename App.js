@@ -1,7 +1,8 @@
 import 'react-native-gesture-handler';
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Image, TouchableOpacity, Text, SafeAreaView, ScrollView, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+import axios from 'axios';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -22,6 +23,7 @@ import CreateAccountForm_Recruiter from './Screens/CreateAccountForm_Recruiter';
 import CreateAccountForm_Worker from './Screens/CreateAccountForm_Worker';
 import Worker_ServiceOfferedSelection from './Screens/Worker_ServiceOfferedSelection';
 import DisplayListOfServices from './Screens/DisplayListOfServices';
+
 
 
 function CustomDrawerContent(props){
@@ -190,6 +192,20 @@ function DrawerNavigator(){
 const StackApp = createNativeStackNavigator();
 
 export default function App() {
+  // ace: di pa to gumagana
+  // const fetchApi = async () => {
+  //   try {
+  //        const res = await axios.get('http://192.168.1.6:3000/');
+  //        console.log(res.data);
+  //   } catch (error) {
+  //       console.log(error.message);
+  //   }
+  // }
+  
+  // useEffect(() => {
+  //    fetchApi()
+  // }, [])
+
   return (
     <NavigationContainer>
       <StackApp.Navigator initialRouteName="LoginScreen">

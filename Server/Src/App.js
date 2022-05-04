@@ -91,4 +91,8 @@ app.post("/login", (req, res) => {
 
 app.use(tryRoutes);
 
+// app.get('/', (req, res) => {
+//   res.json({success: true, message: 'Welcome to backend zone!'});
+// })
+
 app.listen(3000, () => console.log("listening on port 3000."));

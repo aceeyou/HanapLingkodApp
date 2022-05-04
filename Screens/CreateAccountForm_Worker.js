@@ -2,9 +2,10 @@ import React, { useState, useEffect }  from 'react';
 import { Text, View, SafeAreaView, Image, TouchableOpacity, StatusBar, StyleSheet, ScrollView } from 'react-native';
 
 import { FloatingLabelInput } from 'react-native-floating-label-input';
-import { borderBottomColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
+import axios from 'axios';
 
 import CustomHeader from '../components/CustomerHeader';
+import ImageUploadButton from '../components/ImageUploadButton';
 
 function CreateAccountForm_Worker({navigation}) {
     // gets the value from the input box/textbox on the screen
@@ -19,6 +20,19 @@ function CreateAccountForm_Worker({navigation}) {
     const [phoneNumber, setPhoneNumber] = useState('');
     // shows and hides the text of the password input
     const [show, setShow] = useState(false);
+
+    // const fetchApi = async () => {
+    //    try {
+    //         const res = await axios.get('http://192.168.1.6:3000/');
+    //         console.log(res.data);
+    //    } catch (error) {
+    //        console.log(error.message);
+    //    }
+    // }
+
+    // useEffect(() => {
+    //     fetchApi()
+    // }, [])
 
     return (
       <SafeAreaView style={{ flex: 1, marginTop: StatusBar.currentHeight}}>
@@ -167,9 +181,10 @@ function CreateAccountForm_Worker({navigation}) {
                     {/* BUTTON FOR PHOTO ATTACHMENTS */}
                     <View style={{marginTop: 15}}>
                         <Text>License / Certificates (Optional):</Text>
-                        <TouchableOpacity style={{backgroundColor: '#c4c4c4', paddingVertical: 8, alignItems: 'center', marginTop: 15, borderRadius: 5}}>
+                        {/* <TouchableOpacity style={{backgroundColor: '#c4c4c4', paddingVertical: 8, alignItems: 'center', marginTop: 15, borderRadius: 5}}>
                             <Text style={{fontWeight: '700'}}>Attach photos here</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
+                        <ImageUploadButton />
                     </View>
                     
                 </View>
