@@ -339,7 +339,7 @@ node_modules/**/*
 .expo/*
 npm-debug.*
 
-
+C:\Users\Patrick\Desktop\Github\HanapLingkodApp\Server\Src\public\uploads
 
 
 # npm
@@ -357,3 +357,4 @@ benchmarks/graphs
 
 # ignore additional files using core.excludesFile
 # https://git-scm.com/docs/gitignore
+ uploads
