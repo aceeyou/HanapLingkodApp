@@ -54,6 +54,7 @@ app.post(
   "/signup/Recruiter",
   upload.fields([{ name: "govId" }, { name: "profilePic" }]),
   (req, res) => {
+    console.log(req.body);
     const recuiter = new Recuiter({
       username: req.body.username,
       password: req.body.password,
@@ -63,8 +64,8 @@ app.post(
       age: req.body.age,
       sex: req.body.sex,
       address: req.body.address,
-      GovId: req.files["govId"][0].filename,
-      profilePic: req.files["profilePic"][0].filename,
+      //GovId: req.files["govId"][0].filename,
+      //profilePic: req.files["profilePic"][0].filename,
       role: "recuiter",
     });
     recuiter.save((err) => {
