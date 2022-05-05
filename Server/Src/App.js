@@ -4,10 +4,12 @@ const mongoose = require("mongoose");
 const multer = require("multer");
 
 //models
-const Recuiter = require("./Models/Recruiter");
-const Worker = require("./Models/Worker");
+const User = require("./Models/User");
 
+//routes
 const tryRoutes = require("./Routes/try");
+const requestRoutes = require("./Routes/RequestRoute");
+const serviceRoutes = require("./Routes/ServiceRoute");
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -29,7 +31,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 app.post("/signup/worker", upload.single("govId"), (req, res) => {
-  const worker = new Worker({
+  const worker = new User({
     username: req.body.username,
     password: req.body.password,
     firstname: req.body.firstname,
@@ -40,6 +42,8 @@ app.post("/signup/worker", upload.single("govId"), (req, res) => {
     address: req.body.address,
     GovId: req.file.filename,
     role: "worker",
+    accountStatus: "Active",
+    verification: false,
   });
   worker.save((err) => {
     if (err) {
@@ -52,7 +56,7 @@ app.post("/signup/worker", upload.single("govId"), (req, res) => {
 
 app.post("/signup/Recruiter", upload.single("govId"), (req, res) => {
   console.log(req.body);
-  const recuiter = new Recuiter({
+  const recuiter = new User({
     username: req.body.username,
     password: req.body.password,
     firstname: req.body.firstname,
@@ -63,6 +67,8 @@ app.post("/signup/Recruiter", upload.single("govId"), (req, res) => {
     address: req.body.address,
     GovId: req.file.filename,
     role: "recuiter",
+    accountStatus: "Active",
+    verification: false,
   });
   recuiter.save((err) => {
     if (err) {
@@ -74,18 +80,20 @@ app.post("/signup/Recruiter", upload.single("govId"), (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  Recuiter.findOne(
+  User.findOne(
     {
       username: req.body.username,
       password: req.body.password,
     },
-    function (err, recuiter) {
-      res.send(recuiter);
+    function (err, User) {
+      res.send(User);
     }
   );
 });
 
 app.use(tryRoutes);
+app.use(requestRoutes);
+app.use(serviceRoutes);
 
 // app.get('/', (req, res) => {
 //   res.json({success: true, message: 'Welcome to backend zone!'});
