@@ -7,10 +7,11 @@ const multer = require("multer");
 const User = require("./Models/User");
 
 //routes
-const tryRoutes = require("./Routes/try");
+const reviewRoutes = require("./Routes/ReviewRoutes");
 const requestRoutes = require("./Routes/RequestRoute");
 const serviceRoutes = require("./Routes/ServiceRoute");
 const workerRoutes = require("./Routes/WorkerRoutes");
+const recuiterRoutes = require("./Routes/RecuiterRoutes");
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -94,6 +95,8 @@ app.post("/login", (req, res) => {
 app.use(workerRoutes);
 app.use(requestRoutes);
 app.use(serviceRoutes);
+app.use(reviewRoutes);
+app.use(recuiterRoutes);
 
 // app.get('/', (req, res) => {
 //   res.json({success: true, message: 'Welcome to backend zone!'});

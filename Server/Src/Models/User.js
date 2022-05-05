@@ -15,6 +15,12 @@ const userSchema = new mongoose.Schema({
   role: String,
   accountStatus: String,
   verification: Boolean,
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Review",
+    },
+  ],
 });
 
 module.exports = mongoose.model("User", userSchema);
