@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Text, View, Image, TouchableOpacity, StyleSheet } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-function DisplayServices_ListItem(props) {
+function DisplayWorkers(props, { navigation }) {
   //   const [serviceName, setServiceName] = useState("");
   //   const [serviceCategory, setCategory] = useState("");
   //   const [servicePriceRange, setPriceRange] = useState("");
@@ -9,24 +10,25 @@ function DisplayServices_ListItem(props) {
   //   const [image, setImage] = useState("");
 
   // DATA
+  //   const navigation = useNavigation();
   return (
     <TouchableOpacity
       style={styles.btn_container}
       onPress={() => {
-        props.navigation.navigate("ListOfWorkers", {
+        props.navigation.navigate("RequestFormScreen", {
           title: props.title,
           category: props.category,
         });
       }}
     >
       <View style={styles.image_container}>
-        <Image source={props.image} resizeMode="cover" style={styles.image} />
+        <Image source={props.dp} resizeMode="cover" style={styles.image} />
       </View>
       <View style={styles.text_container}>
-        <Text style={styles.title}>{props.title}</Text>
+        <Text style={styles.title}>Name</Text>
         <Text style={styles.category}>{props.category}</Text>
         <Text style={styles.sub_info}>{props.priceRange}</Text>
-        <Text style={styles.sub_info}>Avg. work time is {props.avgWT}</Text>
+        <Text style={styles.sub_info}>Avg. {props.avgWT}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -72,4 +74,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DisplayServices_ListItem;
+export default DisplayWorkers;
