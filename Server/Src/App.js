@@ -10,6 +10,7 @@ const User = require("./Models/User");
 const tryRoutes = require("./Routes/try");
 const requestRoutes = require("./Routes/RequestRoute");
 const serviceRoutes = require("./Routes/ServiceRoute");
+const workerRoutes = require("./Routes/WorkerRoutes");
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -66,7 +67,7 @@ app.post("/signup/Recruiter", upload.single("govId"), (req, res) => {
     sex: req.body.sex,
     address: req.body.address,
     GovId: req.file.filename,
-    role: "recuiter",
+    role: "recruiter",
     accountStatus: "Active",
     verification: false,
   });
@@ -90,8 +91,7 @@ app.post("/login", (req, res) => {
     }
   );
 });
-
-app.use(tryRoutes);
+app.use(workerRoutes);
 app.use(requestRoutes);
 app.use(serviceRoutes);
 
