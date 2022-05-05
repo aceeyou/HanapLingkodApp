@@ -34,6 +34,9 @@ import DisplayListOfServices from "./Screens/DisplayListOfServices";
 import ListOfWorkers from "./Screens/ListOfWorkers";
 import ListOfAllWorkers from "./Screens/ListOfAllWorkers";
 import RequestForm from "./Screens/RequestForm";
+import UserProfilePage from "./Screens/UserProfileScreen";
+import EditUserProfile from "./Screens/EditUserProfile";
+import RequestDetailScreen from "./Screens/RequestDetailScreen";
 
 function CustomDrawerContent(props) {
   return (
@@ -95,7 +98,7 @@ function CustomDrawerContent(props) {
             flexDirection: "row",
             alignItems: "center",
           }}
-          onPress={() => props.navigation.navigate("Requests")}
+          onPress={() => props.navigation.navigate("RequestsScreen")}
         >
           <Image
             source={require("./assets/icons/request.png")}
@@ -163,6 +166,10 @@ const navOptionHandler = () => ({
   headerShown: false,
 });
 
+const hiddenTabNavBtn = () => ({
+  tabBarButton: () => <View style={{ width: 0, height: 0 }}></View>,
+});
+
 const StackHome = createNativeStackNavigator();
 
 function HomeStack() {
@@ -171,11 +178,6 @@ function HomeStack() {
       <StackHome.Screen
         name="Home"
         component={HomeScreen}
-        options={navOptionHandler}
-      />
-      <StackHome.Screen
-        name="AccountTypeScreen"
-        component={Create_AccountTypeScreen}
         options={navOptionHandler}
       />
       <StackHome.Screen
@@ -194,8 +196,18 @@ function HomeStack() {
         options={navOptionHandler}
       />
       <StackHome.Screen
-        name="RequestFormScreen"
-        component={RequestForm}
+        name="UserProfileScreen"
+        component={UserProfilePage}
+        options={navOptionHandler}
+      />
+      <StackHome.Screen
+        name="RequestsScreen"
+        component={MyRequestsScreen}
+        options={navOptionHandler}
+      />
+      <StackHome.Screen
+        name="RequestDetailScreen"
+        component={RequestDetailScreen}
         options={navOptionHandler}
       />
     </StackHome.Navigator>
@@ -213,7 +225,7 @@ function LoginStack() {
         options={navOptionHandler}
       />
       <StackLogin.Screen
-        name="AccountTypeScreen"
+        name="AccountTypeScreenCreate"
         component={Create_AccountTypeScreen}
         options={navOptionHandler}
       />
@@ -281,41 +293,52 @@ function TabNivagator() {
       <Tab.Screen name="Home" component={HomeStack} />
       <Tab.Screen name="ListOfAllWorkersTab" component={ListOfAllWorkers} />
       <Tab.Screen name="Search" component={SearchScreen} />
-      <Tab.Screen name="Messages" component={MessagesScreen} />
+      <Tab.Screen
+        name="Messages"
+        component={MessagesScreen}
+        options={{ tabBarBadge: 3 }}
+      />
       <Tab.Screen
         name="Notifications"
         component={NotificationsScreen}
         options={{ tabBarBadge: 5 }}
       />
 
-      {/* is hidden */}
+      {/* hidden tab navigation buttons */}
       <Tab.Screen
         name="Requests"
         component={MyRequestsScreen}
-        options={{
-          tabBarButton: () => <View style={{ width: 0, height: 0 }}></View>,
-        }}
+        options={hiddenTabNavBtn}
       />
       <Tab.Screen
         name="Bookings"
         component={MyBookingsScreen}
-        options={{
-          tabBarButton: () => <View style={{ width: 0, height: 0 }}></View>,
-        }}
+        options={hiddenTabNavBtn}
       />
       <Tab.Screen
         name="ServicesScreen"
         component={DisplayListOfServices}
-        options={{
-          tabBarButton: () => <View style={{ width: 0, height: 0 }}></View>,
-        }}
+        options={hiddenTabNavBtn}
       />
       <Tab.Screen
         name="ListOfWorkers"
         component={ListOfWorkers}
-        options={{
-          tabBarButton: () => <View style={{ width: 0, height: 0 }}></View>,
-        }}
+        options={hiddenTabNavBtn}
+      />
+      <Tab.Screen
+        name="RequestFormScreen"
+        component={RequestForm}
+        options={hiddenTabNavBtn}
+      />
+      <Tab.Screen
+        name="EditUserProfile"
+        component={EditUserProfile}
+        options={hiddenTabNavBtn}
+      />
+      <Tab.Screen
+        name="RequestDetailScreen"
+        component={RequestDetailScreen}
+        options={hiddenTabNavBtn}
       />
     </Tab.Navigator>
   );
@@ -372,7 +395,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <StackApp.Navigator initialRouteName="LoginScreen">
+      <StackApp.Navigator initialRouteName="LoginStack">
         <StackApp.Screen
           name="HomeApp"
           component={DrawerNavigator}
@@ -399,7 +422,7 @@ export default function App() {
           options={navOptionHandler}
         />
         <StackApp.Screen
-          name="Login"
+          name="LoginStack"
           component={LoginScreen}
           options={navOptionHandler}
         />

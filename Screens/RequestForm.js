@@ -9,17 +9,20 @@ import {
   ScrollView,
   StatusBar,
   StyleSheet,
+  Dimensions,
 } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import DatePicker from "react-native-date-picker";
-
 import CustomHeader from "../components/CustomerHeader";
+import moment from "moment";
+
+const windowHeight = Dimensions.get("window").height;
 
 export default function RequestForm(props, { navigation }) {
   const route = useRoute();
 
-  const [chosenDate, setDate] = useState("");
-  const [chosenTime, setTime] = useState("");
+  const [chosenDate, setDate] = useState();
+  const [chosenTime, setTime] = useState();
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
@@ -41,26 +44,29 @@ export default function RequestForm(props, { navigation }) {
   };
 
   const handleConfirm = (date) => {
-    console.warn("A date has been picked: ", date);
-    setDate(date);
-    console.log(date);
+    // console.warn("A date has been picked: ", date);
+    setDate(moment(date).format("ddd,  MMMM  D"));
     hideDatePicker();
   };
 
   const handleTimeConfirm = (time) => {
-    console.warn("A date has been picked: ", time);
-    setTime(time);
-    console.log(time);
+    // console.warn("A date has been picked: ", time);
+    setTime(moment(time).format("h:mm a"));
     hideTimePicker();
   };
 
-  //
+  const postRequest = () => {
+    alert("hi");
 
-  //   const [date, setDatePicker] = useState(new Date());
+    //do stuff backend here
+
+    // go to myrequest page/screen
+    props.navigation.navigate("Requests");
+  };
 
   return (
     <SafeAreaView style={{ marginTop: StatusBar.currentHeight }}>
-      <ScrollView>
+      <ScrollView style={{}}>
         <CustomHeader title="Request Form" navigation={navigation} />
         <View style={styles.container}>
           <Text style={styles.txtHeader}>Request Summary</Text>
@@ -80,8 +86,8 @@ export default function RequestForm(props, { navigation }) {
               <Text style={styles.txtData}>Chubby Bunny Reyes</Text>
             </View>
 
-            <Text>Date and Time</Text>
-            <View style={styles.section}>
+            <Text style={{ marginTop: 10 }}>Date and Time</Text>
+            <View style={[styles.section, { marginTop: 5 }]}>
               <TouchableOpacity
                 onPress={showDatePicker}
                 style={{
@@ -95,7 +101,11 @@ export default function RequestForm(props, { navigation }) {
                   alignItems: "center",
                 }}
               >
-                <Text>Select Date</Text>
+                {chosenDate ? (
+                  <Text style={{ fontSize: 13 }}>{chosenDate}</Text>
+                ) : (
+                  <Text style={{ fontSize: 13 }}>Select Date </Text>
+                )}
                 <DateTimePickerModal
                   isVisible={isDatePickerVisible}
                   mode="date"
@@ -120,7 +130,11 @@ export default function RequestForm(props, { navigation }) {
                   alignItems: "center",
                 }}
               >
-                <Text>Select Time</Text>
+                {chosenTime ? (
+                  <Text style={{ fontSize: 13 }}>{chosenTime}</Text>
+                ) : (
+                  <Text style={{ fontSize: 13 }}>Select Time </Text>
+                )}
                 <DateTimePickerModal
                   isVisible={isTimePickerVisible}
                   mode="time"
@@ -135,42 +149,56 @@ export default function RequestForm(props, { navigation }) {
               </TouchableOpacity>
             </View>
 
-            <TouchableOpacity
-              style={{
-                backgroundColor: "#393838",
-                padding: 10,
-                borderRadius: 10,
-                width: 180,
-                marginBottom: 30,
-              }}
+            {/* See worker detail Button */}
+            <View
+              style={{ elevation: 10, shadowColor: "#52006A", marginTop: 5 }}
             >
-              <Text
+              <TouchableOpacity
                 style={{
-                  fontWeight: "bold",
-                  fontSize: 15,
-                  color: "#fff",
+                  backgroundColor: "#393838",
+                  paddingVertical: 10,
+                  paddingHorizontal: 15,
+                  borderRadius: 10,
+                  marginBottom: 30,
+                  alignSelf: "flex-start",
+                  elevation: 10,
+                  shadowColor: "#52006A",
                 }}
+                onPress={() => alert("hi")}
               >
-                See worker's details here
-              </Text>
-            </TouchableOpacity>
+                <Text
+                  numberOfLines={1}
+                  style={{
+                    fontWeight: "500",
+                    fontSize: 15,
+                    color: "#fff",
+                    flexWrap: "nowrap",
+                  }}
+                >
+                  See worker's details here
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
+
+          {/* Post a Request Button */}
           <View
             style={{
               flex: 1,
-              backgroundColor: "green",
-              paddingHorizontal: 40,
-              justifiyContent: "flex-end",
-              marginTop: "45%",
+              flexDirection: "column-reverse",
+              alignSelf: "center",
+              width: 300,
+              paddingBottom: 20,
             }}
           >
             <TouchableOpacity
               style={{
                 backgroundColor: "#EF5252",
-                paddingVertical: 15,
+                paddingVertical: 12,
                 alignItems: "center",
                 borderRadius: 10,
               }}
+              onPress={postRequest}
             >
               <Text style={{ color: "#fff", fontWeight: "bold", fontSize: 18 }}>
                 Post a Request
@@ -185,11 +213,9 @@ export default function RequestForm(props, { navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    height: "100%",
+    height: windowHeight - StatusBar.currentHeight - 100,
     paddingHorizontal: 30,
     paddingTop: 30,
-    backgroundColor: "pink",
   },
   txtHeader: {
     paddingHorizontal: 10,
@@ -201,6 +227,8 @@ const styles = StyleSheet.create({
     width: "90%",
     padding: 20,
     borderRadius: 6,
+    elevation: 5,
+    shadowColor: "#52006A",
   },
   section: {
     flexDirection: "row",
@@ -211,7 +239,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
   },
   txtData: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
     marginLeft: 10,
     marginTop: 5,

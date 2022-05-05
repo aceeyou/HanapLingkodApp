@@ -51,7 +51,7 @@ function HomeScreen({ navigation }) {
         <View style={styles.btnContainer}>
           <TouchableOpacity
             style={[styles.btnItem, styles.btnRequests]}
-            onPress={() => navigation.navigate("Requests")}
+            onPress={() => navigation.navigate("RequestsScreen")}
           >
             <Text style={styles.btnText}>Requests (2)</Text>
           </TouchableOpacity>

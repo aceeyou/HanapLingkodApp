@@ -27,50 +27,52 @@ function ListOfWorkers({ navigation }) {
         </Text>
         <View style={styles.viewContainer}>
           <DisplayWorkers
-            title="something"
-            category="category chosen by worker"
-            priceRange="1000 (price range of worker)"
-            avgWT="4 - 5hours (avgWT by the worker)"
+            id=""
+            name="juan"
+            type="Enterprise"
+            category="profession"
+            rating={5}
+            address={"Awitan, Daet"}
             dp={require("../assets/bg.png")}
             navigation={navigation}
           />
           <DisplayWorkers
-            title="something"
-            category="category chosen by worker"
-            priceRange="1000 (price range of worker)"
-            avgWT="4 - 5hours (avgWT by the worker)"
+            id=""
+            name="juan"
+            type="freelancer"
+            category="profession"
+            rating={4}
+            address={"Awitan, Daet"}
             dp={require("../assets/bg2.png")}
             navigation={navigation}
           />
           <DisplayWorkers
-            title="something"
-            category="category chosen by worker"
-            priceRange="1000 (price range of worker)"
-            avgWT="4 - 5hours (avgWT by the worker)"
+            id=""
+            name="juan"
+            type="Enterprise"
+            category="profession"
+            rating={3}
+            address={"Awitan, Daet"}
             dp={require("../assets/bg.png")}
             navigation={navigation}
           />
           <DisplayWorkers
-            title="something"
-            category="category chosen by worker"
-            priceRange="1000 (price range of worker)"
-            avgWT="4 - 5hours (avgWT by the worker)"
-            dp={require("../assets/bg.png")}
-            navigation={navigation}
-          />
-          <DisplayWorkers
-            title="something"
-            category="category chosen by worker"
-            priceRange="1000 (price range of worker)"
-            avgWT="4 - 5hours (avgWT by the worker)"
+            id=""
+            name="juan"
+            type="Enterprise"
+            category="profession"
+            rating={1}
+            address={"Awitan, Daet"}
             dp={require("../assets/bg2.png")}
             navigation={navigation}
           />
           <DisplayWorkers
-            title="something"
-            category="category chosen by worker"
-            priceRange="1000 (price range of worker)"
-            avgWT="4 - 5hours (avgWT by the worker)"
+            id=""
+            name="juan"
+            type="freelancer"
+            category="type: profession"
+            rating={5}
+            address={"Awitan, Daet"}
             dp={require("../assets/bg.png")}
             navigation={navigation}
           />

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Text, View, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { render } from "react-dom";
 
 function DisplayWorkers(props, { navigation }) {
   //   const [serviceName, setServiceName] = useState("");
@@ -11,6 +12,96 @@ function DisplayWorkers(props, { navigation }) {
 
   // DATA
   //   const navigation = useNavigation();
+
+  const renderStars = (rating) => {
+    if (rating == 5) {
+      return (
+        <View style={{ flexDirection: "row" }}>
+          <Image
+            source={require("../assets/icons/star-filled.png")}
+            style={{ width: 15, height: 15 }}
+          />
+          <Image
+            source={require("../assets/icons/star-filled.png")}
+            style={{ width: 15, height: 15 }}
+          />
+          <Image
+            source={require("../assets/icons/star-filled.png")}
+            style={{ width: 15, height: 15 }}
+          />
+          <Image
+            source={require("../assets/icons/star-filled.png")}
+            style={{ width: 15, height: 15 }}
+          />
+          <Image
+            source={require("../assets/icons/star-filled.png")}
+            style={{ width: 15, height: 15 }}
+          />
+        </View>
+      );
+    } else if (rating == 4) {
+      return (
+        <View style={{ flexDirection: "row" }}>
+          <Image
+            source={require("../assets/icons/star-filled.png")}
+            style={{ width: 15, height: 15 }}
+          />
+          <Image
+            source={require("../assets/icons/star-filled.png")}
+            style={{ width: 15, height: 15 }}
+          />
+          <Image
+            source={require("../assets/icons/star-filled.png")}
+            style={{ width: 15, height: 15 }}
+          />
+          <Image
+            source={require("../assets/icons/star-filled.png")}
+            style={{ width: 15, height: 15 }}
+          />
+        </View>
+      );
+    } else if (rating == 3) {
+      return (
+        <View style={{ flexDirection: "row" }}>
+          <Image
+            source={require("../assets/icons/star-filled.png")}
+            style={{ width: 15, height: 15 }}
+          />
+          <Image
+            source={require("../assets/icons/star-filled.png")}
+            style={{ width: 15, height: 15 }}
+          />
+          <Image
+            source={require("../assets/icons/star-filled.png")}
+            style={{ width: 15, height: 15 }}
+          />
+        </View>
+      );
+    } else if (rating == 2) {
+      return (
+        <View style={{ flexDirection: "row" }}>
+          <Image
+            source={require("../assets/icons/star-filled.png")}
+            style={{ width: 15, height: 15 }}
+          />
+          <Image
+            source={require("../assets/icons/star-filled.png")}
+            style={{ width: 15, height: 15 }}
+          />
+        </View>
+      );
+    } else {
+      return (
+        <View style={{ flexDirection: "row" }}>
+          <Image
+            source={require("../assets/icons/star-filled.png")}
+            style={{ width: 15, height: 15 }}
+          />
+        </View>
+      );
+    }
+  };
+
   return (
     <TouchableOpacity
       style={styles.btn_container}
@@ -25,10 +116,22 @@ function DisplayWorkers(props, { navigation }) {
         <Image source={props.dp} resizeMode="cover" style={styles.image} />
       </View>
       <View style={styles.text_container}>
-        <Text style={styles.title}>Name</Text>
-        <Text style={styles.category}>{props.category}</Text>
-        <Text style={styles.sub_info}>{props.priceRange}</Text>
-        <Text style={styles.sub_info}>Avg. {props.avgWT}</Text>
+        <Text style={styles.nametxt}>Name</Text>
+        <Text style={styles.category}>
+          {props.type}: {props.category}
+        </Text>
+
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            marginBottom: 2,
+          }}
+        >
+          {renderStars(props.rating)}
+        </View>
+
+        <Text style={styles.sub_info}>{props.address}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -60,13 +163,13 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 18,
   },
-  title: {
+  nametxt: {
     fontWeight: "bold",
-    fontSize: 16,
+    fontSize: 15,
   },
   category: {
     fontSize: 13,
-    marginBottom: 8,
+    marginBottom: 6,
   },
   sub_info: {
     fontSize: 13,
