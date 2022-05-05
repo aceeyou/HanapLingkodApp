@@ -4,8 +4,8 @@ const router = express.Router();
 
 const User = require("../Models/User");
 
-router.route("/worker").get(function (req, res) {
-  User.find({ role: "worker" }, function (err, foundRequest) {
+router.route("/recuiter").get(function (req, res) {
+  User.find({ role: "recruiter" }, function (err, foundRequest) {
     if (!err) {
       res.send(foundRequest);
     } else {
@@ -16,7 +16,7 @@ router.route("/worker").get(function (req, res) {
 
 /////////////////////////target specific worker/////////////////
 router
-  .route("/worker/:id")
+  .route("/recuiter/:id")
   .get(function (req, res) {
     User.findOne({ _id: req.params.id }, function (err, found) {
       if (found) {
