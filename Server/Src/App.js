@@ -12,6 +12,7 @@ const requestRoutes = require("./Routes/RequestRoute");
 const serviceRoutes = require("./Routes/ServiceRoute");
 const workerRoutes = require("./Routes/WorkerRoutes");
 const recuiterRoutes = require("./Routes/RecuiterRoutes");
+const bookRoutes = require("./Routes/BookRoutes");
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -97,6 +98,7 @@ app.use(requestRoutes);
 app.use(serviceRoutes);
 app.use(reviewRoutes);
 app.use(recuiterRoutes);
+app.use(bookRoutes);
 
 // app.get('/', (req, res) => {
 //   res.json({success: true, message: 'Welcome to backend zone!'});

@@ -7,6 +7,7 @@ const requestSchema = new mongoose.Schema(
     schedule: Date,
     status: String,
     recuiterId: { type: Schema.Types.ObjectId, ref: "User" },
+    workerId: { type: Schema.Types.ObjectId, ref: "User" },
     serviceId: { type: Schema.Types.ObjectId, ref: "Service" },
   },
   { timestamps: true }
