@@ -24,6 +24,7 @@ function CreateAccountForm_Recruiter({ navigation }) {
   // gets the value from the input box/textbox on the screen
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmpassword, setConfirmPassword] = useState("");
   const [fullname, setFullname] = useState("");
   const [birthdate, setbirthdate] = useState("");
   const [age, setAge] = useState("");
@@ -43,6 +44,7 @@ function CreateAccountForm_Recruiter({ navigation }) {
   ref_gender = useRef();
   ref_homeAdd = useRef();
   ref_phoneNum = useRef();
+  ref_confirmpass = useRef();
 
   return (
     <SafeAreaView style={{ flex: 1, marginTop: StatusBar.currentHeight }}>
@@ -110,8 +112,38 @@ function CreateAccountForm_Recruiter({ navigation }) {
                 ref={ref_pass}
                 keyboardType="default"
                 returnKeyType="next"
-                onSubmitEditing={() => ref_fullname.current.focus()}
+                onSubmitEditing={() => ref_confirmpass.current.focus()}
                 onChangeText={(value) => setPassword(value)}
+                containerStyles={{
+                  borderWidth: 0,
+                  borderBottomWidth: 1,
+                  borderBottomColor: "darkgray",
+                }}
+                customLabelStyles={{
+                  color: "black",
+                  colorFocused: "black",
+                  colorBlurred: "black",
+                  fontSizeFocused: 12,
+                }}
+                inputStyles={{ color: "black", paddingTop: 20 }}
+                customShowPasswordComponent={<Text>Show</Text>}
+                customHidePasswordComponent={<Text>Hide</Text>}
+                style={{ marginTop: 20 }}
+              />
+            </View>
+
+            {/* CONFIRM PASSWORD */}
+            <View style={{ marginBottom: 20 }}>
+              <FloatingLabelInput
+                label={"Confirm Password"}
+                isPassword
+                togglePassword={show}
+                value={confirmpassword}
+                ref={ref_confirmpass}
+                keyboardType="default"
+                returnKeyType="next"
+                onSubmitEditing={() => ref_fullname.current.focus()}
+                onChangeText={(value) => setConfirmPassword(value)}
                 containerStyles={{
                   borderWidth: 0,
                   borderBottomWidth: 1,

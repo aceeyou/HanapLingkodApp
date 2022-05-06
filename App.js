@@ -423,7 +423,7 @@ export default function App() {
         />
         <StackApp.Screen
           name="LoginStack"
-          component={LoginScreen}
+          component={LoginStack}
           options={navOptionHandler}
         />
       </StackApp.Navigator>
