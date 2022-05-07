@@ -38,6 +38,8 @@ import UserProfilePage from "./Screens/UserProfileScreen";
 import EditUserProfile from "./Screens/EditUserProfile";
 import RequestDetailScreen from "./Screens/RequestDetailScreen";
 
+import "./global/Global";
+
 function CustomDrawerContent(props) {
   return (
     <SafeAreaView
@@ -145,6 +147,7 @@ function CustomDrawerContent(props) {
             alignItems: "center",
           }}
           onPress={() => {
+            global.userID = "";
             props.navigation.navigate("LoginStack");
             props.navigation.closeDrawer();
           }}
