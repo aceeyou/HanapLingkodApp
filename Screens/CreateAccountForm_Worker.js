@@ -394,7 +394,21 @@ function CreateAccountForm_Worker({ navigation }) {
             }}
           >
             <TouchableOpacity
-              onPress={() => navigation.navigate("CAF_Worker_ServiceSelect")}
+              onPress={() =>
+                props.navigation.navigate("CAF_Worker_ServiceSelect", {
+                  firstname: firstname,
+                  lastname: lastname,
+                  birthdate: birthdate,
+                  age: age,
+                  sex: gender,
+                  homeAdd: homeAdd,
+                  workAdd: workAdd,
+                  phoneNumber: phoneNumber,
+                  username: username,
+                  password: password,
+                  image: image,
+                })
+              }
               style={{ width: 100, padding: 10, flexDirection: "row" }}
             >
               <Text
