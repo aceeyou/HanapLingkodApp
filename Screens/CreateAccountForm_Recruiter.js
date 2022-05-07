@@ -385,6 +385,7 @@ function CreateAccountForm_Recruiter({ navigation }) {
                 formData.append("age", age);
                 formData.append("sex", gender);
                 formData.append("address", homeAdd);
+                formData.append("phoneNumber", phoneNumber);
                 formData.append("username", username);
                 formData.append("password", password);
                 formData.append("GovId", filename);

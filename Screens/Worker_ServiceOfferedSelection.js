@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { useRoute } from "@react-navigation/native";
 import {
   View,
   Text,
@@ -8,12 +9,12 @@ import {
   StatusBar,
   TouchableOpacity,
   Image,
+  FlatList,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import CustomHeader from "../components/CustomerHeader";
-
 import { useNavigation } from "@react-navigation/native";
-import { FlatList } from "react-native-gesture-handler";
+import CreateAccountForm_Worker from "./CreateAccountForm_Worker";
 
 class Worker_ServiceOfferedSelection extends Component {
   constructor(props) {
@@ -29,10 +30,49 @@ class Worker_ServiceOfferedSelection extends Component {
     console.log(this.arrayOfServices);
   };
 
-  display = () => {
-    return this.arrayOfServices.map((item) => {
-      return <Text>{this.state.user}</Text>;
+  createWorkerAccount = () => {
+    const { route } = this.props;
+
+    let localUri = route.params.image;
+    let filename = localUri.split("/").pop();
+
+    // Infer the type of the image
+    let match = /\.(\w+)$/.exec(filename);
+    let type = match ? `image/${match[1]}` : `image`;
+
+    // Upload the image using the fetch and FormData APIs
+    let formData = new FormData();
+
+    // Assume "photo" is the name of the form field the server expects
+    formData.append("govId", {
+      uri: localUri,
+      name: filename,
+      type,
     });
+
+    // console.log(route.params.firstname);
+    // console.log(route.params.lastname);
+
+    formData.append("firstname", route.params.firstname);
+    formData.append("lastname", route.params.lastname);
+    formData.append("birthdate", route.params.birthdate);
+    formData.append("age", route.params.age);
+    formData.append("sex", route.params.gender);
+    formData.append("address", route.params.homeAdd);
+    formData.append("workAddress", route.params.workAdd);
+    formData.append("phoneNumber", route.params.phoneNumber);
+    formData.append("username", route.params.username);
+    formData.append("password", route.params.password);
+    formData.append("GovId", filename);
+
+    fetch("http://192.168.1.2:3000/signup/worker", {
+      method: "POST",
+      body: formData,
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    });
+    console.log("account created");
   };
 
   renderItem = ({ index }) => {
@@ -66,8 +106,11 @@ class Worker_ServiceOfferedSelection extends Component {
     );
   };
 
+  // route = () => useRoute();
+
   arrayOfServices = [];
   render() {
+    // console.log(route.params.firstname);
     return (
       <SafeAreaView style={{ marginTop: StatusBar.currentHeight }}>
         <CustomHeader title="" />
@@ -81,7 +124,13 @@ class Worker_ServiceOfferedSelection extends Component {
         >
           Worker Information
         </Text>
-        <View style={{ marginTop: 50, paddingHorizontal: 40 }}>
+        <View
+          style={{
+            marginTop: 50,
+            height: 530,
+            paddingHorizontal: 40,
+          }}
+        >
           <View style={{ borderBottomWidth: 1, borderBottomColor: "black" }}>
             <Picker
               selectedValue={this.state.user}
@@ -174,6 +223,21 @@ class Worker_ServiceOfferedSelection extends Component {
               </View>
             </View>
           ) : null}
+        </View>
+        <View style={{ alignItems: "center", paddingHorizontal: 60 }}>
+          <TouchableOpacity
+            style={{
+              backgroundColor: "blue",
+              paddingVertical: 10,
+              paddingHorizontal: 50,
+              borderRadius: 10,
+            }}
+            onPress={this.createWorkerAccount}
+          >
+            <Text style={{ color: "#fff", fontWeight: "bold" }}>
+              Create Worker Account
+            </Text>
+          </TouchableOpacity>
         </View>
       </SafeAreaView>
     );
