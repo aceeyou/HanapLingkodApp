@@ -37,8 +37,10 @@ function CreateAccountForm_Recruiter({ navigation }) {
   // shows and hides the text of the password input
   const [show, setShow] = useState(false);
 
+  ref_username = useRef();
   ref_pass = useRef();
-  ref_fullname = useRef();
+  ref_firstname = useRef();
+  ref_lastname = useRef();
   ref_bday = useRef();
   ref_age = useRef();
   ref_gender = useRef();
@@ -78,16 +80,17 @@ function CreateAccountForm_Recruiter({ navigation }) {
               paddingVertical: 40,
             }}
           >
+            {/* FIRST NAME */}
             <View style={{ marginBottom: 20 }}>
-              {/* TEXTBOX FOR USERNAME */}
               <FloatingLabelInput
-                label={"Username"}
-                value={username}
+                label={"First Name"}
+                value={fullname}
                 keyboardType="default"
                 returnKeyType="next"
-                onSubmitEditing={() => ref_pass.current.focus()}
+                onSubmitEditing={() => ref_lastname.current.focus()}
+                ref={ref_firstname}
                 labelStyle={{ colorFocused: "#000" }}
-                onChangeText={(value) => setUsername(value)}
+                onChangeText={(value) => setFullname(value)}
                 containerStyles={{
                   borderWidth: 0,
                   borderBottomWidth: 1,
@@ -102,75 +105,15 @@ function CreateAccountForm_Recruiter({ navigation }) {
               />
             </View>
 
-            {/* PASSWORD */}
+            {/* LAST NAME */}
             <View style={{ marginBottom: 20 }}>
               <FloatingLabelInput
-                label={"Password"}
-                isPassword
-                togglePassword={show}
-                value={password}
-                ref={ref_pass}
-                keyboardType="default"
-                returnKeyType="next"
-                onSubmitEditing={() => ref_confirmpass.current.focus()}
-                onChangeText={(value) => setPassword(value)}
-                containerStyles={{
-                  borderWidth: 0,
-                  borderBottomWidth: 1,
-                  borderBottomColor: "darkgray",
-                }}
-                customLabelStyles={{
-                  color: "black",
-                  colorFocused: "black",
-                  colorBlurred: "black",
-                  fontSizeFocused: 12,
-                }}
-                inputStyles={{ color: "black", paddingTop: 20 }}
-                customShowPasswordComponent={<Text>Show</Text>}
-                customHidePasswordComponent={<Text>Hide</Text>}
-                style={{ marginTop: 20 }}
-              />
-            </View>
-
-            {/* CONFIRM PASSWORD */}
-            <View style={{ marginBottom: 20 }}>
-              <FloatingLabelInput
-                label={"Confirm Password"}
-                isPassword
-                togglePassword={show}
-                value={confirmpassword}
-                ref={ref_confirmpass}
-                keyboardType="default"
-                returnKeyType="next"
-                onSubmitEditing={() => ref_fullname.current.focus()}
-                onChangeText={(value) => setConfirmPassword(value)}
-                containerStyles={{
-                  borderWidth: 0,
-                  borderBottomWidth: 1,
-                  borderBottomColor: "darkgray",
-                }}
-                customLabelStyles={{
-                  color: "black",
-                  colorFocused: "black",
-                  colorBlurred: "black",
-                  fontSizeFocused: 12,
-                }}
-                inputStyles={{ color: "black", paddingTop: 20 }}
-                customShowPasswordComponent={<Text>Show</Text>}
-                customHidePasswordComponent={<Text>Hide</Text>}
-                style={{ marginTop: 20 }}
-              />
-            </View>
-
-            {/* FULL NAME */}
-            <View style={{ marginBottom: 20 }}>
-              <FloatingLabelInput
-                label={"Full Name"}
+                label={"Last Name"}
                 value={fullname}
                 keyboardType="default"
                 returnKeyType="next"
                 onSubmitEditing={() => ref_bday.current.focus()}
-                ref={ref_fullname}
+                ref={ref_lastname}
                 labelStyle={{ colorFocused: "#000" }}
                 onChangeText={(value) => setFullname(value)}
                 containerStyles={{
@@ -300,6 +243,7 @@ function CreateAccountForm_Recruiter({ navigation }) {
                 mask="9999-999-9999"
                 keyboardType="phone-pad"
                 returnKeyType="next"
+                onSubmitEditing={() => ref_username.current.focus()}
                 ref={ref_phoneNum}
                 labelStyle={{ colorFocused: "#000" }}
                 onChangeText={(value) => setPhoneNumber(value)}
@@ -314,6 +258,94 @@ function CreateAccountForm_Recruiter({ navigation }) {
                   fontSizeFocused: 12,
                 }}
                 inputStyles={{ color: "black", paddingTop: 20 }}
+              />
+            </View>
+
+            {/* TEXTBOX FOR USERNAME */}
+            <View style={{ marginBottom: 20 }}>
+              <FloatingLabelInput
+                label={"Username"}
+                autoCapitalize="none"
+                value={username}
+                keyboardType="default"
+                returnKeyType="next"
+                onSubmitEditing={() => ref_pass.current.focus()}
+                ref={ref_username}
+                labelStyle={{ colorFocused: "#000" }}
+                onChangeText={(value) => setUsername(value)}
+                containerStyles={{
+                  borderWidth: 0,
+                  borderBottomWidth: 1,
+                  borderBottomColor: "darkgray",
+                }}
+                customLabelStyles={{
+                  colorFocused: "black",
+                  colorBlurred: "black",
+                  fontSizeFocused: 12,
+                }}
+                inputStyles={{ color: "black", paddingTop: 20 }}
+              />
+            </View>
+
+            {/* PASSWORD */}
+            <View style={{ marginBottom: 20 }}>
+              <FloatingLabelInput
+                label={"Password"}
+                isPassword
+                togglePassword={show}
+                autoCapitalize="none"
+                value={password}
+                ref={ref_pass}
+                keyboardType="default"
+                returnKeyType="next"
+                onSubmitEditing={() => ref_confirmpass.current.focus()}
+                onChangeText={(value) => setPassword(value)}
+                containerStyles={{
+                  borderWidth: 0,
+                  borderBottomWidth: 1,
+                  borderBottomColor: "darkgray",
+                }}
+                customLabelStyles={{
+                  color: "black",
+                  colorFocused: "black",
+                  colorBlurred: "black",
+                  fontSizeFocused: 12,
+                }}
+                inputStyles={{ color: "black", paddingTop: 20 }}
+                customShowPasswordComponent={<Text>Show</Text>}
+                customHidePasswordComponent={<Text>Hide</Text>}
+                style={{ marginTop: 20 }}
+              />
+            </View>
+
+            {/* CONFIRM PASSWORD */}
+            <View style={{ marginBottom: 20 }}>
+              <FloatingLabelInput
+                label={"Confirm Password"}
+                isPassword
+                togglePassword={show}
+                autoCapitalize="none"
+                value={confirmpassword}
+                ref={ref_confirmpass}
+                keyboardType="default"
+                returnKeyType="next"
+                onSubmitEditing={() => ref_fullname.current.focus()}
+                onChangeText={(value) => setConfirmPassword(value)}
+                containerStyles={{
+                  borderWidth: 0,
+                  borderBottomWidth: 1,
+                  borderBottomColor: "darkgray",
+                }}
+                customLabelStyles={{
+                  color: "black",
+                  colorFocused: "black",
+                  colorBlurred: "black",
+                  fontSizeFocused: 12,
+                }}
+                inputStyles={{ color: "black", paddingTop: 20 }}
+                customShowPasswordComponent={<Text>Show</Text>}
+                customHidePasswordComponent={<Text>Hide</Text>}
+                style={{ marginTop: 20 }}
               />
             </View>
 
@@ -347,7 +379,15 @@ function CreateAccountForm_Recruiter({ navigation }) {
                   type,
                 });
 
+                formData.append("firstname", firstname);
+                formData.append("lastname", lastname);
+                formData.append("birthdate", birthdate);
+                formData.append("age", age);
+                formData.append("sex", gender);
+                formData.append("address", homeAdd);
                 formData.append("username", username);
+                formData.append("password", password);
+                formData.append("GovId", filename);
 
                 fetch("http://192.168.1.15:3000/signup/Recruiter", {
                   method: "POST",
