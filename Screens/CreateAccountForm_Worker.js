@@ -16,7 +16,7 @@ import axios from "axios";
 import CustomHeader from "../components/CustomerHeader";
 import ImageUploadButton from "../components/ImageUploadButton";
 
-function CreateAccountForm_Worker({ navigation }) {
+function CreateAccountForm_Worker(props, { navigation }) {
   // gets the value from the input box/textbox on the screen
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -381,10 +381,39 @@ function CreateAccountForm_Worker({ navigation }) {
                         </TouchableOpacity> */}
               <ImageUploadButton changeWord={(image) => setImage(image)} />
             </View>
+            {image ? (
+              <View
+                style={{
+                  paddingHorizontal: 30,
+                  paddingTop: 20,
+                  alignItems: "center",
+                }}
+              >
+                <Image
+                  source={{ uri: image }}
+                  style={{ width: 350, height: 350 }}
+                />
+              </View>
+            ) : null}
+          </View>
+
+          <View style={{ marginBottom: 50, marginTop: 20 }}>
+            <TouchableOpacity
+              style={{
+                paddingHorizontal: 80,
+                backgroundColor: "blue",
+                paddingVertical: 10,
+                borderRadius: 10,
+              }}
+            >
+              <Text style={{ fontSize: 16, fontWeight: "bold", color: "#fff" }}>
+                Create Account
+              </Text>
+            </TouchableOpacity>
           </View>
 
           {/* SIGN IN & CREATE NEW ACCOUNT BUTTON */}
-          <View
+          {/* <View
             style={{
               width: "100%",
               alignItems: "flex-end",
@@ -427,7 +456,7 @@ function CreateAccountForm_Worker({ navigation }) {
                 style={{ width: 20, height: 20, marginHorizontal: 8 }}
               />
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
       </ScrollView>
     </SafeAreaView>

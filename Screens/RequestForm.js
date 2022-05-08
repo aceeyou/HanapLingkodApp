@@ -141,7 +141,7 @@ export default function RequestForm(props, { navigation }) {
       });
 
     // go to myrequest page/screen
-    // props.navigation.navigate("Requests");
+    props.navigation.navigate("Requests");
   };
 
   return (
