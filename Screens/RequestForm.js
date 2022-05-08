@@ -12,9 +12,9 @@ import {
   Dimensions,
 } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import DatePicker from "react-native-date-picker";
 import CustomHeader from "../components/CustomerHeader";
 import moment from "moment";
+import "../global/Global";
 
 const windowHeight = Dimensions.get("window").height;
 
@@ -55,17 +55,99 @@ export default function RequestForm(props, { navigation }) {
     hideTimePicker();
   };
 
+  // fetch and load data with global.serviceSelectedID
+  const [serviceData, setServiceData] = useState({
+    isLoaded: true,
+    data: {},
+  });
+  const [userData, setUserData] = useState({
+    isLoaded: true,
+    address: {},
+  });
+
+  const fetchUser = () => {
+    fetch("http://" + global.IPaddress + ":3000/recuiter/" + global.userID, {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log(data._id);
+        setUserData({
+          isLoaded: false,
+          address: data,
+        });
+      })
+      .catch((error) => {
+        console.log("Error. Something happened");
+      });
+  };
+
+  const fetchData = () => {
+    fetch(
+      "http://" +
+        global.IPaddress +
+        ":3000/service/" +
+        global.selectedServiceID,
+      {
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((responseJson) => {
+        // console.log(responseJson);
+        setServiceData({
+          isLoaded: false,
+          data: responseJson,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  // executed after clicking post a request button
   const postRequest = () => {
     alert("hi");
 
     //do stuff backend here
+    fetch(
+      "http://" +
+        global.IPaddress +
+        ":3000/service/" +
+        global.selectedServiceID,
+      {
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((responseJson) => {
+        // console.log(responseJson);
+        setServiceData({
+          isLoaded: false,
+          data: responseJson,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
     // go to myrequest page/screen
-    props.navigation.navigate("Requests");
+    // props.navigation.navigate("Requests");
   };
 
   return (
     <SafeAreaView style={{ marginTop: StatusBar.currentHeight }}>
+      {serviceData.isLoaded ? fetchData() : null}
+      {userData.isLoaded ? fetchUser() : null}
       <ScrollView style={{}}>
         <CustomHeader title="Request Form" navigation={navigation} />
         <View style={styles.container}>
@@ -73,12 +155,12 @@ export default function RequestForm(props, { navigation }) {
           <View style={styles.boxContainer}>
             <View style={[styles.section, styles.textSpace]}>
               <Text>Service Requested:</Text>
-              <Text style={styles.txtData}>Deep Cleaning</Text>
+              <Text style={styles.txtData}>{serviceData.data.name}</Text>
             </View>
 
             <View style={[styles.section, styles.textSpace]}>
               <Text>Location:</Text>
-              <Text style={styles.txtData}>Daet Cam Norte</Text>
+              <Text style={styles.txtData}>{userData.address.address}</Text>
             </View>
 
             <View style={[styles.section, styles.textSpace]}>

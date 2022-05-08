@@ -16,8 +16,8 @@ import "../global/Global";
 import CustomHeader from "../components/CustomerHeader";
 import DisplayWorkers from "../components/DisplayWorkers";
 
-// function nav(){
-//   const navigation = useNavigation();
+// function nav() {
+//   return (navigation = useNavigation());
 // }
 
 export default class ListOfAllWorkers extends React.Component {
@@ -81,7 +81,7 @@ export default class ListOfAllWorkers extends React.Component {
                     onPress={() => {
                       // alert(item._id);
                       global.selectedServiceID = item._id;
-                      props.navigation.navigate("RequestForm");
+                      this.props.navigation.navigate("RequestFormScreen");
                     }}
                   >
                     <View style={{ flex: 1.1 }}>
