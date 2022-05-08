@@ -9,6 +9,7 @@ function CustomHeader(props) {
     <View
       style={{
         flexDirection: "row",
+        width: "100%",
         height: 50,
         paddingTop: 20,
         paddingHorizontal: 30,

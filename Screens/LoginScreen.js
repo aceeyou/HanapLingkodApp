@@ -25,7 +25,7 @@ function LoginScreen({ navigation }) {
 
   // fetch data from server/database
   const fetchUser = () => {
-    fetch("http://192.168.1.2:3000/login", {
+    fetch("http://" + global.IPaddress + ":3000/login", {
       method: "POST",
       body: JSON.stringify({
         username: username,
@@ -140,7 +140,7 @@ function LoginScreen({ navigation }) {
               inputStyles={{ color: "black", paddingTop: 20 }}
               customShowPasswordComponent={<Text>Show</Text>}
               customHidePasswordComponent={<Text>Hide</Text>}
-              onSubmit={() => navigation.navigate("HomeApp")}
+              onSubmit={fetchUser}
             />
           </View>
 

@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import CustomHeader from "../components/CustomerHeader";
+import "../global/Global";
 import { useNavigation } from "@react-navigation/native";
 import CreateAccountForm_Worker from "./CreateAccountForm_Worker";
 
@@ -65,7 +66,7 @@ class Worker_ServiceOfferedSelection extends Component {
     formData.append("password", route.params.password);
     formData.append("GovId", filename);
 
-    fetch("http://192.168.1.2:3000/signup/worker", {
+    fetch("http://" + global.IPaddress + "3000/signup/worker", {
       method: "POST",
       body: formData,
       headers: {

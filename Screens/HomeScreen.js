@@ -12,6 +12,8 @@ import {
 import CategoryButton from "../components/CategoryButton";
 import CustomHeader from "../components/CustomerHeader";
 
+import "../global/Global";
+
 // needs to be a class to use the Component
 
 // export default class HomeClass extends React.Component{

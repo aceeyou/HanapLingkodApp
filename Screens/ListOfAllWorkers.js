@@ -12,14 +12,15 @@ import {
 } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
+import "../global/Global";
 import CustomHeader from "../components/CustomerHeader";
 import DisplayWorkers from "../components/DisplayWorkers";
 
-// const { navigation } = useNavigation();
-export default class ListOfAllWorkers extends React.Component {
-  //   const route = useRoute();
-  // use route.params.title to know which services to display
+// function nav(){
+//   const navigation = useNavigation();
+// }
 
+export default class ListOfAllWorkers extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,33 +29,8 @@ export default class ListOfAllWorkers extends React.Component {
     };
   }
 
-  renderItem = ({ data }) => {
-    return (
-      // <View
-      //   style={{
-      //     paddingHorizontal: 20,
-      //     paddingVertical: 10,
-      //     backgroundColor: "#dddcdc",
-      //     marginBottom: 10,
-      //   }}
-      // >
-      //   <Text>{this.state.data[index].name}</Text>
-      // </View>
-      // console.log(data)
-      <View>
-        {console.log("data: ", data)}
-        <DisplayWorkers
-          name={data.name}
-          priceRange={data.price}
-          avgWH={data.hours}
-          image={require("../assets/bg.png")}
-        />
-      </View>
-    );
-  };
-
   componentMount() {
-    fetch("http://192.168.1.2:3000/service", {
+    fetch("http://" + global.IPaddress + ":3000/service", {
       method: "GET",
       headers: {
         "content-type": "application/json",
@@ -76,28 +52,65 @@ export default class ListOfAllWorkers extends React.Component {
 
   render() {
     let { data } = this.state;
+    // let { navigation } = useNavigation();
     return (
       <SafeAreaView style={styles.container}>
-        <View>
+        <View style={{ flex: 1 }}>
           <CustomHeader title="Available Workers" />
-          <Text style={styles.txtHeader}>
-            Below are the list of all workers
-          </Text>
-
+          <View style={{ marginBottom: 15 }}>
+            <Text style={styles.txtHeader}>
+              Below are the list of all workers
+            </Text>
+          </View>
           {this.state.isLoaded ? this.componentMount() : null}
 
-          <View style={{ height: "100%", paddingBottom: 100 }}>
+          <View
+            style={{
+              flex: 1,
+              marginTop: 0,
+            }}
+          >
             <FlatList
+              ListFooterComponent={<View style={{ height: 60 }} />}
               keyExtractor={(item) => item._id}
               data={data}
               renderItem={({ item }) => (
-                <View style={{ paddingHorizontal: 30, marginTop: 12 }}>
+                <View style={styles.btnView}>
                   <TouchableOpacity
-                    style={{ backgroundColor: "darkgray", padding: 30 }}
+                    style={styles.btn}
+                    onPress={() => {
+                      // alert(item._id);
+                      global.selectedServiceID = item._id;
+                      props.navigation.navigate("RequestForm");
+                    }}
                   >
-                    <Text>{item.name}</Text>
-                    <Text>{item.name}</Text>
-                    <Text>{item.name}</Text>
+                    <View style={{ flex: 1.1 }}>
+                      <Image
+                        source={require("../assets/bg.png")}
+                        style={{ width: "100%", height: "100%" }}
+                      />
+                    </View>
+                    <View style={{ flex: 2, padding: 15 }}>
+                      <Text style={{ fontSize: 16 }}>{item.name}</Text>
+
+                      <Text style={{ color: "#434544", fontSize: 13 }}>
+                        {item.name}
+                      </Text>
+
+                      <Text
+                        style={{
+                          marginTop: 10,
+                          fontSize: 12,
+                          color: "#434544",
+                        }}
+                      >
+                        {item.priceRange}
+                      </Text>
+
+                      <Text style={{ fontSize: 12, marginTop: 3 }}>
+                        Avg. Work Hours {item.workingHours}
+                      </Text>
+                    </View>
                   </TouchableOpacity>
                 </View>
               )}
@@ -117,11 +130,21 @@ const styles = StyleSheet.create({
   viewContainer: {
     paddingHorizontal: 30,
     marginTop: 30,
-    marginBottom: 50,
   },
   txtHeader: {
     paddingHorizontal: 50,
     marginTop: 30,
     fontSize: 15,
+  },
+  btnView: {
+    flex: 1,
+    paddingHorizontal: 30,
+    paddingTop: 15,
+  },
+  btn: {
+    backgroundColor: "#dddcdc",
+    borderRadius: 7,
+    overflow: "hidden",
+    flexDirection: "row",
   },
 });
