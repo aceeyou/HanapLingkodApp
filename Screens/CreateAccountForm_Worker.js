@@ -11,7 +11,7 @@ import {
 } from "react-native";
 
 import { FloatingLabelInput } from "react-native-floating-label-input";
-import axios from "axios";
+import "../global/Global";
 
 import CustomHeader from "../components/CustomerHeader";
 import ImageUploadButton from "../components/ImageUploadButton";
@@ -44,6 +44,52 @@ function CreateAccountForm_Worker(props, { navigation }) {
   ref_workAdd = useRef();
   ref_phoneNum = useRef();
   ref_confirmpass = useRef();
+
+  const createWorkerAccount = () => {
+    let localUri = image;
+    let filename = localUri.split("/").pop();
+
+    // Infer the type of the image
+    let match = /\.(\w+)$/.exec(filename);
+    let type = match ? `image/${match[1]}` : `image`;
+
+    // Upload the image using the fetch and FormData APIs
+    let formData = new FormData();
+
+    // Assume "photo" is the name of the form field the server expects
+    formData.append("govId", {
+      uri: localUri,
+      name: filename,
+      type,
+    });
+
+    formData.append("firstname", firstname);
+    formData.append("lastname", lastname);
+    formData.append("birthdate", birthdate);
+    formData.append("age", age);
+    formData.append("sex", gender);
+    formData.append("address", homeAdd);
+    formData.append("workAddress", workAdd);
+    formData.append("phoneNumber", phoneNumber);
+    formData.append("username", username);
+    formData.append("password", password);
+    formData.append("GovId", filename);
+
+    fetch("http://" + global.IPaddress + ":3000/signup/worker", {
+      method: "POST",
+      body: formData,
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    })
+      .then(() => {
+        alert("account created");
+        props.navigation.navigate("LoginStack");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, marginTop: StatusBar.currentHeight }}>
@@ -397,14 +443,24 @@ function CreateAccountForm_Worker(props, { navigation }) {
             ) : null}
           </View>
 
-          <View style={{ marginBottom: 50, marginTop: 20 }}>
+          {/* Create account button */}
+          <View
+            style={{
+              marginBottom: 50,
+              marginTop: 20,
+              width: "100%",
+              paddingHorizontal: 10,
+            }}
+          >
             <TouchableOpacity
               style={{
-                paddingHorizontal: 80,
-                backgroundColor: "blue",
+                width: "100%",
+                backgroundColor: "#338CF4",
                 paddingVertical: 10,
                 borderRadius: 10,
+                alignItems: "center",
               }}
+              onPress={createWorkerAccount}
             >
               <Text style={{ fontSize: 16, fontWeight: "bold", color: "#fff" }}>
                 Create Account
@@ -412,6 +468,7 @@ function CreateAccountForm_Worker(props, { navigation }) {
             </TouchableOpacity>
           </View>
 
+          {/* Hid the service type screen */}
           {/* SIGN IN & CREATE NEW ACCOUNT BUTTON */}
           {/* <View
             style={{

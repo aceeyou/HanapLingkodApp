@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   SafeAreaView,
   ScrollView,
@@ -12,7 +12,48 @@ import {
 import { borderColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 import CustomerHeader from "../components/CustomerHeader";
 
+import "../global/Global";
+
 export default function UserProfilePage({ navigation }) {
+  const [data, setData] = useState({
+    isLoaded: true,
+    data: [],
+  });
+
+  const [imageuri, setimageuri] = useState("");
+  const imageURI =
+    "../Server/Src/public/uploads/" +
+    "16520229485852ce02904-301f-4774-936f-7ada34c7527a.jpg";
+
+  const fetchData = () => {
+    let route;
+    if (global.userRole === "recruiter") {
+      route = "recuiter";
+    } else route = "worker";
+
+    fetch(
+      "http://" + global.IPaddress + ":3000/" + route + "/" + global.userID,
+      {
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data._govId);
+        setData({
+          isLoaded: false,
+          data: data,
+        });
+        setimageuri(data.GovId);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <SafeAreaView
       style={{
@@ -26,22 +67,30 @@ export default function UserProfilePage({ navigation }) {
           isHome={true}
           isCreateAccount={true}
         />
+
         <View style={styles.mainContainer}>
+          {data.isLoaded ? fetchData() : null}
           <View style={styles.imgContainer}>
             <Image
-              source={require("../assets/icons/dp-placeholder.png")}
-              style={{ width: 90, height: 90 }}
+              source={require(imageURI)}
+              style={{ width: 90, height: 90, borderRadius: 45 }}
             />
 
             <View style={styles.nameBlock}>
-              <Text style={styles.usersName}> Ace Logronio</Text>
+              <Text style={styles.usersName}>
+                {" "}
+                {data.data.firstname} {data.data.lastname}
+              </Text>
               <Image
                 style={styles.verifyIcon}
                 source={require("../assets/icons/verified-green.png")}
               />
             </View>
 
-            <Text style={styles.usersService}>Recruiter</Text>
+            <Text style={styles.usersService}>
+              {global.userRole.charAt(0).toUpperCase() +
+                global.userRole.slice(1)}
+            </Text>
           </View>
 
           {/* Overview Stats */}
@@ -109,7 +158,7 @@ export default function UserProfilePage({ navigation }) {
                 style={{ width: 18, height: 18, marginRight: 15 }}
               /> */}
               <Text style={styles.infolabel}>Username</Text>
-              <Text style={styles.infoDetail}>aceeyou</Text>
+              <Text style={styles.infoDetail}>{data.data.username}</Text>
             </View>
 
             {/* home address */}
@@ -121,7 +170,7 @@ export default function UserProfilePage({ navigation }) {
                 style={{ width: 18, height: 18, marginRight: 15 }}
               /> */}
               <Text style={styles.infolabel}>Home Address</Text>
-              <Text style={styles.infoDetail}>Awitan, Daet, Camarines Sur</Text>
+              <Text style={styles.infoDetail}>{data.data.address}</Text>
             </View>
 
             {/* birthdate */}
@@ -133,7 +182,7 @@ export default function UserProfilePage({ navigation }) {
                 style={{ width: 20, height: 20, marginRight: 15 }}
               /> */}
               <Text style={styles.infolabel}>Birth Date</Text>
-              <Text style={styles.infoDetail}>01/01/1991</Text>
+              <Text style={styles.infoDetail}>{data.data.birthday}</Text>
             </View>
 
             {/* sex | gender */}
@@ -145,7 +194,7 @@ export default function UserProfilePage({ navigation }) {
                 style={{ width: 18, height: 18, marginRight: 15 }}
               /> */}
               <Text style={styles.infolabel}>Gender</Text>
-              <Text style={styles.infoDetail}>Male</Text>
+              <Text style={styles.infoDetail}>{data.data.sex}</Text>
             </View>
 
             {/* phone number */}

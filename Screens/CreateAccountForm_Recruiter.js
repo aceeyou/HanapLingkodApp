@@ -14,7 +14,7 @@ import {
 } from "react-native";
 
 import { FloatingLabelInput } from "react-native-floating-label-input";
-import { borderBottomColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
+import "../global/Global";
 
 import CustomHeader from "../components/CustomerHeader";
 import ImagePicker from "react-native-image-picker";
@@ -390,7 +390,7 @@ function CreateAccountForm_Recruiter({ navigation }) {
                 formData.append("password", password);
                 formData.append("GovId", filename);
 
-                fetch("http://192.168.1.15:3000/signup/Recruiter", {
+                fetch("http://" + global.IPaddress + ":3000/signup/Recruiter", {
                   method: "POST",
                   body: formData,
                   headers: {
