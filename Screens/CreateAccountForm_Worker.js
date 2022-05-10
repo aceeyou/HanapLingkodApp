@@ -45,52 +45,6 @@ function CreateAccountForm_Worker(props, { navigation }) {
   ref_phoneNum = useRef();
   ref_confirmpass = useRef();
 
-  const createWorkerAccount = () => {
-    let localUri = image;
-    let filename = localUri.split("/").pop();
-
-    // Infer the type of the image
-    let match = /\.(\w+)$/.exec(filename);
-    let type = match ? `image/${match[1]}` : `image`;
-
-    // Upload the image using the fetch and FormData APIs
-    let formData = new FormData();
-
-    // Assume "photo" is the name of the form field the server expects
-    formData.append("govId", {
-      uri: localUri,
-      name: filename,
-      type,
-    });
-
-    formData.append("firstname", firstname);
-    formData.append("lastname", lastname);
-    formData.append("birthday", birthdate);
-    formData.append("age", age);
-    formData.append("sex", gender);
-    formData.append("address", homeAdd);
-    formData.append("workAddress", workAdd);
-    formData.append("phoneNumber", phoneNumber);
-    formData.append("username", username);
-    formData.append("password", password);
-    formData.append("GovId", filename);
-
-    fetch("http://" + global.IPaddress + ":3000/signup/worker", {
-      method: "POST",
-      body: formData,
-      headers: {
-        "content-type": "multipart/form-data",
-      },
-    })
-      .then(() => {
-        alert("Account created");
-        props.navigation.navigate("CAF_Worker_ServiceSelect");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
   return (
     <SafeAreaView style={{ flex: 1, marginTop: StatusBar.currentHeight }}>
       <ScrollView style={{}}>
@@ -460,7 +414,52 @@ function CreateAccountForm_Worker(props, { navigation }) {
                 borderRadius: 10,
                 alignItems: "center",
               }}
-              onPress={() => createWorkerAccount}
+              onPress={() => {
+                let formData = new FormData();
+
+                let localUri = image;
+                let filename = localUri.split("/").pop();
+
+                // Infer the type of the image
+                let match = /\.(\w+)$/.exec(filename);
+                let type = match ? `image/${match[1]}` : `image`;
+
+                // Upload the image using the fetch and FormData APIs
+
+                // Assume "photo" is the name of the form field the server expects
+                formData.append("govId", {
+                  uri: localUri,
+                  name: filename,
+                  type,
+                });
+
+                formData.append("firstname", firstname);
+                formData.append("lastname", lastname);
+                formData.append("birthday", birthdate);
+                formData.append("age", age);
+                formData.append("sex", gender);
+                formData.append("address", homeAdd);
+                formData.append("workAddress", workAdd);
+                formData.append("phoneNumber", phoneNumber);
+                formData.append("username", username);
+                formData.append("password", password);
+                formData.append("GovId", filename);
+
+                fetch("http://" + global.IPaddress + ":3000/signup/worker", {
+                  method: "POST",
+                  body: formData,
+                  headers: {
+                    "content-type": "multipart/form-data",
+                  },
+                })
+                  .then(() => {
+                    alert("Account created");
+                    props.navigation.navigate("CAF_Worker_ServiceSelect");
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  });
+              }}
             >
               <Text style={{ fontSize: 16, fontWeight: "bold", color: "#fff" }}>
                 Create Account

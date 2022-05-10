@@ -34,6 +34,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 app.post("/signup/worker", upload.single("govId"), (req, res) => {
+  console.log(req.body);
   const worker = new User({
     username: req.body.username,
     password: req.body.password,

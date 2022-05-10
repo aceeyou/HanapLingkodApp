@@ -1,5 +1,5 @@
 // set IP address
-global.IPaddress = "192.168.1.8";
+global.IPaddress = "192.168.1.10";
 
 // used variables
 global.userID = "";
