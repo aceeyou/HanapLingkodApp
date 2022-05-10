@@ -65,7 +65,7 @@ function CreateAccountForm_Worker(props, { navigation }) {
 
     formData.append("firstname", firstname);
     formData.append("lastname", lastname);
-    formData.append("birthdate", birthdate);
+    formData.append("birthday", birthdate);
     formData.append("age", age);
     formData.append("sex", gender);
     formData.append("address", homeAdd);
@@ -83,8 +83,8 @@ function CreateAccountForm_Worker(props, { navigation }) {
       },
     })
       .then(() => {
-        alert("account created");
-        props.navigation.navigate("LoginStack");
+        alert("Account created");
+        props.navigation.navigate("CAF_Worker_ServiceSelect");
       })
       .catch((error) => {
         console.log(error);
@@ -460,7 +460,7 @@ function CreateAccountForm_Worker(props, { navigation }) {
                 borderRadius: 10,
                 alignItems: "center",
               }}
-              onPress={createWorkerAccount}
+              onPress={() => createWorkerAccount}
             >
               <Text style={{ fontSize: 16, fontWeight: "bold", color: "#fff" }}>
                 Create Account
@@ -480,21 +480,7 @@ function CreateAccountForm_Worker(props, { navigation }) {
             }}
           >
             <TouchableOpacity
-              onPress={() =>
-                props.navigation.navigate("CAF_Worker_ServiceSelect", {
-                  firstname: firstname,
-                  lastname: lastname,
-                  birthdate: birthdate,
-                  age: age,
-                  sex: gender,
-                  homeAdd: homeAdd,
-                  workAdd: workAdd,
-                  phoneNumber: phoneNumber,
-                  username: username,
-                  password: password,
-                  image: image,
-                })
-              }
+              onPress={() => createWorkerAccount}
               style={{ width: 100, padding: 10, flexDirection: "row" }}
             >
               <Text

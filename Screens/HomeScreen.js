@@ -160,7 +160,7 @@ function HomeScreen({ navigation }) {
           />
           <CategoryButton
             categoryImage={require("../assets/icons/Inspection.png")}
-            title="Errand"
+            title="Appliances"
             navigation={navigation}
           />
         </View>

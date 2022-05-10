@@ -22,6 +22,8 @@ class Worker_ServiceOfferedSelection extends Component {
     super(props);
     this.state = {
       refresh: false,
+      selectedService: {},
+      selectedSubCat: {},
     };
   }
 
@@ -29,6 +31,18 @@ class Worker_ServiceOfferedSelection extends Component {
     this.setState({ user: user });
     this.arrayOfServices.push(user);
     console.log(this.arrayOfServices);
+  };
+
+  setService = (service) => {
+    this.setState({ selectedService: service });
+    this.arrayOfServices[0] = service;
+    console.log("sService: ", this.state.selectedService);
+  };
+
+  setSubCat = (service) => {
+    this.setState({ selectedSubCat: service });
+    this.arrayOfServices[1] = service;
+    console.log("sService: ", this.state.selectedSubCat);
   };
 
   createWorkerAccount = () => {
@@ -107,13 +121,15 @@ class Worker_ServiceOfferedSelection extends Component {
     );
   };
 
-  // route = () => useRoute();
+  // route = () => {
+  //   useRoute();
+  // };
 
   arrayOfServices = [];
   render() {
     // console.log(route.params.firstname);
     return (
-      <SafeAreaView style={{ marginTop: StatusBar.currentHeight }}>
+      <SafeAreaView style={{ flex: 1, marginTop: StatusBar.currentHeight }}>
         <CustomHeader title="" />
         <Text
           style={{
@@ -127,24 +143,33 @@ class Worker_ServiceOfferedSelection extends Component {
         </Text>
         <View
           style={{
+            flex: 1,
             marginTop: 50,
-            height: 530,
             paddingHorizontal: 40,
           }}
         >
-          <View style={{ borderBottomWidth: 1, borderBottomColor: "black" }}>
+          <View
+            style={{
+              borderWidth: 1,
+              borderColor: "black",
+              paddingHorizontal: 10,
+              borderRadius: 8,
+            }}
+          >
+            <Text style={{ paddingTop: 10 }}>
+              Select a Service Category to continue:
+            </Text>
             <Picker
-              selectedValue={this.state.user}
-              onValueChange={this.updateUser}
+              selectedValue={this.state.selectedService}
+              onValueChange={this.setService}
               style={{ height: 50, width: "100%" }}
             >
               <Picker.Item label="Service Offered" value="" enabled={false} />
-              <Picker.Item label="Errand" value="Errand" />
-              <Picker.Item label="Mounting" value="Mounting" />
-              <Picker.Item label="Plumbing" value="Plumbing" />
-              <Picker.Item label="General" value="General" />
-              <Picker.Item label="Electrical" value="Electrical" />
               <Picker.Item label="Cleaning" value="Cleaning" />
+              <Picker.Item label="Plumbing" value="Plumbing" />
+              <Picker.Item label="Mounting" value="Mounting" />
+              <Picker.Item label="Electrical" value="Electrical" />
+              <Picker.Item label="Errand" value="Errand" />
             </Picker>
           </View>
 
@@ -154,7 +179,7 @@ class Worker_ServiceOfferedSelection extends Component {
               marginTop: 8,
             }}
           >
-            <FlatList
+            {/* <FlatList
               horizontal
               showsHorizontalScrollIndicator={false}
               refreshing
@@ -162,78 +187,205 @@ class Worker_ServiceOfferedSelection extends Component {
               data={this.arrayOfServices}
               keyExtractor={(item, index) => index.toString()}
               renderItem={this.renderItem}
-            />
+            /> */}
+            {/* <Text
+              style={{
+                backgroundColor: "pink",
+                paddingVertical: 10,
+                paddingHorizontal: 20,
+              }}
+            >
+              {this.arrayOfServices[0]}
+            </Text> */}
           </View>
-
-          {/* <View
-                        style={{
-                            flex: 1,
-                            backgroundColor: "pink",
-                            width: "100%",
-                            height: 200,
-                        }}
-                        >
-                        {this.display}
-                        </View> */}
-
-          {/* <View>
-                        {this.state.user ? arrayOfServices.push(this.state.user) : null}
-                        {arrayOfServices.map((item) => (
-                            <Text>{item}</Text>
-                        ))}
-                        </View> */}
-          {/* <Text style={styles.next}>{this.arrayOfServices}</Text> */}
-          {/* {console.log(arrayOfServices)} */}
-        </View>
-
-        <View>
-          {/* shows another dropdown when the user selected something */}
-          {this.state.user === "Cleaning" ? (
-            <View style={{ marginTop: 50, paddingHorizontal: 40 }}>
-              <Text>User Selected Cleaning</Text>
-              <View
-                style={{ borderBottomWidth: 1, borderBottomColor: "black" }}
-              >
-                <Picker
-                  selectedValue={this.state.user}
-                  onValueChange={this.updateUser}
-                  style={{ height: 50, width: "100%" }}
+          <View>
+            {/* shows another dropdown when the user selected something */}
+            {/* CLEANING */}
+            {this.state.selectedService === "Cleaning" ? (
+              <View style={{ marginTop: 50, paddingHorizontal: 0 }}>
+                <Text>User Selected Cleaning</Text>
+                <View
+                  style={{ borderBottomWidth: 1, borderBottomColor: "black" }}
                 >
-                  <Picker.Item
-                    label="Cleaning Services"
-                    value=""
-                    enabled={false}
-                  />
-                  <Picker.Item label="General" value="General" />
-                  <Picker.Item label="Bedroom Cleaning" value="Bedroom" />
-                  <Picker.Item label="Deep Cleaning" value="DeepClean" />
-                  <Picker.Item label="Aircon Cleaning" value="Aircon" />
-                  <Picker.Item label="Cleaning" value="Cleaning" />
-                </Picker>
+                  <Picker
+                    selectedValue={this.state.selectedSubCat}
+                    onValueChange={this.setSubCat}
+                    style={{ height: 50, width: "100%" }}
+                  >
+                    <Picker.Item
+                      label="Cleaning Services:"
+                      value=""
+                      enabled={false}
+                    />
+                    <Picker.Item
+                      label="House Cleaning"
+                      value="House Cleaning"
+                    />
+                    <Picker.Item
+                      label="Carpet Cleaning"
+                      value="Carpet Cleaning"
+                    />
+                    <Picker.Item
+                      label="Disinfection Cleaning"
+                      value="Disinfection Cleaning"
+                    />
+                    <Picker.Item
+                      label="Aircon Cleaning"
+                      value="Aircon Cleaning"
+                    />
+                  </Picker>
+                </View>
               </View>
-            </View>
-          ) : null}
+            ) : null}
 
-          {this.state.user === "General" ? (
-            <View style={{ marginTop: 50, paddingHorizontal: 40 }}>
-              <Text>User Selected General Cleaning</Text>
-              <View
-                style={{ borderBottomWidth: 1, borderBottomColor: "black" }}
-              >
-                <Text>How much</Text>
+            {/* PLUMBING */}
+            {this.state.selectedService === "Plumbing" ? (
+              <View style={{ marginTop: 50, paddingHorizontal: 0 }}>
+                <Text>User Selected Cleaning</Text>
+                <View
+                  style={{ borderBottomWidth: 1, borderBottomColor: "black" }}
+                >
+                  <Picker
+                    selectedValue={this.state.selectedSubCat}
+                    onValueChange={this.setSubCat}
+                    style={{ height: 50, width: "100%" }}
+                  >
+                    <Picker.Item label="Plumbing Services:" value="" />
+                    <Picker.Item
+                      label="Plumbing Installation"
+                      value=""
+                      enabled={false}
+                    />
+                    <Picker.Item
+                      label="Plumbing Repair"
+                      value="Plumbing Repair"
+                    />
+                    <Picker.Item
+                      label="Bidet Installation"
+                      value="Bidet Installation"
+                    />
+                    <Picker.Item
+                      label="Water Heater Installation"
+                      value="Water Heater Installation"
+                    />
+                    <Picker.Item
+                      label="Water Heater Repair"
+                      value="Water Heater Repair"
+                    />
+                  </Picker>
+                </View>
               </View>
-            </View>
-          ) : null}
+            ) : null}
+
+            {/* MOUNTING */}
+            {this.state.selectedService === "Mounting" ? (
+              <View style={{ marginTop: 50, paddingHorizontal: 0 }}>
+                <Text>User Selected Mounting</Text>
+                <View
+                  style={{ borderBottomWidth: 1, borderBottomColor: "black" }}
+                >
+                  <Picker
+                    selectedValue={this.state.selectedSubCat}
+                    onValueChange={this.setSubCat}
+                    style={{ height: 50, width: "100%" }}
+                  >
+                    <Picker.Item
+                      label="Mounting Services:"
+                      value=""
+                      enabled={false}
+                    />
+                    <Picker.Item label="TV Mounting" value="TV Mounting" />
+                    <Picker.Item
+                      label="Aircon Installation"
+                      value="Aircon Installation"
+                    />
+                  </Picker>
+                </View>
+              </View>
+            ) : null}
+
+            {/* ELECTRICAL */}
+            {this.state.selectedService === "Electrical" ? (
+              <View style={{ marginTop: 50, paddingHorizontal: 0 }}>
+                <Text>User Selected Electrical</Text>
+                <View
+                  style={{ borderBottomWidth: 1, borderBottomColor: "black" }}
+                >
+                  <Picker
+                    selectedValue={this.state.selectedSubCat}
+                    onValueChange={this.setSubCat}
+                    style={{ height: 50, width: "100%" }}
+                  >
+                    <Picker.Item
+                      label="Electrical Services:"
+                      value=""
+                      enabled={false}
+                    />
+                    <Picker.Item label="Aircon Repair" value="Aircon Repair" />
+                    <Picker.Item
+                      label="Lighting Repair"
+                      value="Lighting Repair"
+                    />
+                    <Picker.Item
+                      label="Lighting Installation"
+                      value="Lighting Installation"
+                    />
+                  </Picker>
+                </View>
+              </View>
+            ) : null}
+
+            {/* ERRAND */}
+            {this.state.selectedService === "Errand" ? (
+              <View style={{ marginTop: 50, paddingHorizontal: 0 }}>
+                <Text>User Selected Errand</Text>
+                <View
+                  style={{ borderBottomWidth: 1, borderBottomColor: "black" }}
+                >
+                  <Picker
+                    selectedValue={this.state.selectedSubCat}
+                    onValueChange={this.setSubCat}
+                    style={{ height: 50, width: "100%" }}
+                  >
+                    <Picker.Item
+                      label="Errand Services:"
+                      value=""
+                      enabled={false}
+                    />
+                    <Picker.Item
+                      label="Grocery Shopping"
+                      value="Grocery Shopping"
+                    />
+                    <Picker.Item
+                      label="Personal Shopping"
+                      value="Personal Shopping"
+                    />
+                  </Picker>
+                </View>
+              </View>
+            ) : null}
+          </View>
         </View>
-        <View style={{ alignItems: "center", paddingHorizontal: 60 }}>
+
+        <View
+          style={{
+            alignItems: "center",
+            paddingHorizontal: 60,
+          }}
+        >
           <TouchableOpacity
             style={{
               backgroundColor: "blue",
               paddingVertical: 10,
-              paddingHorizontal: 50,
+              paddingHorizontal: 60,
               borderRadius: 10,
+              position: "absolute",
+              bottom: 30,
             }}
-            onPress={this.createWorkerAccount}
+            onPress={() => {
+              alert(this.state.selectedService);
+              alert(this.state.selectedSubCat);
+            }}
           >
             <Text style={{ color: "#fff", fontWeight: "bold" }}>
               Create Worker Account
