@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import {
   Text,
   View,
@@ -9,27 +9,38 @@ import {
   StatusBar,
   ScrollView,
 } from "react-native";
+import { set } from "react-native-reanimated";
 import CategoryButton from "../components/CategoryButton";
 import CustomHeader from "../components/CustomerHeader";
 
 import "../global/Global";
 
-// needs to be a class to use the Component
-
-// export default class HomeClass extends React.Component{
-
-//     // const { useState, setState } =
-
-//     render(){
-//         return(
-//             <View>
-//                 <Text>Hi!</Text>
-//             </View>
-//         );
-//     }
-// }
-
 function HomeScreen({ navigation }) {
+  const [userRole, setUserRole] = useState();
+  // setUserRole(global.userRole);
+
+  // const fetchUserRole = () => {
+  //   fetch("http://" + global.IPaddress + ":3000/user", {
+  //     method: "POST",
+  //     body: JSON.stringify({
+  //       username: username,
+  //       password: password,
+  //     }),
+  //     headers: {
+  //       "content-type": "application/json",
+  //     },
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       console.log(data._id);
+  //       global.userID = data._id;
+  //       navigation.navigate("HomeApp");
+  //     })
+  //     .catch((error) => {
+  //       console.log("Incorrect Credentials. Try again");
+  //     });
+  // }
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -39,17 +50,48 @@ function HomeScreen({ navigation }) {
           dp={require("../assets/bg.png")}
           navigation={navigation}
         />
+
+        {/* {setUserRole(global.userRole)} */}
+
+        {/* {userRole === "recruiter" ? (
+          <Text
+            style={{
+              fontSize: 22,
+              fontWeight: "bold",
+              color: "#0d0d0c",
+              paddingHorizontal: 40,
+              paddingTop: 30,
+            }}
+          >
+            Welcome, Recruiter!
+          </Text>
+        ) : (
+          <Text
+            style={{
+              fontSize: 22,
+              fontWeight: "bold",
+              color: "#0d0d0c",
+              paddingHorizontal: 40,
+              paddingTop: 30,
+            }}
+          >
+            Welcome, Worker!
+          </Text>
+        )} */}
+
         <Text
           style={{
-            fontSize: 22,
+            fontSize: 21,
             fontWeight: "bold",
             color: "#0d0d0c",
             paddingHorizontal: 40,
             paddingTop: 30,
           }}
         >
-          Welcome, Recruiter!
+          Welcome,{" "}
+          {global.userRole.charAt(0).toUpperCase() + global.userRole.slice(1)}!
         </Text>
+
         <View style={styles.btnContainer}>
           <TouchableOpacity
             style={[styles.btnItem, styles.btnRequests]}
@@ -64,6 +106,30 @@ function HomeScreen({ navigation }) {
             <Text style={styles.btnText}>Bookings (1)</Text>
           </TouchableOpacity>
         </View>
+
+        {/* adds a button to add a service (worker side) */}
+        {/* {global.userRole === "worker" ? (
+          <View style={{ paddingHorizontal: 40 }}>
+            <View style={{ elevation: 6, shadowColor: "#2387fc" }}>
+              <TouchableOpacity
+                style={{
+                  alignItems: "center",
+                  backgroundColor: "#2387fc",
+                  paddingVertical: 10,
+                  marginBottom: 35,
+                  borderRadius: 8,
+                }}
+                onPress={() => {
+                  alert("hi");
+                }}
+              >
+                <Text style={{ fontWeight: "bold", color: "#fff" }}>
+                  Add A Service
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        ) : null} */}
 
         {/* Button for every category of avialable jobs */}
         <View style={styles.categoryContainer}>
@@ -95,16 +161,6 @@ function HomeScreen({ navigation }) {
           <CategoryButton
             categoryImage={require("../assets/icons/Inspection.png")}
             title="Errand"
-            navigation={navigation}
-          />
-          <CategoryButton
-            categoryImage={require("../assets/icons/Plumbing.png")}
-            title="Plumbing"
-            navigation={navigation}
-          />
-          <CategoryButton
-            categoryImage={require("../assets/icons/Janitor.png")}
-            title="Cleaning"
             navigation={navigation}
           />
         </View>

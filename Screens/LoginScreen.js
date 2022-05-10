@@ -39,10 +39,16 @@ function LoginScreen({ navigation }) {
       .then((data) => {
         console.log(data._id);
         global.userID = data._id;
+        global.userRole = data.role;
+        console.log(data.role);
+
         navigation.navigate("HomeApp");
+
+        // if (global.userRole === recruiter) navigation.navigate("HomeApp");
+        // else navigation.navigate("");
       })
       .catch((error) => {
-        console.log("Incorrect Credentials. Try again");
+        alert("Incorrect Credentials. Try again");
       });
   };
 
