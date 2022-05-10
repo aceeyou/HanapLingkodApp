@@ -116,22 +116,9 @@ function DisplayWorkers(props, { navigation }) {
         <Image source={props.dp} resizeMode="cover" style={styles.image} />
       </View>
       <View style={styles.text_container}>
-        <Text style={styles.nametxt}>Name</Text>
-        <Text style={styles.category}>
-          {props.type}: {props.category}
-        </Text>
-
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            marginBottom: 2,
-          }}
-        >
-          {renderStars(props.rating)}
-        </View>
-
-        <Text style={styles.sub_info}>{props.address}</Text>
+        <Text style={styles.nametxt}>{props.name}</Text>
+        <Text style={styles.category}>{props.priceRange}</Text>
+        <Text style={styles.sub_info}>{props.avgWH}</Text>
       </View>
     </TouchableOpacity>
   );

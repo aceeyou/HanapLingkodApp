@@ -38,7 +38,11 @@ import UserProfilePage from "./Screens/UserProfileScreen";
 import EditUserProfile from "./Screens/EditUserProfile";
 import RequestDetailScreen from "./Screens/RequestDetailScreen";
 
+import "./global/Global";
+import { useNavigation } from "@react-navigation/native";
+
 function CustomDrawerContent(props) {
+  // const navigation = useNavigation();
   return (
     <SafeAreaView
       style={{
@@ -145,6 +149,7 @@ function CustomDrawerContent(props) {
             alignItems: "center",
           }}
           onPress={() => {
+            global.userID = "";
             props.navigation.navigate("LoginStack");
             props.navigation.closeDrawer();
           }}
@@ -249,6 +254,8 @@ function LoginStack() {
 }
 
 function TabNivagator() {
+  const navigation = useNavigation();
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -291,7 +298,11 @@ function TabNivagator() {
       })}
     >
       <Tab.Screen name="Home" component={HomeStack} />
-      <Tab.Screen name="ListOfAllWorkersTab" component={ListOfAllWorkers} />
+      <Tab.Screen
+        name="ListOfAllWorkersTab"
+        component={ListOfAllWorkers}
+        initialParams={{ navigation }}
+      />
       <Tab.Screen name="Search" component={SearchScreen} />
       <Tab.Screen
         name="Messages"

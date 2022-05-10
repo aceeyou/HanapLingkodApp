@@ -1,29 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { TouchableOpacity, Text, Image } from "react-native";
 
-// import { launchImageLibrary } from 'react-native-image-picker';
-
 import * as ImagePicker from "expo-image-picker";
-import client from "../api/client";
-
-// const options={
-//     title: 'Select Image',
-//     type: 'library',
-//     options: {
-//       maxHeight: 200,
-//       maxWidth: 300,
-//       selectionLimit: 1,
-//       mediaType: 'photo',
-//       includeBase64: false,
-//     },
-// }
 
 export default function ImageUploadButton(props) {
-  // const openGallery=async()=>{
-  //     const image = await launchImageLibrary(options);
-  //     console.log(image)
-  // }
-
   const [image, setImage] = useState(null);
 
   useEffect(() => {
@@ -42,7 +22,6 @@ export default function ImageUploadButton(props) {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [4, 3],
       quality: 1,
     });
 
@@ -53,27 +32,6 @@ export default function ImageUploadButton(props) {
       props.changeWord(result.uri);
     }
   };
-
-  // const uploadImage = async () => {
-  //     const formData = new FormData()
-  //     formData.append('GovId', {
-  //         name: new Date() + "_GovId",
-  //         uri: image,
-  //         type: 'image/jpg/png'
-  //     })
-
-  //     try {
-  //         const res = await client.post('/signup/worker', formData, {
-  //             header: {
-  //                 Accept: 'application/json',
-  //                 'Content-Type': 'multipart/form-data',
-  //             }
-  //         })
-  //     } catch (error) {
-  //         console.log(error.message)
-  //     }
-
-  // }
 
   return (
     <TouchableOpacity
@@ -87,9 +45,6 @@ export default function ImageUploadButton(props) {
       onPress={pickImage}
     >
       <Text style={{ fontWeight: "bold" }}>Attach photos here</Text>
-      {image && (
-        <Image source={{ uri: image }} style={{ width: 300, height: 200 }} />
-      )}
     </TouchableOpacity>
   );
 }

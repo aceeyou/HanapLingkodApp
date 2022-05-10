@@ -10,7 +10,7 @@ import {
 } from "react-native";
 
 import { FloatingLabelInput } from "react-native-floating-label-input";
-import { borderBottomColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
+import "../global/Global";
 
 import CustomHeader from "../components/CustomerHeader";
 
@@ -22,6 +22,29 @@ function LoginScreen({ navigation }) {
   const [show, setShow] = useState(false);
 
   ref_passwInput = useRef();
+
+  // fetch data from server/database
+  const fetchUser = () => {
+    fetch("http://" + global.IPaddress + ":3000/login", {
+      method: "POST",
+      body: JSON.stringify({
+        username: username,
+        password: password,
+      }),
+      headers: {
+        "content-type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data._id);
+        global.userID = data._id;
+        navigation.navigate("HomeApp");
+      })
+      .catch((error) => {
+        console.log("Incorrect Credentials. Try again");
+      });
+  };
 
   return (
     <SafeAreaView
@@ -117,7 +140,7 @@ function LoginScreen({ navigation }) {
               inputStyles={{ color: "black", paddingTop: 20 }}
               customShowPasswordComponent={<Text>Show</Text>}
               customHidePasswordComponent={<Text>Hide</Text>}
-              onSubmit={() => navigation.navigate("HomeApp")}
+              onSubmit={fetchUser}
             />
           </View>
 
@@ -137,19 +160,8 @@ function LoginScreen({ navigation }) {
             justifyContent: "flex-end",
           }}
         >
-          <TouchableOpacity
-            style={styles.btn}
-            onPress={() => {
-              fetch("http://192.168.1.15/service")
-                .then((response) => response.json())
-                .then((json) => {
-                  console.warn(json);
-                })
-                .catch((error) => {
-                  console.error(error);
-                });
-            }}
-          >
+          {/* Login Button */}
+          <TouchableOpacity style={styles.btn} onPress={fetchUser}>
             <Text
               style={{ color: "white", textAlign: "center", fontWeight: "700" }}
             >
