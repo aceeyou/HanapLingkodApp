@@ -139,7 +139,16 @@ function LoginScreen({ navigation }) {
         >
           <TouchableOpacity
             style={styles.btn}
-            onPress={() => navigation.navigate("HomeApp")}
+            onPress={() => {
+              fetch("http://192.168.1.15/service")
+                .then((response) => response.json())
+                .then((json) => {
+                  console.warn(json);
+                })
+                .catch((error) => {
+                  console.error(error);
+                });
+            }}
           >
             <Text
               style={{ color: "white", textAlign: "center", fontWeight: "700" }}

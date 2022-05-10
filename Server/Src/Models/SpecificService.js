@@ -5,6 +5,7 @@ const specificServiceSchema = new mongoose.Schema({
   name: String,
   priceRange: String,
   workingHours: String,
+  category: String,
   workerId: [{ type: Schema.Types.ObjectId, ref: "User" }],
 });
 

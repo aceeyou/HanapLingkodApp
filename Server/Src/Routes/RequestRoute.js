@@ -30,7 +30,9 @@ router
     const newRequest = new Request({
       location: req.body.location,
       schedule: req.body.schedule,
+      time: req.body.time,
       status: "1",
+      time: req.body.time,
       recuiterId: req.params.user,
       workerId: req.body.workerId,
       serviceId: req.body.service,
@@ -74,6 +76,7 @@ router
       {
         location: req.body.location,
         schedule: req.body.schedule,
+        time: req.body.time,
         status: req.body.status,
       },
       function (err) {

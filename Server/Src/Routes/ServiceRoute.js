@@ -18,6 +18,7 @@ router
     const newService = new Service({
       name: req.body.name,
       priceRange: req.body.price,
+      category: req.body.category,
       workingHours: req.body.hours,
       workerId: req.body.user,
     });
@@ -58,6 +59,7 @@ router
       {
         name: req.body.name,
         priceRange: req.body.price,
+        category: req.body.category,
         workingHours: req.body.hours,
       },
       function (err) {

@@ -5,6 +5,7 @@ const requestSchema = new mongoose.Schema(
   {
     location: String,
     schedule: Date,
+    time: String, 
     status: String,
     recuiterId: { type: Schema.Types.ObjectId, ref: "User" },
     workerId: { type: Schema.Types.ObjectId, ref: "User" },
