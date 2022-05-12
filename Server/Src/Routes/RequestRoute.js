@@ -82,7 +82,9 @@ router
       function (err) {
         if (!err) {
           res.send("Edit Success");
-          createBook(req.params.id);
+          if (req.body.status === "2") {
+            createBook(req.params.id);
+          }
         } else {
           res.send(err);
         }
@@ -103,6 +105,8 @@ router
 function createBook(id) {
   console.log(id);
   const newBook = new Book({
+    rConfirm: "1",
+    wConfirm: "1",
     status: "1",
     OTP: "On the way",
     confirmPayment: "done",

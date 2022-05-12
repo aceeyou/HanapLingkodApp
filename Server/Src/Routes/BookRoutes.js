@@ -2,10 +2,10 @@ const express = require("express");
 const router = express.Router();
 const Book = require("../Models/Book");
 
-router.route("/book").get(function (req, res) {
+router.route("/book/:user").get(function (req, res) {
   Book.find(
     {
-      $or: [{ recuiterId: req.body.user }, { workerId: req.body.user }],
+      $or: [{ recuiterId: req.params.user }, { workerId: req.params.user }],
     },
     function (err, foundRequest) {
       if (!err) {
@@ -17,5 +17,42 @@ router.route("/book").get(function (req, res) {
   ).populate("requestId");
 });
 
-router.route("/route");
+router
+  .route("/book/:user/:id")
+  .get(function (req, res) {
+    Book.findOne({ _id: req.params.id }, function (err, found) {
+      if (found) {
+        res.send(found);
+      } else {
+        res.send("No such data found");
+      }
+    }).populate("requestId");
+  })
+  .put(function (req, res) {
+    Book.updateOne(
+      { _id: req.params.id },
+      {
+        rConfirm: req.body.rConfirm,
+        wConfirm: req.body.wConfirm,
+        status: req.body.status,
+      },
+      function (err) {
+        if (!err) {
+          res.send("Edit Success");
+        } else {
+          res.send(err);
+        }
+      }
+    );
+  })
+  .delete(function (req, res) {
+    Book.deleteOne({ _id: req.params.id }, function (err) {
+      if (!err) {
+        res.send("Deleted Successfully ");
+      } else {
+        res.send(err);
+      }
+    });
+  });
+
 module.exports = router;
