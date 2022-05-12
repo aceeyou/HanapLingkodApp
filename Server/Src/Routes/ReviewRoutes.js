@@ -9,7 +9,7 @@ router.route("/review/:reviewer/:reviewee").post(function (req, res) {
   const id = req.params.reviewee;
   const review = new Review({
     reviewee: id,
-    content: "try",
+    content: req.body.content,
     reviewer: req.params.reviewer,
   });
   review.save();
