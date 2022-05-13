@@ -109,6 +109,7 @@ function DisplayWorkers(props, { navigation }) {
         props.navigation.navigate("RequestFormScreen", {
           title: props.title,
           category: props.category,
+          name: props.name,
         });
       }}
     >

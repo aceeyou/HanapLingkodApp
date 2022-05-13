@@ -36,46 +36,6 @@ function ListOfWorkers({ navigation }) {
             dp={require("../assets/bg.png")}
             navigation={navigation}
           />
-          <DisplayWorkers
-            id=""
-            name="juan"
-            type="freelancer"
-            category="profession"
-            rating={4}
-            address={"Awitan, Daet"}
-            dp={require("../assets/bg2.png")}
-            navigation={navigation}
-          />
-          <DisplayWorkers
-            id=""
-            name="juan"
-            type="Enterprise"
-            category="profession"
-            rating={3}
-            address={"Awitan, Daet"}
-            dp={require("../assets/bg.png")}
-            navigation={navigation}
-          />
-          <DisplayWorkers
-            id=""
-            name="juan"
-            type="Enterprise"
-            category="profession"
-            rating={1}
-            address={"Awitan, Daet"}
-            dp={require("../assets/bg2.png")}
-            navigation={navigation}
-          />
-          <DisplayWorkers
-            id=""
-            name="juan"
-            type="freelancer"
-            category="type: profession"
-            rating={5}
-            address={"Awitan, Daet"}
-            dp={require("../assets/bg.png")}
-            navigation={navigation}
-          />
         </View>
       </ScrollView>
     </SafeAreaView>

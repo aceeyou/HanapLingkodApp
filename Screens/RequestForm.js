@@ -21,6 +21,8 @@ const windowHeight = Dimensions.get("window").height;
 export default function RequestForm(props, { navigation }) {
   const route = useRoute();
 
+  const objEmpt = {};
+
   const [chosenDate, setDate] = useState();
   const [chosenTime, setTime] = useState();
 
@@ -64,6 +66,13 @@ export default function RequestForm(props, { navigation }) {
     isLoaded: true,
     address: {},
   });
+
+  const serviceNameReset = () => {
+    setServiceData({
+      isLoaded: true,
+      data: {},
+    });
+  };
 
   const fetchUser = () => {
     fetch("http://" + global.IPaddress + ":3000/recuiter/" + global.userID, {
@@ -144,9 +153,12 @@ export default function RequestForm(props, { navigation }) {
     props.navigation.navigate("Requests");
   };
 
+  // fetchData();
+  // fetchUser();
+
   return (
     <SafeAreaView style={{ marginTop: StatusBar.currentHeight }}>
-      {serviceData.isLoaded ? fetchData() : null}
+      {serviceData.data ? fetchData() : null}
       {userData.isLoaded ? fetchUser() : null}
       <ScrollView style={{}}>
         <CustomHeader title="Request Form" navigation={navigation} />
@@ -159,13 +171,15 @@ export default function RequestForm(props, { navigation }) {
             </View>
 
             <View style={[styles.section, styles.textSpace]}>
-              <Text>Location:</Text>
+              <Text>Recruiter Address:</Text>
               <Text style={styles.txtData}>{userData.address.address}</Text>
             </View>
 
             <View style={[styles.section, styles.textSpace]}>
               <Text>Recruiter Name:</Text>
-              <Text style={styles.txtData}>Chubby Bunny Reyes</Text>
+              <Text style={styles.txtData}>
+                {userData.address.firstname} {userData.address.lastname}
+              </Text>
             </View>
 
             <Text style={{ marginTop: 10 }}>Date and Time</Text>
@@ -229,6 +243,11 @@ export default function RequestForm(props, { navigation }) {
                   style={{ width: 20, height: 20 }}
                 />
               </TouchableOpacity>
+            </View>
+
+            <View style={[styles.section, styles.textSpace]}>
+              <Text>Worker Name:</Text>
+              <Text style={styles.txtData}>Juan D. Cruz</Text>
             </View>
 
             {/* See worker detail Button */}

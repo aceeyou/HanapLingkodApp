@@ -415,8 +415,6 @@ function CreateAccountForm_Worker(props, { navigation }) {
                 alignItems: "center",
               }}
               onPress={() => {
-                let formData = new FormData();
-
                 let localUri = image;
                 let filename = localUri.split("/").pop();
 
@@ -425,6 +423,7 @@ function CreateAccountForm_Worker(props, { navigation }) {
                 let type = match ? `image/${match[1]}` : `image`;
 
                 // Upload the image using the fetch and FormData APIs
+                let formData = new FormData();
 
                 // Assume "photo" is the name of the form field the server expects
                 formData.append("govId", {
@@ -457,7 +456,7 @@ function CreateAccountForm_Worker(props, { navigation }) {
                     props.navigation.navigate("CAF_Worker_ServiceSelect");
                   })
                   .catch((error) => {
-                    console.log(error);
+                    console.log("All fields should be filled.");
                   });
               }}
             >

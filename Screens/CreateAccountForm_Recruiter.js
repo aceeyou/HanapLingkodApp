@@ -25,7 +25,8 @@ function CreateAccountForm_Recruiter({ navigation }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
-  const [fullname, setFullname] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
   const [birthdate, setbirthdate] = useState("");
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
@@ -84,13 +85,13 @@ function CreateAccountForm_Recruiter({ navigation }) {
             <View style={{ marginBottom: 20 }}>
               <FloatingLabelInput
                 label={"First Name"}
-                value={fullname}
+                value={firstname}
                 keyboardType="default"
                 returnKeyType="next"
                 onSubmitEditing={() => ref_lastname.current.focus()}
                 ref={ref_firstname}
                 labelStyle={{ colorFocused: "#000" }}
-                onChangeText={(value) => setFullname(value)}
+                onChangeText={(value) => setFirstname(value)}
                 containerStyles={{
                   borderWidth: 0,
                   borderBottomWidth: 1,
@@ -109,13 +110,13 @@ function CreateAccountForm_Recruiter({ navigation }) {
             <View style={{ marginBottom: 20 }}>
               <FloatingLabelInput
                 label={"Last Name"}
-                value={fullname}
+                value={lastname}
                 keyboardType="default"
                 returnKeyType="next"
                 onSubmitEditing={() => ref_bday.current.focus()}
                 ref={ref_lastname}
                 labelStyle={{ colorFocused: "#000" }}
-                onChangeText={(value) => setFullname(value)}
+                onChangeText={(value) => setLastname(value)}
                 containerStyles={{
                   borderWidth: 0,
                   borderBottomWidth: 1,
@@ -353,9 +354,24 @@ function CreateAccountForm_Recruiter({ navigation }) {
             <View style={{ marginTop: 15 }}>
               <Text>Government-issued ID(s):</Text>
               <ImageUploadButton changeWord={(image) => setImage(image)} />
-              {/* <Image source={uri(image)} /> */}
+              {/* <Image source={{ uri: image }} /> */}
             </View>
           </View>
+
+          {image ? (
+            <View
+              style={{
+                paddingHorizontal: 30,
+                paddingTop: 0,
+                alignItems: "center",
+              }}
+            >
+              <Image
+                source={{ uri: image }}
+                style={{ width: 350, height: 350 }}
+              />
+            </View>
+          ) : null}
 
           {/* SIGN IN & CREATE NEW ACCOUNT BUTTON */}
           <View style={{ width: "100%", alignItems: "center", paddingTop: 40 }}>
@@ -396,6 +412,9 @@ function CreateAccountForm_Recruiter({ navigation }) {
                   headers: {
                     "content-type": "multipart/form-data",
                   },
+                }).then(() => {
+                  alert("Account created");
+                  props.navigation.navigate("CAF_Worker_ServiceSelect");
                 });
               }}
             >
