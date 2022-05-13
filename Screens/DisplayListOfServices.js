@@ -36,7 +36,9 @@ function DisplayListOfServices(props, { navigation }) {
               category="Cleaning"
               priceRange="P300 - P700"
               avgWT=" 3 - 6 hours"
-              image={require("../assets/bedroom.jpg")}
+              image={{
+                uri: "https://media.istockphoto.com/photos/new-modern-living-room-with-kitchen-new-home-interior-photography-picture-id1031043754?k=20&m=1031043754&s=612x612&w=0&h=YH-fz0uS4ehW8WhTglUkS4eohtv9_KILyRTDm_1hPkc=",
+              }}
               navigation={props.navigation}
             />
             <DisplayServices_ListItem
@@ -44,7 +46,9 @@ function DisplayListOfServices(props, { navigation }) {
               category="Cleaning"
               priceRange="P300 - P700"
               avgWT=" 3 - 6 hours"
-              image={require("../assets/bathroom.jpg")}
+              image={{
+                uri: "https://media.angi.com/s3fs-public/carpet-cleaner-removing-dirt.jpg",
+              }}
               navigation={props.navigation}
             />
             <DisplayServices_ListItem
@@ -52,7 +56,9 @@ function DisplayListOfServices(props, { navigation }) {
               category="Cleaning"
               priceRange="P300 - P700"
               avgWT=" 3 - 6 hours"
-              image={require("../assets/aircon-window.jpg")}
+              image={{
+                uri: "https://www.dalworth.com/images/disinfecting-service/disinfecting-solutions-image.jpg",
+              }}
               navigation={props.navigation}
             />
             <DisplayServices_ListItem
@@ -60,7 +66,9 @@ function DisplayListOfServices(props, { navigation }) {
               category="Cleaning"
               priceRange="P300 - P700"
               avgWT=" 3 - 6 hours"
-              image={require("../assets/aircon-split.jpg")}
+              image={{
+                uri: "https://smileservelive.arcadier.io/images/categories/aircon-cleaning-80ax4ulb7wd8msn720lpma5dp.jpg",
+              }}
               navigation={props.navigation}
             />
           </View>

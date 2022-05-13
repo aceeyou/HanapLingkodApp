@@ -22,8 +22,8 @@ class Worker_ServiceOfferedSelection extends Component {
     super(props);
     this.state = {
       refresh: false,
-      selectedService: {},
-      selectedSubCat: {},
+      selectedService: "",
+      selectedSubCat: "",
     };
   }
 
@@ -36,7 +36,7 @@ class Worker_ServiceOfferedSelection extends Component {
   setService = (service) => {
     this.setState({ selectedService: service });
     this.arrayOfServices[0] = service;
-    console.log("sService: ", this.state.selectedService);
+    console.log("selectedService: ", this.state.selectedService);
   };
 
   setSubCat = (service) => {
@@ -385,6 +385,29 @@ class Worker_ServiceOfferedSelection extends Component {
             onPress={() => {
               alert(this.state.selectedService);
               alert(this.state.selectedSubCat);
+
+              let formData = new FormData();
+
+              formData.append("category", this.arrayOfServices);
+              // formData.append("lastname", lastname);
+
+              fetch(
+                "http://" + global.IPaddress + ":3000/worker/" + global.userID,
+                {
+                  method: "POST",
+                  body: formData,
+                  headers: {
+                    "content-type": "multipart/form-data",
+                  },
+                }
+              )
+                .then(() => {
+                  alert("Account created");
+                  // props.navigation.navigate("LoginStack");
+                })
+                .catch((error) => {
+                  console.log("All fields should be filled.");
+                });
             }}
           >
             <Text style={{ color: "#fff", fontWeight: "bold" }}>

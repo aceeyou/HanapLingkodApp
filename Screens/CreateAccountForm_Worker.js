@@ -352,8 +352,7 @@ function CreateAccountForm_Worker(props, { navigation }) {
                 value={confirmpassword}
                 ref={ref_confirmpass}
                 keyboardType="default"
-                returnKeyType="next"
-                onSubmitEditing={() => ref_fullname.current.focus()}
+                returnKeyType="submit"
                 onChangeText={(value) => setConfirmPassword(value)}
                 containerStyles={{
                   borderWidth: 0,
@@ -453,7 +452,29 @@ function CreateAccountForm_Worker(props, { navigation }) {
                 })
                   .then(() => {
                     alert("Account created");
-                    props.navigation.navigate("CAF_Worker_ServiceSelect");
+
+                    fetch("http://" + global.IPaddress + ":3000/login", {
+                      method: "POST",
+                      body: JSON.stringify({
+                        username: username,
+                        password: password,
+                      }),
+                      headers: {
+                        "content-type": "application/json",
+                      },
+                    })
+                      .then((response) => response.json())
+                      .then((data) => {
+                        console.log("new account: ", data._id);
+                        global.userID = data._id;
+                        console.log(global.userID);
+
+                        // navigation.navigate("HomeApp");
+                        props.navigation.navigate("CAF_Worker_ServiceSelect");
+                      })
+                      .catch((error) => {
+                        alert("Incorrect Credentials. Try again");
+                      });
                   })
                   .catch((error) => {
                     console.log("All fields should be filled.");

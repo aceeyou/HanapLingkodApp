@@ -105,6 +105,7 @@ function LoginScreen({ navigation }) {
             <FloatingLabelInput
               label={"Username"}
               value={username}
+              autoCapitalize={false}
               keyboarType="text"
               returnKeyType="next"
               onSubmitEditing={() => ref_passwInput.current.focus()}
