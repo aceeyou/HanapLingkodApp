@@ -103,12 +103,12 @@ router
   });
 
 function createBook(id) {
-  console.log(id);
+  const OTP = Math.random().toString(36).substring(2, 7);
   const newBook = new Book({
     rConfirm: "1",
     wConfirm: "1",
     status: "1",
-    OTP: "On the way",
+    OTP: OTP,
     confirmPayment: "done",
     requestId: id,
   });

@@ -39,6 +39,7 @@ router
       function (err) {
         if (!err) {
           res.send("Edit Success");
+          contract_close(req.params.id);
         } else {
           res.send(err);
         }
@@ -54,5 +55,18 @@ router
       }
     });
   });
+
+async function contract_close(id) {
+  let status = "1";
+  const contract = await Book.findById({ _id: id }).exec();
+  if (contract.rConfirm === "2" && contract.wConfirm === "2") {
+    await Book.updateOne(
+      { _id: id },
+      {
+        status: "ContractClose",
+      }
+    );
+  }
+}
 
 module.exports = router;
