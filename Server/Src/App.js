@@ -34,7 +34,6 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 app.post("/signup/worker", upload.single("govId"), (req, res) => {
-  console.log(req.body);
   const worker = new User({
     username: req.body.username,
     password: req.body.password,
@@ -53,15 +52,16 @@ app.post("/signup/worker", upload.single("govId"), (req, res) => {
   });
   worker.save((err) => {
     if (err) {
-      res.json({ message: err.message, type: "danger" });
+      console.log(err);
     } else {
+      console.log("asd");
       res.send("Worker account created");
     }
   });
 });
 
 app.post("/signup/Recruiter", upload.single("govId"), (req, res) => {
-  console.log(req.body);
+  console.log(req);
   const recuiter = new User({
     username: req.body.username,
     password: req.body.password,
@@ -81,6 +81,7 @@ app.post("/signup/Recruiter", upload.single("govId"), (req, res) => {
     if (err) {
       res.json({ message: err.message, type: "danger" });
     } else {
+      console.log();
       res.send("Recuiter account created");
     }
   });

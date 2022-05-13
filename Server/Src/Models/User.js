@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
   firstname: String,
   lastname: String,
   birthday: Date,
-  phoneNumber: Number,
+  phoneNumber: String,
   age: Number,
   sex: String,
   category: [String],
