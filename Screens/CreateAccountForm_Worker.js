@@ -10,6 +10,7 @@ import {
   ScrollView,
 } from "react-native";
 
+import { Picker } from "@react-native-picker/picker";
 import { FloatingLabelInput } from "react-native-floating-label-input";
 import "../global/Global";
 
@@ -32,6 +33,14 @@ function CreateAccountForm_Worker(props, { navigation }) {
   const [image, setImage] = useState("");
   // shows and hides the text of the password input
   const [show, setShow] = useState(false);
+
+  const [selectedCategory, setCategory] = useState("");
+  const [selectedSubCategory, setSubCategory] = useState("");
+
+  const selectCat = (data) => {
+    setCategory(data);
+    setSubCategory("");
+  };
 
   ref_username = useRef();
   ref_pass = useRef();
@@ -372,8 +381,219 @@ function CreateAccountForm_Worker(props, { navigation }) {
               />
             </View>
 
+            {/* Category Selected */}
+
+            <View>
+              <Text style={{ marginTop: 20, marginBottom: 20 }}>
+                Select a Service Category to continue:
+              </Text>
+            </View>
+
+            <View
+              style={{
+                borderWidth: 1,
+                borderColor: "black",
+                paddingHorizontal: 10,
+                borderRadius: 8,
+              }}
+            >
+              <Picker
+                selectedValue={selectedCategory}
+                onValueChange={selectCat}
+                style={{ height: 50, width: "100%" }}
+              >
+                <Picker.Item label="Service Offered" value="" enabled={false} />
+                <Picker.Item label="Cleaning" value="Cleaning" />
+                <Picker.Item label="Plumbing" value="Plumbing" />
+                <Picker.Item label="Mounting" value="Mounting" />
+                <Picker.Item label="Electrical" value="Electrical" />
+                <Picker.Item label="Errand" value="Errand" />
+              </Picker>
+            </View>
+
+            {/* Sub-Category Select */}
+            <View>
+              {/* shows another dropdown when the user selected something */}
+              {/* CLEANING */}
+              {selectedCategory === "Cleaning" ? (
+                <View
+                  style={{
+                    marginTop: 30,
+                    paddingHorizontal: 0,
+                  }}
+                >
+                  <Text>User Selected Cleaning</Text>
+                  <View
+                    style={{ borderBottomWidth: 1, borderBottomColor: "black" }}
+                  >
+                    <Picker
+                      selectedValue={selectedSubCategory}
+                      onValueChange={setSubCategory}
+                      style={{ height: 50, width: "100%" }}
+                    >
+                      <Picker.Item
+                        label="Cleaning Services:"
+                        value=""
+                        enabled={false}
+                      />
+                      <Picker.Item
+                        label="House Cleaning"
+                        value="House Cleaning"
+                      />
+                      <Picker.Item
+                        label="Carpet Cleaning"
+                        value="Carpet Cleaning"
+                      />
+                      <Picker.Item
+                        label="Disinfection Cleaning"
+                        value="Disinfection Cleaning"
+                      />
+                      <Picker.Item
+                        label="Aircon Cleaning"
+                        value="Aircon Cleaning"
+                      />
+                    </Picker>
+                  </View>
+                </View>
+              ) : null}
+
+              {/* PLUMBING */}
+              {selectedCategory === "Plumbing" ? (
+                <View
+                  style={{
+                    marginTop: 30,
+                    paddingHorizontal: 0,
+                  }}
+                >
+                  <Text>User Selected Plumbing</Text>
+                  <View
+                    style={{ borderBottomWidth: 1, borderBottomColor: "black" }}
+                  >
+                    <Picker
+                      selectedValue={selectedSubCategory}
+                      onValueChange={setSubCategory}
+                      style={{ height: 50, width: "100%" }}
+                    >
+                      <Picker.Item label="Plumbing Services:" value="" />
+                      <Picker.Item
+                        label="Plumbing Installation"
+                        value="Plumbing Installation"
+                      />
+                      <Picker.Item
+                        label="Plumbing Repair"
+                        value="Plumbing Repair"
+                      />
+                      <Picker.Item
+                        label="Bidet Installation"
+                        value="Bidet Installation"
+                      />
+                      <Picker.Item
+                        label="Water Heater Installation"
+                        value="Water Heater Installation"
+                      />
+                      <Picker.Item
+                        label="Water Heater Repair"
+                        value="Water Heater Repair"
+                      />
+                    </Picker>
+                  </View>
+                </View>
+              ) : null}
+
+              {/* MOUNTING */}
+              {selectedCategory === "Mounting" ? (
+                <View style={{ marginTop: 30, paddingHorizontal: 0 }}>
+                  <Text>User Selected Mounting</Text>
+                  <View
+                    style={{ borderBottomWidth: 1, borderBottomColor: "black" }}
+                  >
+                    <Picker
+                      selectedValue={selectedSubCategory}
+                      onValueChange={setSubCategory}
+                      style={{ height: 50, width: "100%" }}
+                    >
+                      <Picker.Item
+                        label="Mounting Services:"
+                        value=""
+                        enabled={false}
+                      />
+                      <Picker.Item label="TV Mounting" value="TV Mounting" />
+                      <Picker.Item
+                        label="Aircon Installation"
+                        value="Aircon Installation"
+                      />
+                    </Picker>
+                  </View>
+                </View>
+              ) : null}
+
+              {/* ELECTRICAL */}
+              {selectedCategory === "Electrical" ? (
+                <View style={{ marginTop: 30, paddingHorizontal: 0 }}>
+                  <Text>User Selected Electrical</Text>
+                  <View
+                    style={{ borderBottomWidth: 1, borderBottomColor: "black" }}
+                  >
+                    <Picker
+                      selectedValue={selectedSubCategory}
+                      onValueChange={setSubCategory}
+                      style={{ height: 50, width: "100%" }}
+                    >
+                      <Picker.Item
+                        label="Electrical Services:"
+                        value=""
+                        enabled={false}
+                      />
+                      <Picker.Item
+                        label="Aircon Repair"
+                        value="Aircon Repair"
+                      />
+                      <Picker.Item
+                        label="Lighting Repair"
+                        value="Lighting Repair"
+                      />
+                      <Picker.Item
+                        label="Lighting Installation"
+                        value="Lighting Installation"
+                      />
+                    </Picker>
+                  </View>
+                </View>
+              ) : null}
+
+              {/* ERRAND */}
+              {selectedCategory === "Errand" ? (
+                <View style={{ marginTop: 30, paddingHorizontal: 0 }}>
+                  <Text>User Selected Errand</Text>
+                  <View
+                    style={{ borderBottomWidth: 1, borderBottomColor: "black" }}
+                  >
+                    <Picker
+                      selectedValue={selectedSubCategory}
+                      onValueChange={setSubCategory}
+                      style={{ height: 50, width: "100%" }}
+                    >
+                      <Picker.Item
+                        label="Errand Services:"
+                        value=""
+                        enabled={false}
+                      />
+                      <Picker.Item
+                        label="Grocery Shopping"
+                        value="Grocery Shopping"
+                      />
+                      <Picker.Item
+                        label="Personal Shopping"
+                        value="Personal Shopping"
+                      />
+                    </Picker>
+                  </View>
+                </View>
+              ) : null}
+            </View>
+
             {/* BUTTON FOR PHOTO ATTACHMENTS */}
-            <View style={{ marginTop: 15 }}>
+            <View style={{ marginTop: 50 }}>
               <Text>License / Certificates (Optional):</Text>
               {/* <TouchableOpacity style={{backgroundColor: '#c4c4c4', paddingVertical: 8, alignItems: 'center', marginTop: 15, borderRadius: 5}}>
                             <Text style={{fontWeight: '700'}}>Attach photos here</Text>
@@ -442,6 +662,7 @@ function CreateAccountForm_Worker(props, { navigation }) {
                 formData.append("username", username);
                 formData.append("password", password);
                 formData.append("GovId", filename);
+                formData.append("category", selectedSubCategory);
 
                 fetch("http://" + global.IPaddress + ":3000/signup/worker", {
                   method: "POST",
@@ -452,29 +673,31 @@ function CreateAccountForm_Worker(props, { navigation }) {
                 })
                   .then(() => {
                     alert("Account created");
+                    props.navigation.navigate("LoginStack");
 
-                    fetch("http://" + global.IPaddress + ":3000/login", {
-                      method: "POST",
-                      body: JSON.stringify({
-                        username: username,
-                        password: password,
-                      }),
-                      headers: {
-                        "content-type": "application/json",
-                      },
-                    })
-                      .then((response) => response.json())
-                      .then((data) => {
-                        console.log("new account: ", data._id);
-                        global.workerID = data._id;
-                        console.log(global.userID);
+                    // fetch("http://" + global.IPaddress + ":3000/login", {
+                    //   method: "POST",
+                    //   body: JSON.stringify({
+                    //     username: username,
+                    //     password: password,
+                    //   }),
+                    //   headers: {
+                    //     "content-type": "application/json",
+                    //   },
+                    // })
+                    //   .then((response) => response.json())
+                    //   .then((data) => {
+                    //     console.log("new account: ", data._id);
+                    //     // global.workerID = data._id;
+                    //     // console.log(global.userID);
 
-                        // navigation.navigate("HomeApp");
-                        props.navigation.navigate("CAF_Worker_ServiceSelect");
-                      })
-                      .catch((error) => {
-                        alert("Incorrect Credentials. Try again");
-                      });
+                    //     alert("Account Created");
+                    //     navigation.navigate("LoginStack");
+                    //     // props.navigation.navigate("CAF_Worker_ServiceSelect");
+                    //   })
+                    //   .catch((error) => {
+                    //     alert("Incorrect Credentials. Try again");
+                    //   });
                   })
                   .catch((error) => {
                     console.log("All fields should be filled.");

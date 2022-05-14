@@ -10,8 +10,7 @@ import {
   StatusBar,
   FlatList,
 } from "react-native";
-import { useRoute } from "@react-navigation/native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import "../global/Global";
 import CustomHeader from "../components/CustomerHeader";
 import DisplayWorkers from "../components/DisplayWorkers";
@@ -29,7 +28,16 @@ export default class ListOfAllWorkers extends React.Component {
     };
   }
 
+  getRouteItems() {
+    const route = useRoute();
+    const w = route.params.title;
+    return w;
+    this.setState({ selectedWork: route.params.title });
+    console.log("func: ", this.state.selectedWork);
+  }
+
   componentMount() {
+    // const route = useRoute();
     fetch("http://" + global.IPaddress + ":3000/worker", {
       method: "GET",
       headers: {
@@ -38,12 +46,13 @@ export default class ListOfAllWorkers extends React.Component {
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        // console.log(responseJson);
+        console.log(responseJson);
+        console.log(global.selectedWorkSubCat);
         this.setState({
           isLoaded: false,
           data: responseJson,
         });
-        console.log(responseJson);
+        console.log(this.state.data);
       })
       .catch((error) => {
         console.log(error);
@@ -94,7 +103,7 @@ export default class ListOfAllWorkers extends React.Component {
                     >
                       <Image
                         source={{
-                          uri: "https://s.yimg.com/ny/api/res/1.2/b0utpiLK707RZGImLQI7PQ--/YXBwaWQ9aGlnaGxhbmRlcjt3PTcwNTtoPTEwOTc-/https://s.yimg.com/os/289/2013/01/29/Coco-Martin-as-Juan-dela-Cruz-jpg_081130.jpg",
+                          uri: "https://pbs.twimg.com/media/EXayM80U4AAst8O.jpg",
                         }}
                         style={{ width: "100%", height: "100%" }}
                       />
@@ -105,8 +114,7 @@ export default class ListOfAllWorkers extends React.Component {
                       </Text>
 
                       <Text style={{ color: "#434544", fontSize: 13 }}>
-                        {/* {item.name} */}
-                        Category
+                        {item.category}
                       </Text>
 
                       <View
@@ -144,7 +152,7 @@ export default class ListOfAllWorkers extends React.Component {
                         }}
                       >
                         <Image
-                          source={require("../assets/icons/location2.png")}
+                          source={require("../assets/icons/location.png")}
                           style={{
                             width: 14,
                             height: 14,

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Text, View, Image, TouchableOpacity, StyleSheet } from "react-native";
 
+import "../global/Global";
+
 function DisplayServices_ListItem(props) {
   //   const [serviceName, setServiceName] = useState("");
   //   const [serviceCategory, setCategory] = useState("");
@@ -13,6 +15,7 @@ function DisplayServices_ListItem(props) {
     <TouchableOpacity
       style={styles.btn_container}
       onPress={() => {
+        global.selectedWorkSubCat = props.title;
         props.navigation.navigate("ListOfAllWorkers", {
           title: props.title,
           category: props.category,

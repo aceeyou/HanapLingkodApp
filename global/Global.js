@@ -9,3 +9,4 @@ global.selectedWorker = "";
 
 // new worker account
 global.workerID = "";
+global.selectedWorkSubCat = "";

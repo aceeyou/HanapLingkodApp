@@ -400,7 +400,7 @@ class Worker_ServiceOfferedSelection extends Component {
                 {
                   method: "PATCH",
                   body: {
-                    category: this.state.selectedSubCat,
+                    category: toString(this.state.selectedSubCat),
                   },
                   headers: {
                     "content-type": "multipart/form-data",

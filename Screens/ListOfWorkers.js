@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   TouchableOpacity,
   Text,
@@ -10,18 +10,34 @@ import {
   StatusBar,
   FlatList,
 } from "react-native";
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import "../global/Global";
 import CustomHeader from "../components/CustomerHeader";
 import DisplayWorkers from "../components/DisplayWorkers";
 
-function ListOfWorkers({ navigation }) {
-  // use route.params.title to know which services to display
-  const route = useRoute();
+// function nav() {
+//   return (navigation = useNavigation());
+// }
 
-  const [data, setData] = useState([]);
-  const [isLoaded, setLoaded] = useState(true);
+export default class ListOfWorkers extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoaded: true,
+      data: [],
+    };
+  }
 
-  const componentMount = () => {
+  getRouteItems() {
+    const route = useRoute();
+    const w = route.params.title;
+    return w;
+    this.setState({ selectedWork: route.params.title });
+    console.log("func: ", this.state.selectedWork);
+  }
+
+  componentMount() {
+    // const route = useRoute();
     fetch("http://" + global.IPaddress + ":3000/worker", {
       method: "GET",
       headers: {
@@ -30,58 +46,148 @@ function ListOfWorkers({ navigation }) {
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        // console.log(responseJson);
-        // this.setState({
-        //   isLoaded: false,
-        //   data: responseJson,
-        // });
-
-        setData([responseJson]);
-        setLoaded(false);
-
         console.log(responseJson);
-        console.log(isLoaded);
+        console.log(global.selectedWorkSubCat);
+        this.setState({
+          isLoaded: false,
+          data: responseJson,
+        });
+        console.log(this.state.data);
       })
       .catch((error) => {
         console.log(error);
       });
-  };
+  }
 
-  return (
-    <SafeAreaView style={styles.container}>
-      <CustomHeader title="Available Workers" navigation={navigation} />
+  render() {
+    let { data } = this.state;
+    // let { navigation } = useNavigation();
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={{ flex: 1 }}>
+          <CustomHeader title="Available Workers" />
+          <View style={{ marginBottom: 15 }}>
+            <Text style={styles.txtHeader}>
+              Below are the list of all workers
+            </Text>
+          </View>
+          {this.state.isLoaded ? this.componentMount() : null}
 
-      <View>
-        <Text style={styles.txtHeader}>
-          Below are the list of workers for {route.params.title} services
-        </Text>
-      </View>
+          <View
+            style={{
+              flex: 1,
+              marginTop: 0,
+            }}
+          >
+            <FlatList
+              ListFooterComponent={<View style={{ height: 60 }} />}
+              keyExtractor={(item) => item._id}
+              data={data}
+              renderItem={({ item }) => (
+                <View style={styles.btnView}>
+                  <TouchableOpacity
+                    style={styles.btn}
+                    onPress={() => {
+                      // alert(item._id);
+                      global.selectedWorker = item._id;
+                      this.props.navigation.navigate("RequestFormScreen");
+                    }}
+                  >
+                    <View
+                      style={{
+                        flex: 1.1,
+                        alignItems: "center",
+                        justifyContent: "center",
+                        backgroundColor: "skyblue",
+                      }}
+                    >
+                      <Image
+                        source={{
+                          uri: "https://pbs.twimg.com/media/EXayM80U4AAst8O.jpg",
+                        }}
+                        style={{ width: "100%", height: "100%" }}
+                      />
+                    </View>
+                    <View style={{ flex: 2, padding: 15 }}>
+                      <Text style={{ fontSize: 16 }}>
+                        {item.firstname} {item.lastname}
+                      </Text>
 
-      {isLoaded ? componentMount : null}
-      <View style={styles.viewContainer}>
-        <DisplayWorkers
-          id=""
-          name="juan"
-          type="Enterprise"
-          category="profession"
-          rating={5}
-          address={"Awitan, Daet"}
-          dp={require("../assets/bg.png")}
-          navigation={navigation}
-        />
-      </View>
-    </SafeAreaView>
-  );
+                      <Text style={{ color: "#434544", fontSize: 13 }}>
+                        {item.category}
+                      </Text>
+
+                      <View
+                        style={{
+                          marginTop: 10,
+                          flexDirection: "row",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Text
+                          style={{
+                            fontSize: 12,
+                            color: "#434544",
+                            marginRight: 5,
+                          }}
+                        >
+                          {/* {item.priceRange} */}
+                          4.5
+                        </Text>
+                        <Image
+                          source={require("../assets/icons/star-filled.png")}
+                          style={{ width: 14, height: 14, marginRight: 3 }}
+                        />
+                        <Image
+                          source={require("../assets/icons/star-filled.png")}
+                          style={{ width: 14, height: 14, marginRight: 3 }}
+                        />
+                      </View>
+
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          marginTop: 3,
+                        }}
+                      >
+                        <Image
+                          source={require("../assets/icons/location.png")}
+                          style={{
+                            width: 14,
+                            height: 14,
+                            marginRight: 5,
+                            alignItems: "center",
+                          }}
+                        />
+                        <Text
+                          style={{ fontSize: 12, marginTop: 0 }}
+                          numberOfLines={1}
+                          ellipsizeMode="tail"
+                        >
+                          {item.address}
+                        </Text>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+              )}
+            />
+          </View>
+        </View>
+      </SafeAreaView>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     marginTop: StatusBar.currentHeight,
   },
   viewContainer: {
     paddingHorizontal: 30,
     marginTop: 30,
-    marginBottom: 50,
   },
   txtHeader: {
     paddingHorizontal: 50,
@@ -93,6 +199,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     paddingTop: 15,
   },
+  btn: {
+    backgroundColor: "#dddcdc",
+    borderRadius: 7,
+    overflow: "hidden",
+    flexDirection: "row",
+  },
 });
-
-export default ListOfWorkers;
