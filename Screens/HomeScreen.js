@@ -8,6 +8,9 @@ import {
   TouchableOpacity,
   StatusBar,
   ScrollView,
+  TouchableNativeFeedback,
+  TouchableHighlight,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { set } from "react-native-reanimated";
 import CategoryButton from "../components/CategoryButton";
@@ -107,30 +110,6 @@ function HomeScreen({ navigation }) {
           </TouchableOpacity>
         </View>
 
-        {/* adds a button to add a service (worker side) */}
-        {/* {global.userRole === "worker" ? (
-          <View style={{ paddingHorizontal: 40 }}>
-            <View style={{ elevation: 6, shadowColor: "#2387fc" }}>
-              <TouchableOpacity
-                style={{
-                  alignItems: "center",
-                  backgroundColor: "#2387fc",
-                  paddingVertical: 10,
-                  marginBottom: 35,
-                  borderRadius: 8,
-                }}
-                onPress={() => {
-                  alert("hi");
-                }}
-              >
-                <Text style={{ fontWeight: "bold", color: "#fff" }}>
-                  Add A Service
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        ) : null} */}
-
         {/* Button for every category of avialable jobs */}
         <View style={styles.categoryContainer}>
           <CategoryButton
@@ -198,6 +177,7 @@ const styles = StyleSheet.create({
     margin: 5,
     alignItems: "center",
     borderRadius: 6,
+    elevation: 6,
   },
   btnRequests: {
     marginRight: 11,
@@ -220,11 +200,40 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     padding: 40,
     paddingBottom: 50,
-    borderTopRightRadius: 30,
-    borderTopLeftRadius: 30,
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
     //   backgroundColor: '#F8F3F3'
-    backgroundColor: "#2387fc",
+    backgroundColor: "#2080FF",
+    elevation: 5,
   },
 });
 
 export default HomeScreen;
+
+{
+  /* adds a button to add a service (worker side) */
+}
+{
+  /* {global.userRole === "worker" ? (
+          <View style={{ paddingHorizontal: 40 }}>
+            <View style={{ elevation: 6, shadowColor: "#2387fc" }}>
+              <TouchableOpacity
+                style={{
+                  alignItems: "center",
+                  backgroundColor: "#2387fc",
+                  paddingVertical: 10,
+                  marginBottom: 35,
+                  borderRadius: 8,
+                }}
+                onPress={() => {
+                  alert("hi");
+                }}
+              >
+                <Text style={{ fontWeight: "bold", color: "#fff" }}>
+                  Add A Service
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        ) : null} */
+}

@@ -40,6 +40,7 @@ import RequestDetailScreen from "./Screens/RequestDetailScreen";
 
 import "./global/Global";
 import { useNavigation } from "@react-navigation/native";
+import WorkerProfile from "./Screens/WorkerProfile";
 
 function CustomDrawerContent(props) {
   // const navigation = useNavigation();
@@ -201,18 +202,33 @@ function HomeStack() {
         options={navOptionHandler}
       />
       <StackHome.Screen
+        name="ListOfWorkers"
+        component={ListOfWorkers}
+        options={navOptionHandler}
+      />
+      <StackHome.Screen
         name="UserProfileScreen"
         component={UserProfilePage}
         options={navOptionHandler}
       />
       <StackHome.Screen
-        name="RequestsScreen"
+        name="RequestFormHome"
+        component={RequestForm}
+        options={navOptionHandler}
+      />
+      <StackHome.Screen
+        name="RequestsScreenHome"
         component={MyRequestsScreen}
         options={navOptionHandler}
       />
       <StackHome.Screen
         name="RequestDetailScreen"
         component={RequestDetailScreen}
+        options={navOptionHandler}
+      />
+      <StackHome.Screen
+        name="WorkerProfilePageHome"
+        component={WorkerProfile}
         options={navOptionHandler}
       />
     </StackHome.Navigator>
@@ -349,6 +365,11 @@ function TabNivagator() {
       <Tab.Screen
         name="RequestDetailScreen"
         component={RequestDetailScreen}
+        options={hiddenTabNavBtn}
+      />
+      <Tab.Screen
+        name="WorkerProfilePage"
+        component={WorkerProfile}
         options={hiddenTabNavBtn}
       />
     </Tab.Navigator>

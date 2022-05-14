@@ -28,13 +28,17 @@ function Create_AccountTypeScreen({ navigation }) {
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={styles.btn}
+          style={[styles.btn, styles.btnWorker]}
           onPress={() => navigation.navigate("CAF_Worker")}
         >
           <Image source={require("../assets/bg2.png")} style={styles.image} />
           <View style={{ flex: 1 }}>
-            <Text style={styles.header}>Worker Account</Text>
-            <Text>For individuals who offer on-demand home services</Text>
+            <Text style={[styles.header, styles.headerWhite]}>
+              Worker Account
+            </Text>
+            <Text style={[styles.headerWhite]}>
+              For individuals who offer on-demand home services
+            </Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -51,6 +55,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 20,
     marginBottom: 20,
+    elevation: 5,
+    shadowColor: "#C5C5C5",
+  },
+  btnWorker: {
+    backgroundColor: "#2080FF",
+  },
+  headerWhite: {
+    color: "#fff",
   },
   image: {
     width: 70,

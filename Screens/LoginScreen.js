@@ -193,7 +193,7 @@ function LoginScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   btn: {
-    backgroundColor: "#338CF4",
+    backgroundColor: "#2080FF",
     padding: 10,
     width: "90%",
     marginBottom: 20,

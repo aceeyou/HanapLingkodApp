@@ -58,7 +58,7 @@ export default function RequestForm(props, { navigation }) {
   };
 
   // fetch and load data with global.serviceSelectedID
-  const [serviceData, setServiceData] = useState({
+  const [workerData, setWorkerData] = useState({
     isLoaded: true,
     data: {},
   });
@@ -68,13 +68,14 @@ export default function RequestForm(props, { navigation }) {
   });
 
   const serviceNameReset = () => {
-    setServiceData({
+    setWorkerData({
       isLoaded: true,
       data: {},
     });
   };
 
   const fetchUser = () => {
+    console.log(global.userID);
     fetch("http://" + global.IPaddress + ":3000/recuiter/" + global.userID, {
       method: "GET",
       headers: {
@@ -96,10 +97,7 @@ export default function RequestForm(props, { navigation }) {
 
   const fetchData = () => {
     fetch(
-      "http://" +
-        global.IPaddress +
-        ":3000/service/" +
-        global.selectedServiceID,
+      "http://" + global.IPaddress + ":3000/worker/" + global.selectedWorker,
       {
         method: "GET",
         headers: {
@@ -110,7 +108,7 @@ export default function RequestForm(props, { navigation }) {
       .then((response) => response.json())
       .then((responseJson) => {
         // console.log(responseJson);
-        setServiceData({
+        setWorkerData({
           isLoaded: false,
           data: responseJson,
         });
@@ -140,7 +138,7 @@ export default function RequestForm(props, { navigation }) {
       .then((response) => response.json())
       .then((responseJson) => {
         // console.log(responseJson);
-        setServiceData({
+        setWorkerData({
           isLoaded: false,
           data: responseJson,
         });
@@ -153,28 +151,38 @@ export default function RequestForm(props, { navigation }) {
     props.navigation.navigate("Requests");
   };
 
-  // fetchData();
-  // fetchUser();
+  React.useEffect(() => {
+    const unsubscribe = props.navigation.addListener("focus", () => {
+      fetchData();
+      fetchUser();
+      //Put your Data loading function here instead of my loadData()
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   return (
     <SafeAreaView style={{ marginTop: StatusBar.currentHeight }}>
-      {serviceData.data ? fetchData() : null}
+      {workerData.isLoaded ? fetchData() : null}
       {userData.isLoaded ? fetchUser() : null}
       <ScrollView style={{}}>
         <CustomHeader title="Request Form" navigation={navigation} />
         <View style={styles.container}>
           <Text style={styles.txtHeader}>Request Summary</Text>
           <View style={styles.boxContainer}>
+            {/* Service Requested */}
             <View style={[styles.section, styles.textSpace]}>
               <Text>Service Requested:</Text>
-              <Text style={styles.txtData}>{serviceData.data.name}</Text>
+              <Text style={styles.txtData}>{global.selectedWorkSubCat}</Text>
             </View>
 
+            {/* Recruiter Address */}
             <View style={[styles.section, styles.textSpace]}>
               <Text>Recruiter Address:</Text>
               <Text style={styles.txtData}>{userData.address.address}</Text>
             </View>
 
+            {/* Recruiter Name */}
             <View style={[styles.section, styles.textSpace]}>
               <Text>Recruiter Name:</Text>
               <Text style={styles.txtData}>
@@ -182,6 +190,7 @@ export default function RequestForm(props, { navigation }) {
               </Text>
             </View>
 
+            {/* Date Time Picker */}
             <Text style={{ marginTop: 10 }}>Date and Time</Text>
             <View style={[styles.section, { marginTop: 5 }]}>
               <TouchableOpacity
@@ -245,9 +254,12 @@ export default function RequestForm(props, { navigation }) {
               </TouchableOpacity>
             </View>
 
+            {/* Worker Name */}
             <View style={[styles.section, styles.textSpace]}>
               <Text>Worker Name:</Text>
-              <Text style={styles.txtData}>Juan D. Cruz</Text>
+              <Text style={styles.txtData}>
+                {workerData.data.firstname} {workerData.data.lastname}
+              </Text>
             </View>
 
             {/* See worker detail Button */}
@@ -265,7 +277,9 @@ export default function RequestForm(props, { navigation }) {
                   elevation: 10,
                   shadowColor: "#52006A",
                 }}
-                onPress={() => alert("hi")}
+                onPress={() =>
+                  props.navigation.navigate("WorkerProfilePageHome")
+                }
               >
                 <Text
                   numberOfLines={1}

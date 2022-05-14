@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Text, View, Image, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  TouchableNativeFeedback,
+  StyleSheet,
+} from "react-native";
 
 const CategoryButton = (props) => {
   // const [state, setState] = useState()
@@ -27,17 +34,9 @@ const styles = StyleSheet.create({
     width: "43%",
     height: 140,
     marginBottom: 30,
-    // backgroundColor: '#DDDCDC',
-    backgroundColor: "#fff",
+    backgroundColor: "#fdfdfd",
     borderRadius: 6,
-    shadowColor: "black",
-    shadowOffset: {
-      width: 1,
-      height: 1,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 2,
-    overflow: "visible",
+    elevation: 4,
   },
   itemImage: {
     width: "30%",

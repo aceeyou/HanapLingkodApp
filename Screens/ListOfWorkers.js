@@ -114,7 +114,7 @@ export default class ListOfWorkers extends React.Component {
                     onPress={() => {
                       // alert(item._id);
                       global.selectedWorker = item._id;
-                      this.props.navigation.navigate("RequestFormScreen");
+                      this.props.navigation.navigate("RequestFormHome");
                     }}
                   >
                     <View
