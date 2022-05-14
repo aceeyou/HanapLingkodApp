@@ -5,3 +5,7 @@ global.IPaddress = "192.168.1.7";
 global.userID = "";
 global.userRole = "";
 global.selectedServiceID = "";
+global.selectedWorker = "";
+
+// new worker account
+global.workerID = "";

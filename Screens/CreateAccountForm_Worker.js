@@ -466,7 +466,7 @@ function CreateAccountForm_Worker(props, { navigation }) {
                       .then((response) => response.json())
                       .then((data) => {
                         console.log("new account: ", data._id);
-                        global.userID = data._id;
+                        global.workerID = data._id;
                         console.log(global.userID);
 
                         // navigation.navigate("HomeApp");

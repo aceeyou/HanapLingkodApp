@@ -375,7 +375,7 @@ class Worker_ServiceOfferedSelection extends Component {
         >
           <TouchableOpacity
             style={{
-              backgroundColor: "blue",
+              backgroundColor: "#338CF4",
               paddingVertical: 10,
               paddingHorizontal: 60,
               borderRadius: 10,
@@ -383,19 +383,25 @@ class Worker_ServiceOfferedSelection extends Component {
               bottom: 30,
             }}
             onPress={() => {
+              alert(global.workerID);
               alert(this.state.selectedService);
               alert(this.state.selectedSubCat);
 
               let formData = new FormData();
 
-              formData.append("category", this.arrayOfServices);
+              formData.append("username", "marktahimik");
               // formData.append("lastname", lastname);
 
               fetch(
-                "http://" + global.IPaddress + ":3000/worker/" + global.userID,
+                "http://" +
+                  global.IPaddress +
+                  ":3000/worker/" +
+                  global.workerID,
                 {
-                  method: "POST",
-                  body: formData,
+                  method: "PATCH",
+                  body: {
+                    category: this.state.selectedSubCat,
+                  },
                   headers: {
                     "content-type": "multipart/form-data",
                   },

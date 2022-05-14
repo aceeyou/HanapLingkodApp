@@ -13,7 +13,7 @@ function DisplayServices_ListItem(props) {
     <TouchableOpacity
       style={styles.btn_container}
       onPress={() => {
-        props.navigation.navigate("ListOfWorkers", {
+        props.navigation.navigate("ListOfAllWorkers", {
           title: props.title,
           category: props.category,
         });

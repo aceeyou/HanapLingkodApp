@@ -30,7 +30,7 @@ export default class ListOfAllWorkers extends React.Component {
   }
 
   componentMount() {
-    fetch("http://" + global.IPaddress + ":3000/service", {
+    fetch("http://" + global.IPaddress + ":3000/worker", {
       method: "GET",
       headers: {
         "content-type": "application/json",
@@ -80,36 +80,86 @@ export default class ListOfAllWorkers extends React.Component {
                     style={styles.btn}
                     onPress={() => {
                       // alert(item._id);
-                      global.selectedServiceID = item._id;
+                      global.selectedWorker = item._id;
                       this.props.navigation.navigate("RequestFormScreen");
                     }}
                   >
-                    <View style={{ flex: 1.1 }}>
+                    <View
+                      style={{
+                        flex: 1.1,
+                        alignItems: "center",
+                        justifyContent: "center",
+                        backgroundColor: "skyblue",
+                      }}
+                    >
                       <Image
-                        source={require("../assets/bg.png")}
+                        source={{
+                          uri: "https://s.yimg.com/ny/api/res/1.2/b0utpiLK707RZGImLQI7PQ--/YXBwaWQ9aGlnaGxhbmRlcjt3PTcwNTtoPTEwOTc-/https://s.yimg.com/os/289/2013/01/29/Coco-Martin-as-Juan-dela-Cruz-jpg_081130.jpg",
+                        }}
                         style={{ width: "100%", height: "100%" }}
                       />
                     </View>
                     <View style={{ flex: 2, padding: 15 }}>
-                      <Text style={{ fontSize: 16 }}>{item.name}</Text>
+                      <Text style={{ fontSize: 16 }}>
+                        {item.firstname} {item.lastname}
+                      </Text>
 
                       <Text style={{ color: "#434544", fontSize: 13 }}>
-                        {item.name}
+                        {/* {item.name} */}
+                        Category
                       </Text>
 
-                      <Text
+                      <View
                         style={{
                           marginTop: 10,
-                          fontSize: 12,
-                          color: "#434544",
+                          flexDirection: "row",
+                          alignItems: "center",
                         }}
                       >
-                        {item.priceRange}
-                      </Text>
+                        <Text
+                          style={{
+                            fontSize: 12,
+                            color: "#434544",
+                            marginRight: 5,
+                          }}
+                        >
+                          {/* {item.priceRange} */}
+                          4.5
+                        </Text>
+                        <Image
+                          source={require("../assets/icons/star-filled.png")}
+                          style={{ width: 14, height: 14, marginRight: 3 }}
+                        />
+                        <Image
+                          source={require("../assets/icons/star-filled.png")}
+                          style={{ width: 14, height: 14, marginRight: 3 }}
+                        />
+                      </View>
 
-                      <Text style={{ fontSize: 12, marginTop: 3 }}>
-                        Avg. Work Hours {item.workingHours}
-                      </Text>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          marginTop: 3,
+                        }}
+                      >
+                        <Image
+                          source={require("../assets/icons/location2.png")}
+                          style={{
+                            width: 14,
+                            height: 14,
+                            marginRight: 5,
+                            alignItems: "center",
+                          }}
+                        />
+                        <Text
+                          style={{ fontSize: 12, marginTop: 0 }}
+                          numberOfLines={1}
+                          ellipsizeMode="tail"
+                        >
+                          {item.address}
+                        </Text>
+                      </View>
                     </View>
                   </TouchableOpacity>
                 </View>
