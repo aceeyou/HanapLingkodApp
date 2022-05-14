@@ -65,6 +65,7 @@ router
 /////////////////////////////////////worker list specific category/////////////////////////////////////////
 
 router.route("/worker/category/:category").get(function (req, res) {
+  console.log(req.params.category);
   User.find(
     { $and: [{ role: "worker" }, { category: req.params.category }] },
     function (err, foundRequest) {

@@ -52,7 +52,7 @@ function DisplayListOfServices(props, { navigation }) {
               navigation={props.navigation}
             />
             <DisplayServices_ListItem
-              title="Disinfection Service"
+              title="Disinfection Cleaning"
               category="Cleaning"
               priceRange="P300 - P700"
               avgWT=" 3 - 6 hours"

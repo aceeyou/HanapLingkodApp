@@ -10,7 +10,11 @@ import {
   StatusBar,
   FlatList,
 } from "react-native";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import {
+  useNavigation,
+  useRoute,
+  useIsFocused,
+} from "@react-navigation/native";
 import "../global/Global";
 import CustomHeader from "../components/CustomerHeader";
 import DisplayWorkers from "../components/DisplayWorkers";
@@ -19,35 +23,40 @@ import DisplayWorkers from "../components/DisplayWorkers";
 //   return (navigation = useNavigation());
 // }
 
+let toTrue = true;
+
 export default class ListOfWorkers extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoaded: true,
+      isLoaded: global.isTrue,
       data: [],
     };
   }
 
-  getRouteItems() {
-    const route = useRoute();
-    const w = route.params.title;
-    return w;
-    this.setState({ selectedWork: route.params.title });
-    console.log("func: ", this.state.selectedWork);
+  goRefresh() {
+    this.focusListener = this.props.navigation.addListener("focus", () => {
+      this.componentMount();
+    });
   }
 
   componentMount() {
-    // const route = useRoute();
-    fetch("http://" + global.IPaddress + ":3000/worker", {
-      method: "GET",
-      headers: {
-        "content-type": "application/json",
-      },
-    })
+    fetch(
+      "http://" +
+        global.IPaddress +
+        ":3000/worker/category/" +
+        global.selectedWorkSubCat,
+      {
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+        },
+      }
+    )
       .then((response) => response.json())
       .then((responseJson) => {
-        console.log(responseJson);
         console.log(global.selectedWorkSubCat);
+
         this.setState({
           isLoaded: false,
           data: responseJson,
@@ -56,23 +65,37 @@ export default class ListOfWorkers extends React.Component {
       })
       .catch((error) => {
         console.log(error);
+        return;
       });
   }
 
   render() {
     let { data } = this.state;
+    // let { navigation } = this.props;
+    // navigation.addListener("willFocus", () => console.log("hi"));
     // let { navigation } = useNavigation();
+    // let isFocused = useIsFocused();
+
     return (
       <SafeAreaView style={styles.container}>
         <View style={{ flex: 1 }}>
           <CustomHeader title="Available Workers" />
           <View style={{ marginBottom: 15 }}>
             <Text style={styles.txtHeader}>
-              Below are the list of all workers
+              Below are the list of {global.selectedWorkSubCat} workers
             </Text>
           </View>
-          {this.state.isLoaded ? this.componentMount() : null}
 
+          {this.goRefresh()}
+
+          {/* {this.state.isLoaded ? this.componentMount() : null} */}
+          {/* {global.selectedWorkSubCat == this.state.data.category
+            ? null
+            : this.componentMount} */}
+          {/* {toTrue ? this.componentMount() : this.isScreenFocused} */}
+          {/* {toTrue ? this.componentMount() : (toTrue = true)} */}
+
+          {/* {isFocused ? this.componentMount() : null} */}
           <View
             style={{
               flex: 1,
@@ -80,6 +103,7 @@ export default class ListOfWorkers extends React.Component {
             }}
           >
             <FlatList
+              extraData={data}
               ListFooterComponent={<View style={{ height: 60 }} />}
               keyExtractor={(item) => item._id}
               data={data}

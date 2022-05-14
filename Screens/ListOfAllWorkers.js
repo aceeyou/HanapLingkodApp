@@ -15,10 +15,6 @@ import "../global/Global";
 import CustomHeader from "../components/CustomerHeader";
 import DisplayWorkers from "../components/DisplayWorkers";
 
-// function nav() {
-//   return (navigation = useNavigation());
-// }
-
 export default class ListOfAllWorkers extends React.Component {
   constructor(props) {
     super(props);
@@ -28,16 +24,8 @@ export default class ListOfAllWorkers extends React.Component {
     };
   }
 
-  getRouteItems() {
-    const route = useRoute();
-    const w = route.params.title;
-    return w;
-    this.setState({ selectedWork: route.params.title });
-    console.log("func: ", this.state.selectedWork);
-  }
-
   componentMount() {
-    // const route = useRoute();
+    console.log(global.selectedWorkSubCat);
     fetch("http://" + global.IPaddress + ":3000/worker", {
       method: "GET",
       headers: {
@@ -47,21 +35,19 @@ export default class ListOfAllWorkers extends React.Component {
       .then((response) => response.json())
       .then((responseJson) => {
         console.log(responseJson);
-        console.log(global.selectedWorkSubCat);
         this.setState({
           isLoaded: false,
           data: responseJson,
         });
-        console.log(this.state.data);
       })
       .catch((error) => {
-        console.log(error);
+        console.log("error: ", error);
       });
   }
 
   render() {
     let { data } = this.state;
-    // let { navigation } = useNavigation();
+
     return (
       <SafeAreaView style={styles.container}>
         <View style={{ flex: 1 }}>
@@ -88,7 +74,6 @@ export default class ListOfAllWorkers extends React.Component {
                   <TouchableOpacity
                     style={styles.btn}
                     onPress={() => {
-                      // alert(item._id);
                       global.selectedWorker = item._id;
                       this.props.navigation.navigate("RequestFormScreen");
                     }}

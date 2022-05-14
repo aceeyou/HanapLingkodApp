@@ -15,8 +15,9 @@ function DisplayServices_ListItem(props) {
     <TouchableOpacity
       style={styles.btn_container}
       onPress={() => {
+        global.selectedWorkSubCat = "";
         global.selectedWorkSubCat = props.title;
-        props.navigation.navigate("ListOfAllWorkers", {
+        props.navigation.navigate("ListOfWorkers", {
           title: props.title,
           category: props.category,
         });
