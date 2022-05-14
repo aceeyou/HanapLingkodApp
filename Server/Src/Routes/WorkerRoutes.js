@@ -27,6 +27,7 @@ router
     }).populate({ path: "comments", populate: { path: "reviewer" } });
   })
   .put(function (req, res) {
+    console.log(req);
     User.updateOne(
       { _id: req.params.id },
       {
@@ -36,6 +37,7 @@ router
         lastname: req.body.lastname,
         birthday: req.body.birthday,
         age: req.body.age,
+        category: req.body.category,
         sex: req.body.sex,
         address: req.body.address,
         accountStatus: req.body.status,
@@ -59,5 +61,20 @@ router
       }
     });
   });
+
+/////////////////////////////////////worker list specific category/////////////////////////////////////////
+
+router.route("/worker/category/:category").get(function (req, res) {
+  User.find(
+    { $and: [{ role: "worker" }, { category: req.params.category }] },
+    function (err, foundRequest) {
+      if (!err) {
+        res.send(foundRequest);
+      } else {
+        res.send(err);
+      }
+    }
+  );
+});
 
 module.exports = router;
