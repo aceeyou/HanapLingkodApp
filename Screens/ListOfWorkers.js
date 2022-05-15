@@ -133,11 +133,11 @@ export default class ListOfWorkers extends React.Component {
                       />
                     </View>
                     <View style={{ flex: 2, padding: 15 }}>
-                      <Text style={{ fontSize: 16 }}>
+                      <Text style={{ fontSize: 16, color: "#0b132b" }}>
                         {item.firstname} {item.lastname}
                       </Text>
 
-                      <Text style={{ color: "#434544", fontSize: 13 }}>
+                      <Text style={{ color: "#1c2541", fontSize: 13 }}>
                         {item.category}
                       </Text>
 
@@ -185,7 +185,11 @@ export default class ListOfWorkers extends React.Component {
                           }}
                         />
                         <Text
-                          style={{ fontSize: 12, marginTop: 0 }}
+                          style={{
+                            fontSize: 12,
+                            marginTop: 0,
+                            color: "#1c2541",
+                          }}
                           numberOfLines={1}
                           ellipsizeMode="tail"
                         >
@@ -208,6 +212,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: StatusBar.currentHeight,
+    backgroundColor: "#fafafa",
   },
   viewContainer: {
     paddingHorizontal: 30,
@@ -224,9 +229,10 @@ const styles = StyleSheet.create({
     paddingTop: 15,
   },
   btn: {
-    backgroundColor: "#dddcdc",
+    backgroundColor: "#fdfffc",
     borderRadius: 7,
     overflow: "hidden",
     flexDirection: "row",
+    elevation: 3,
   },
 });

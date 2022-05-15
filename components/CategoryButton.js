@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
   },
   itemText: {
     fontSize: 14,
+    color: "#0b132b",
   },
 });
 

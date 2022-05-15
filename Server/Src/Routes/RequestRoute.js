@@ -24,15 +24,17 @@ router
       }
     )
       .populate("recuiterId")
-      .populate("serviceId");
+      .populate("serviceId")
+      .populate("workerId");
   })
   .post(function (req, res) {
+    console.log(req);
     const newRequest = new Request({
       location: req.body.location,
       schedule: req.body.schedule,
       time: req.body.time,
       status: "1",
-      time: req.body.time,
+      serviceCategory: req.body.serviceCategory,
       recuiterId: req.params.user,
       workerId: req.body.workerId,
       serviceId: req.body.service,
@@ -68,7 +70,8 @@ router
       }
     })
       .populate("recuiterId")
-      .populate("serviceId");
+      .populate("serviceId")
+      .populate("workerId");
   })
   .put(function (req, res) {
     Request.updateOne(

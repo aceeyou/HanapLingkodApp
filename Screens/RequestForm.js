@@ -120,35 +120,43 @@ export default function RequestForm(props, { navigation }) {
 
   // executed after clicking post a request button
   const postRequest = () => {
-    alert("hi");
+    // let formData = new FormData();
+
+    console.log("user: ", global.userID);
+    console.log("worker:", global.selectedWorker);
+
+    // formData.append("location", userData.address.address);
+    // formData.append("schedule", chosenDate);
+    // formData.append("time", chosenTime);
+    // formData.append("serviceCategory", workerData.data.category);
+    // formData.append("recruiterId", global.userID);
+    // formData.append("workerId", global.selectedWorker);
 
     //do stuff backend here
-    fetch(
-      "http://" +
-        global.IPaddress +
-        ":3000/service/" +
-        global.selectedServiceID,
-      {
-        method: "GET",
+    if (chosenDate && chosenTime) {
+      fetch("http://" + global.IPaddress + ":3000/request/" + global.userID, {
+        method: "POST",
+        body: JSON.stringify({
+          serviceCategory: global.selectedWorkSubCat,
+          location: userData.address.address,
+          schedule: chosenDate,
+          time: chosenTime,
+          workerId: global.selectedWorker,
+        }),
         headers: {
           "content-type": "application/json",
         },
-      }
-    )
-      .then((response) => response.json())
-      .then((responseJson) => {
-        // console.log(responseJson);
-        setWorkerData({
-          isLoaded: false,
-          data: responseJson,
-        });
       })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    // go to myrequest page/screen
-    props.navigation.navigate("Requests");
+        .then(() => {
+          alert("Service Request has been posted!");
+          props.navigation.navigate("Requests");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      alert("Please select a Date and Time to proceed.");
+    }
   };
 
   React.useEffect(() => {
@@ -172,19 +180,19 @@ export default function RequestForm(props, { navigation }) {
           <View style={styles.boxContainer}>
             {/* Service Requested */}
             <View style={[styles.section, styles.textSpace]}>
-              <Text>Service Requested:</Text>
+              <Text style={[styles.labels]}>Service Requested:</Text>
               <Text style={styles.txtData}>{global.selectedWorkSubCat}</Text>
             </View>
 
             {/* Recruiter Address */}
             <View style={[styles.section, styles.textSpace]}>
-              <Text>Recruiter Address:</Text>
+              <Text style={[styles.labels]}>Recruiter Address:</Text>
               <Text style={styles.txtData}>{userData.address.address}</Text>
             </View>
 
             {/* Recruiter Name */}
             <View style={[styles.section, styles.textSpace]}>
-              <Text>Recruiter Name:</Text>
+              <Text style={[styles.labels]}>Recruiter Name:</Text>
               <Text style={styles.txtData}>
                 {userData.address.firstname} {userData.address.lastname}
               </Text>
@@ -243,7 +251,7 @@ export default function RequestForm(props, { navigation }) {
                 <DateTimePickerModal
                   isVisible={isTimePickerVisible}
                   mode="time"
-                  display="spinner"
+                  // display="spinner"
                   onConfirm={handleTimeConfirm}
                   onCancel={hideTimePicker}
                 />
@@ -256,7 +264,7 @@ export default function RequestForm(props, { navigation }) {
 
             {/* Worker Name */}
             <View style={[styles.section, styles.textSpace]}>
-              <Text>Worker Name:</Text>
+              <Text style={[styles.labels]}>Worker Name:</Text>
               <Text style={styles.txtData}>
                 {workerData.data.firstname} {workerData.data.lastname}
               </Text>
@@ -268,7 +276,8 @@ export default function RequestForm(props, { navigation }) {
             >
               <TouchableOpacity
                 style={{
-                  backgroundColor: "#393838",
+                  // backgroundColor: "#393838",
+                  backgroundColor: "#2080FF",
                   paddingVertical: 10,
                   paddingHorizontal: 15,
                   borderRadius: 10,
@@ -304,11 +313,14 @@ export default function RequestForm(props, { navigation }) {
               alignSelf: "center",
               width: 300,
               paddingBottom: 20,
+              elevation: 7,
+              shadowColor: "black",
             }}
           >
             <TouchableOpacity
               style={{
-                backgroundColor: "#EF5252",
+                // backgroundColor: "#EF5252",
+                backgroundColor: "#2080FF",
                 paddingVertical: 12,
                 alignItems: "center",
                 borderRadius: 10,
@@ -359,4 +371,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginTop: 5,
   },
+  // labels: {
+  //   color: "#757678",
+  // },
 });

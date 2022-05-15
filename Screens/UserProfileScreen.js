@@ -21,9 +21,8 @@ export default function UserProfilePage({ navigation }) {
   });
 
   const [imageuri, setimageuri] = useState("");
-  const imageURI =
-    "../Server/Src/public/uploads/" +
-    "16520229485852ce02904-301f-4774-936f-7ada34c7527a.jpg";
+  const imageURI = require("../Server/Src/public/uploads/" +
+    "16520229485852ce02904-301f-4774-936f-7ada34c7527a.jpg");
 
   const fetchData = () => {
     let route;
@@ -71,10 +70,12 @@ export default function UserProfilePage({ navigation }) {
         <View style={styles.mainContainer}>
           {data.isLoaded ? fetchData() : null}
           <View style={styles.imgContainer}>
-            <Image
-              source={require(imageURI)}
-              style={{ width: 90, height: 90, borderRadius: 45 }}
-            />
+            {imageuri ? null : (
+              <Image
+                source={imageURI}
+                style={{ width: 90, height: 90, borderRadius: 45 }}
+              />
+            )}
 
             <View style={styles.nameBlock}>
               <Text style={styles.usersName}>
@@ -252,10 +253,12 @@ const styles = StyleSheet.create({
     paddingBottom: 3,
     fontSize: 16,
     fontWeight: "bold",
+    marginRight: 3,
   },
   verifyIcon: {
     width: 18,
     height: 18,
+    marginLeft: 5,
   },
   usersService: {
     color: "#646466",

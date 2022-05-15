@@ -54,34 +54,6 @@ function HomeScreen({ navigation }) {
           navigation={navigation}
         />
 
-        {/* {setUserRole(global.userRole)} */}
-
-        {/* {userRole === "recruiter" ? (
-          <Text
-            style={{
-              fontSize: 22,
-              fontWeight: "bold",
-              color: "#0d0d0c",
-              paddingHorizontal: 40,
-              paddingTop: 30,
-            }}
-          >
-            Welcome, Recruiter!
-          </Text>
-        ) : (
-          <Text
-            style={{
-              fontSize: 22,
-              fontWeight: "bold",
-              color: "#0d0d0c",
-              paddingHorizontal: 40,
-              paddingTop: 30,
-            }}
-          >
-            Welcome, Worker!
-          </Text>
-        )} */}
-
         <Text
           style={{
             fontSize: 21,
@@ -98,7 +70,7 @@ function HomeScreen({ navigation }) {
         <View style={styles.btnContainer}>
           <TouchableOpacity
             style={[styles.btnItem, styles.btnRequests]}
-            onPress={() => navigation.navigate("RequestsScreen")}
+            onPress={() => navigation.navigate("Requests")}
           >
             <Text style={styles.btnText}>Requests (2)</Text>
           </TouchableOpacity>
@@ -155,7 +127,7 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
     // paddingVertical: 25,
     marginTop: StatusBar.currentHeight,
-    backgroundColor: "#fff",
+    backgroundColor: "#eee",
   },
   pageTitle: {
     fontSize: 20,
@@ -181,11 +153,11 @@ const styles = StyleSheet.create({
   },
   btnRequests: {
     marginRight: 11,
-    backgroundColor: "#f7ad19",
+    backgroundColor: "#5bc0be",
   },
   btnBookings: {
     marginLeft: 11,
-    backgroundColor: "#338CF4",
+    backgroundColor: "#1c2541",
   },
   btnText: {
     fontSize: 15.8,
@@ -236,4 +208,36 @@ export default HomeScreen;
             </View>
           </View>
         ) : null} */
+}
+
+{
+  /* {setUserRole(global.userRole)} */
+}
+
+{
+  /* {userRole === "recruiter" ? (
+          <Text
+            style={{
+              fontSize: 22,
+              fontWeight: "bold",
+              color: "#0d0d0c",
+              paddingHorizontal: 40,
+              paddingTop: 30,
+            }}
+          >
+            Welcome, Recruiter!
+          </Text>
+        ) : (
+          <Text
+            style={{
+              fontSize: 22,
+              fontWeight: "bold",
+              color: "#0d0d0c",
+              paddingHorizontal: 40,
+              paddingTop: 30,
+            }}
+          >
+            Welcome, Worker!
+          </Text>
+        )} */
 }

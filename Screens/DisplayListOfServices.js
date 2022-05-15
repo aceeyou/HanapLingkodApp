@@ -19,18 +19,27 @@ function DisplayListOfServices(props, { navigation }) {
 
   const route = useRoute();
   return (
-    <SafeAreaView style={{ flex: 1, marginTop: StatusBar.currentHeight }}>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        marginTop: StatusBar.currentHeight,
+        backgroundColor: "#fafafa",
+      }}
+    >
       <ScrollView>
         <CustomHeader title={route.params.title} navigation={navigation} />
         {/* CLEANING SERVICES */}
         {route.params.title === "Cleaning" ? (
           <View
             style={{
-              justifyContent: "center",
-              alignItems: "center",
+              // justifyContent: "center",
+              // alignItems: "center",
               padding: 30,
             }}
           >
+            <Text style={{ marginLeft: 20, marginBottom: 10, fontSize: 15 }}>
+              Below are services associated with Cleaning
+            </Text>
             <DisplayServices_ListItem
               title="House Cleaning"
               category="Cleaning"
@@ -78,11 +87,14 @@ function DisplayListOfServices(props, { navigation }) {
         {route.params.title === "Plumbing" ? (
           <View
             style={{
-              justifyContent: "center",
-              alignItems: "center",
+              // justifyContent: "center",
+              // alignItems: "center",
               padding: 30,
             }}
           >
+            <Text style={{ marginLeft: 20, marginBottom: 10, fontSize: 15 }}>
+              Below are services associated with Plumbing
+            </Text>
             <DisplayServices_ListItem
               title="Plumbing Installation"
               category="Plumbing"
@@ -130,11 +142,14 @@ function DisplayListOfServices(props, { navigation }) {
         {route.params.title === "Mounting" ? (
           <View
             style={{
-              justifyContent: "center",
-              alignItems: "center",
+              // justifyContent: "center",
+              // alignItems: "center",
               padding: 30,
             }}
           >
+            <Text style={{ marginLeft: 20, marginBottom: 10, fontSize: 15 }}>
+              Below are services associated with Mounting
+            </Text>
             <DisplayServices_ListItem
               title="TV Mounting"
               category="Mounting"
@@ -158,11 +173,14 @@ function DisplayListOfServices(props, { navigation }) {
         {route.params.title === "Electrical" ? (
           <View
             style={{
-              justifyContent: "center",
-              alignItems: "center",
+              // justifyContent: "center",
+              // alignItems: "center",
               padding: 30,
             }}
           >
+            <Text style={{ marginLeft: 20, marginBottom: 10, fontSize: 15 }}>
+              Below are services associated with Electrical
+            </Text>
             <DisplayServices_ListItem
               title="Aircon Repair"
               category="Electrical"
@@ -194,11 +212,14 @@ function DisplayListOfServices(props, { navigation }) {
         {route.params.title === "General" ? (
           <View
             style={{
-              justifyContent: "center",
-              alignItems: "center",
+              // justifyContent: "center",
+              // alignItems: "center",
               padding: 30,
             }}
           >
+            <Text style={{ marginLeft: 20, marginBottom: 10, fontSize: 15 }}>
+              Below are services associated with General
+            </Text>
             <DisplayServices_ListItem
               title="Grocery Shopping"
               category="General"
@@ -222,11 +243,14 @@ function DisplayListOfServices(props, { navigation }) {
         {route.params.title === "Appliances" ? (
           <View
             style={{
-              justifyContent: "center",
-              alignItems: "center",
+              // justifyContent: "center",
+              // alignItems: "center",
               padding: 30,
             }}
           >
+            <Text style={{ marginLeft: 20, marginBottom: 10, fontSize: 15 }}>
+              Below are services associated with Appliances
+            </Text>
             <DisplayServices_ListItem
               title="Washing Machine Repair"
               category="Appliances"

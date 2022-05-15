@@ -41,9 +41,11 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 110,
     flexDirection: "row",
-    backgroundColor: "#DDDCDC",
+    backgroundColor: "#fdfffc",
     borderRadius: 6,
     marginTop: 15,
+    elevation: 3,
+    // shadowColor: "#edebeb",
   },
   image_container: {
     width: 110,
@@ -65,6 +67,7 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: "bold",
     fontSize: 16,
+    color: "#0b132b",
   },
   category: {
     fontSize: 13,
@@ -72,7 +75,8 @@ const styles = StyleSheet.create({
   },
   sub_info: {
     fontSize: 13,
-    color: "#6e6d6b",
+    // color: "#6e6d6b",
+    color: "#1c2541",
   },
 });
 
