@@ -13,36 +13,26 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import { set } from "react-native-reanimated";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import CategoryButton from "../components/CategoryButton";
 import CustomHeader from "../components/CustomerHeader";
 
 import "../global/Global";
 
-function HomeScreen({ navigation }) {
-  const [userRole, setUserRole] = useState();
-  // setUserRole(global.userRole);
+function HomeScreen(props) {
+  const navigation = useNavigation();
 
-  // const fetchUserRole = () => {
-  //   fetch("http://" + global.IPaddress + ":3000/user", {
-  //     method: "POST",
-  //     body: JSON.stringify({
-  //       username: username,
-  //       password: password,
-  //     }),
-  //     headers: {
-  //       "content-type": "application/json",
-  //     },
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       console.log(data._id);
-  //       global.userID = data._id;
-  //       navigation.navigate("HomeApp");
-  //     })
-  //     .catch((error) => {
-  //       console.log("Incorrect Credentials. Try again");
-  //     });
-  // }
+  let reqLen = 0;
+  const isFocused = useIsFocused();
+  if (isFocused) reqLen = global.requestCount;
+
+  // React.useEffect(() => {
+  //   const unsubscribe = props.navigation.addListener("willfocus", () => {
+  //     //Put your Data loading function here instead of my loadData()
+  //   });
+
+  //   return unsubscribe;
+  // }, [navigation]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -72,7 +62,7 @@ function HomeScreen({ navigation }) {
             style={[styles.btnItem, styles.btnRequests]}
             onPress={() => navigation.navigate("Requests")}
           >
-            <Text style={styles.btnText}>Requests (2)</Text>
+            <Text style={styles.btnText}>Requests ({reqLen})</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.btnItem, styles.btnBookings]}

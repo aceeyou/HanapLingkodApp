@@ -181,7 +181,7 @@ export default function RequestForm(props, { navigation }) {
             {/* Service Requested */}
             <View style={[styles.section, styles.textSpace]}>
               <Text style={[styles.labels]}>Service Requested:</Text>
-              <Text style={styles.txtData}>{global.selectedWorkSubCat}</Text>
+              <Text style={styles.txtData}>{workerData.data.category}</Text>
             </View>
 
             {/* Recruiter Address */}

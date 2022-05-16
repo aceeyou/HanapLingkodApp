@@ -8,6 +8,7 @@ import {
   StatusBar,
   ScrollView,
   FlatList,
+  StyleSheet,
 } from "react-native";
 import CustomHeader from "../components/CustomerHeader";
 import RequestsItem from "../components/RequestsItem";
@@ -43,6 +44,8 @@ class MyRequestsScreen extends Component {
           isLoaded: false,
           data: responseJson,
         });
+        global.requestCount = this.state.data.length;
+        console.log("len: ", this.state.data.length);
         console.log(this.state.data);
       })
       .catch((error) => {
@@ -82,67 +85,227 @@ class MyRequestsScreen extends Component {
               keyExtractor={(item) => item._id}
               data={data}
               renderItem={({ item }) => (
+                // Recruiter View
                 <View style={{ flex: 1, paddingHorizontal: 30 }}>
                   <View
                     style={{
                       flex: 1,
-                      backgroundColor: "lightgray",
+                      backgroundColor: "#dddcdc",
                       width: "100%",
                       marginBottom: 20,
                       borderRadius: 8,
+                      elevation: 6,
                     }}
                   >
-                    {/* Top */}
-                    <View style={{ flexDirection: "row" }}>
-                      {/* Image */}
-                      <View style={{ padding: 13 }}>
-                        <Image
-                          source={require("../assets/bg.png")}
-                          style={{ width: 80, height: 80, borderRadius: 40 }}
-                        />
-                      </View>
-                      {/* Request Detail Block */}
-                      <View
-                        style={{ paddingVertical: 18, paddingHorizontal: 8 }}
-                      >
-                        <Text
+                    {global.userRole == "recruiter" ? (
+                      <View>
+                        <View style={{ flexDirection: "row" }}>
+                          <View style={{ padding: 13 }}>
+                            <Image
+                              source={require("../assets/bg.png")}
+                              style={{
+                                width: 80,
+                                height: 80,
+                                borderRadius: 40,
+                              }}
+                            />
+                          </View>
+
+                          <View
+                            style={{
+                              paddingVertical: 18,
+                              paddingHorizontal: 8,
+                            }}
+                          >
+                            <Text
+                              style={{
+                                fontSize: 15,
+                                fontWeight: "bold",
+                                // marginBottom: 3,
+                              }}
+                            >
+                              {item.serviceCategory}
+                            </Text>
+                            <Text style={{ fontSize: 13 }}>
+                              Where: {item.location}
+                            </Text>
+                            <Text
+                              style={{
+                                fontSize: 15,
+                                fontWeight: "bold",
+                                marginVertical: 8,
+                              }}
+                            >
+                              {item.schedule}, {item.time}
+                            </Text>
+                            <Text style={{ fontSize: 12 }}>
+                              Rating of recruiter
+                            </Text>
+                            <Text style={{ fontSize: 13, fontWeight: "bold" }}>
+                              Recruiter: {item.recuiterId.firstname}{" "}
+                              {item.recuiterId.lastname}
+                            </Text>
+                          </View>
+                        </View>
+
+                        <View
                           style={{
-                            fontSize: 15,
-                            fontWeight: "bold",
-                            // marginBottom: 3,
+                            alignItems: "center",
+                            justifyContent: "center",
+                            paddingVertical: 12,
+                            borderTopWidth: 1,
+                            borderColor: "darkgray",
+                            // marginTop: 5,
                           }}
                         >
-                          {item.serviceCategory}
-                        </Text>
-                        <Text style={{ fontSize: 13 }}>{item.location}</Text>
-                        <Text
+                          <Text>Pending</Text>
+                        </View>
+                      </View>
+                    ) : (
+                      // Worker View
+                      <View>
+                        <View style={{ flexDirection: "row" }}>
+                          <View style={{ padding: 13, paddingLeft: 30 }}>
+                            <Image
+                              source={require("../assets/bg.png")}
+                              style={{
+                                width: 60,
+                                height: 60,
+                                borderRadius: 30,
+                              }}
+                            />
+                          </View>
+
+                          <View
+                            style={{
+                              paddingVertical: 18,
+                              paddingHorizontal: 8,
+                              marginTop: 5,
+                            }}
+                          >
+                            <Text
+                              style={{
+                                fontSize: 18,
+                                fontWeight: "bold",
+                                // marginBottom: 3,
+                              }}
+                            >
+                              {item.recuiterId.firstname}{" "}
+                              {item.recuiterId.lastname}
+                            </Text>
+                            <View
+                              style={{
+                                flexDirection: "row",
+                                alignItems: "center",
+                              }}
+                            >
+                              <Text>Recruiter</Text>
+                              <Image
+                                style={{ width: 15, height: 15, marginLeft: 3 }}
+                                source={require("../assets/icons/verified-green.png")}
+                              />
+                            </View>
+                          </View>
+                        </View>
+
+                        <View
                           style={{
-                            fontSize: 15,
-                            fontWeight: "bold",
-                            marginVertical: 8,
+                            marginBottom: 0,
+                            paddingHorizontal: 30,
                           }}
                         >
-                          {item.schedule}, {item.time}
-                        </Text>
-                        <Text style={{ fontSize: 12 }}>{item.time}</Text>
-                        <Text style={{ fontSize: 12 }}>
-                          Price Range: P 300 - P 1000
-                        </Text>
+                          <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+                            {item.serviceCategory}
+                          </Text>
+                          <Text
+                            style={{
+                              fontSize: 16,
+                              fontWeight: "bold",
+                              // marginVertical: 8,
+                              marginBottom: 10,
+                            }}
+                          >
+                            {item.schedule}, {item.time}
+                          </Text>
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              alignItems: "center",
+                            }}
+                          >
+                            <Image
+                              style={{ width: 15, height: 15, marginRight: 3 }}
+                              source={require("../assets/icons/location.png")}
+                            />
+                            <Text
+                              style={{ fontSize: 16, fontWeight: "bold" }}
+                              numberOfLines={2}
+                            >
+                              {item.location}
+                            </Text>
+                          </View>
+                          {/* <Text style={{ fontSize: 13, fontWeight: "bold" }}>
+                            Recruiter: {item.recuiterId.firstname}{" "}
+                            {item.recuiterId.lastname}
+                          </Text> */}
+                        </View>
+
+                        <View
+                          style={{
+                            alignItems: "center",
+                            justifyContent: "space-around",
+                            flexDirection: "row",
+                            paddingVertical: 20,
+                            paddingHorizontal: 30,
+                            borderColor: "darkgray",
+                            // marginTop: 5,
+                          }}
+                        >
+                          <TouchableOpacity
+                            style={[styles.btns, styles.btnAccept]}
+                            onPress={() => {
+                              // console.log(item._id);
+                              fetch(
+                                "http://" +
+                                  global.IPaddress +
+                                  ":3000/request/" +
+                                  global.userID +
+                                  "/" +
+                                  item._id,
+                                {
+                                  method: "PUT",
+                                  body: JSON.stringify({
+                                    location: item.location,
+                                    schedule: item.schedule,
+                                    time: item.time,
+                                    status: "2",
+                                  }),
+                                  headers: {
+                                    "content-type": "application/json",
+                                  },
+                                }
+                              )
+                                .then(() => {
+                                  alert("Service Request has been Accept.");
+                                })
+                                .catch((error) => {
+                                  console.log("Error has occured");
+                                  console.log(error);
+                                });
+                              this.goRefresh();
+                            }}
+                          >
+                            <Text style={styles.btnTxt}>Accept</Text>
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                            style={[styles.btns, styles.btnReject]}
+                            onPress={() => alert("rejected")}
+                          >
+                            <Text style={styles.btnTxt}>Reject</Text>
+                          </TouchableOpacity>
+                        </View>
                       </View>
-                    </View>
-                    {/* Bottom | Status */}
-                    <View
-                      style={{
-                        alignItems: "center",
-                        justifyContent: "center",
-                        paddingVertical: 12,
-                        borderTopWidth: 1,
-                        borderColor: "darkgray",
-                        // marginTop: 5,
-                      }}
-                    >
-                      <Text>Pending</Text>
-                    </View>
+                    )}
                   </View>
                 </View>
               )}
@@ -153,6 +316,29 @@ class MyRequestsScreen extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  btns: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    // paddingHorizontal: 40,
+    paddingVertical: 7,
+    borderRadius: 6,
+  },
+  btnAccept: {
+    backgroundColor: "#0AA954",
+    marginRight: 10,
+  },
+  btnReject: {
+    backgroundColor: "#D62F35",
+  },
+  btnTxt: {
+    color: "#fff",
+    fontSize: 13,
+    fontWeight: "bold",
+  },
+});
 
 export default MyRequestsScreen;
 
