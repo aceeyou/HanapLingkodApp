@@ -14,7 +14,15 @@ router.route("/book/:user").get(function (req, res) {
         res.send(err);
       }
     }
-  ).populate("requestId");
+  )
+    .populate({
+      path: "requestId",
+      populate: { path: "workerId" },
+    })
+    .populate({
+      path: "requestId",
+      populate: { path: "recuiterId" },
+    });
 });
 
 router

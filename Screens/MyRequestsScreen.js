@@ -26,46 +26,6 @@ class MyRequestsScreen extends Component {
     };
   }
 
-  deleteAlert() {
-    Alert.alert(
-      "Delete Request",
-      "This request item will not appear again once deleted",
-      [
-        {
-          text: "Cancel",
-          onPress: () => {
-            fetch(
-              "http://" +
-                global.IPaddress +
-                ":3000/request/" +
-                global.userID +
-                "/" +
-                item._id,
-              {
-                method: "DELETE",
-                headers: {
-                  "content-type": "application/json",
-                },
-              }
-            )
-              .then(() => {
-                alert("Service Request has been Deleted.");
-              })
-              .catch((error) => {
-                console.log("Error has occured");
-                console.log(error);
-              });
-          },
-          style: "cancel",
-        },
-        {
-          text: "OK",
-          onPress: () => console.log("Ok"),
-        },
-      ]
-    );
-  }
-
   goRefresh() {
     this.focusListener = this.props.navigation.addListener("focus", () => {
       this.componentMount();
