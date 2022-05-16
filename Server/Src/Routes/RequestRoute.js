@@ -13,7 +13,7 @@ router
     Request.find(
       {
         $or: [{ recuiterId: req.params.user }, { workerId: req.params.user }],
-        $and: [{ status: "1" }],
+        $and: [{ $or: [{ status: "1" }, { status: "3" }] }],
       },
       function (err, foundRequest) {
         if (!err) {

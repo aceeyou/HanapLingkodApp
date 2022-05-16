@@ -32,28 +32,6 @@ function MyBookingsScreen({ navigation }) {
             priceRange="P1100 - P2600"
             navigation={navigation}
           />
-
-          <BookingsItem
-            id={123}
-            service="Deep Cleaning"
-            category="Bathroom"
-            date="11 September, 11:11AM"
-            worker="Narda D. Custodio"
-            address="Awitan, Daet"
-            priceRange="P1100 - P2600"
-            navigation={navigation}
-          />
-
-          <BookingsItem
-            id={123}
-            service="Deep Cleaning"
-            category="Bathroom"
-            date="11 September, 11:11AM"
-            worker="Narda D. Custodio"
-            address="Awitan, Daet"
-            priceRange="P1100 - P2600"
-            navigation={navigation}
-          />
         </View>
       </ScrollView>
     </SafeAreaView>

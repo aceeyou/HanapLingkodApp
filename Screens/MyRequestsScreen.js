@@ -9,6 +9,7 @@ import {
   ScrollView,
   FlatList,
   StyleSheet,
+  Alert,
 } from "react-native";
 import CustomHeader from "../components/CustomerHeader";
 import RequestsItem from "../components/RequestsItem";
@@ -23,6 +24,46 @@ class MyRequestsScreen extends Component {
       workerFirstName: "",
       workerLastName: "",
     };
+  }
+
+  deleteAlert() {
+    Alert.alert(
+      "Delete Request",
+      "This request item will not appear again once deleted",
+      [
+        {
+          text: "Cancel",
+          onPress: () => {
+            fetch(
+              "http://" +
+                global.IPaddress +
+                ":3000/request/" +
+                global.userID +
+                "/" +
+                item._id,
+              {
+                method: "DELETE",
+                headers: {
+                  "content-type": "application/json",
+                },
+              }
+            )
+              .then(() => {
+                alert("Service Request has been Deleted.");
+              })
+              .catch((error) => {
+                console.log("Error has occured");
+                console.log(error);
+              });
+          },
+          style: "cancel",
+        },
+        {
+          text: "OK",
+          onPress: () => console.log("Ok"),
+        },
+      ]
+    );
   }
 
   goRefresh() {
@@ -92,13 +133,127 @@ class MyRequestsScreen extends Component {
                       flex: 1,
                       backgroundColor: "#dddcdc",
                       width: "100%",
-                      marginBottom: 20,
+                      marginTop: 20,
                       borderRadius: 8,
                       elevation: 6,
+                      overflow: "hidden",
                     }}
                   >
                     {global.userRole == "recruiter" ? (
                       <View>
+                        {item.status === "3" ? (
+                          <View
+                            style={{
+                              backgroundColor: "#DD2C32",
+                              flexDirection: "row",
+                              alignItems: "center",
+                              justifyContent: "space-around",
+                            }}
+                          >
+                            <View
+                              style={{
+                                alignItems: "center",
+                                justifyContent: "center",
+                                paddingVertical: 12,
+                                // backgroundColor: "red",
+                                // marginTop: 5,
+                              }}
+                            >
+                              <Text
+                                style={{ color: "#fff", fontWeight: "bold" }}
+                              >
+                                Service Request Rejected by the Worker
+                              </Text>
+                            </View>
+                            <View>
+                              <TouchableOpacity
+                                style={{
+                                  backgroundColor: "#0b132b",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  borderRadius: 6,
+                                  padding: 5,
+                                  paddingRight: 6,
+                                }}
+                                // onPress={() => {
+                                // this.deleteAlert();
+                                //   fetch(
+                                //   "http://" +
+                                //     global.IPaddress +
+                                //     ":3000/request/" +
+                                //     global.userID +
+                                //     "/" +
+                                //     item._id,
+                                //   {
+                                //     method: "DELETE",
+                                //     headers: {
+                                //       "content-type": "application/json",
+                                //     },
+                                //   }
+                                // )
+                                //   .then(() => {
+                                //     alert("Service Request has been Deleted.");
+                                //   })
+                                //   .catch((error) => {
+                                //     console.log("Error has occured");
+                                //     console.log(error);
+                                //   });
+                                // this.componentMount();
+                                // }}
+                                onPress={() => {
+                                  Alert.alert(
+                                    "Delete Request",
+                                    "This request item will not appear again once deleted",
+                                    [
+                                      {
+                                        text: "Cancel",
+                                        onPress: () => {
+                                          console.log("cancel");
+                                        },
+                                        style: "cancel",
+                                      },
+                                      {
+                                        text: "OK",
+                                        onPress: () => {
+                                          fetch(
+                                            "http://" +
+                                              global.IPaddress +
+                                              ":3000/request/" +
+                                              global.userID +
+                                              "/" +
+                                              item._id,
+                                            {
+                                              method: "DELETE",
+                                              headers: {
+                                                "content-type":
+                                                  "application/json",
+                                              },
+                                            }
+                                          )
+                                            .then(() => {
+                                              alert(
+                                                "Service Request has been Deleted."
+                                              );
+                                            })
+                                            .catch((error) => {
+                                              console.log("Error has occured");
+                                              console.log(error);
+                                            });
+                                          this.componentMount();
+                                        },
+                                      },
+                                    ]
+                                  );
+                                }}
+                              >
+                                <Image
+                                  source={require("../assets/icons/trash-white.png")}
+                                  style={{ width: 18, height: 18 }}
+                                />
+                              </TouchableOpacity>
+                            </View>
+                          </View>
+                        ) : null}
                         <View style={{ flexDirection: "row" }}>
                           <View style={{ padding: 13 }}>
                             <Image
@@ -139,27 +294,29 @@ class MyRequestsScreen extends Component {
                               {item.schedule}, {item.time}
                             </Text>
                             <Text style={{ fontSize: 12 }}>
-                              Rating of recruiter
+                              Rating of worker
                             </Text>
                             <Text style={{ fontSize: 13, fontWeight: "bold" }}>
-                              Recruiter: {item.recuiterId.firstname}{" "}
-                              {item.recuiterId.lastname}
+                              Worker: {item.workerId.firstname}{" "}
+                              {item.workerId.lastname}
                             </Text>
                           </View>
                         </View>
 
-                        <View
-                          style={{
-                            alignItems: "center",
-                            justifyContent: "center",
-                            paddingVertical: 12,
-                            borderTopWidth: 1,
-                            borderColor: "darkgray",
-                            // marginTop: 5,
-                          }}
-                        >
-                          <Text>Pending</Text>
-                        </View>
+                        {item.status === "3" ? null : (
+                          <View
+                            style={{
+                              alignItems: "center",
+                              justifyContent: "center",
+                              paddingVertical: 12,
+                              borderTopWidth: 1,
+                              borderColor: "darkgray",
+                              // marginTop: 5,
+                            }}
+                          >
+                            <Text>Pending</Text>
+                          </View>
+                        )}
                       </View>
                     ) : (
                       // Worker View
@@ -250,60 +407,114 @@ class MyRequestsScreen extends Component {
                           </Text> */}
                         </View>
 
-                        <View
-                          style={{
-                            alignItems: "center",
-                            justifyContent: "space-around",
-                            flexDirection: "row",
-                            paddingVertical: 20,
-                            paddingHorizontal: 30,
-                            borderColor: "darkgray",
-                            // marginTop: 5,
-                          }}
-                        >
-                          <TouchableOpacity
-                            style={[styles.btns, styles.btnAccept]}
-                            onPress={() => {
-                              // console.log(item._id);
-                              fetch(
-                                "http://" +
-                                  global.IPaddress +
-                                  ":3000/request/" +
-                                  global.userID +
-                                  "/" +
-                                  item._id,
-                                {
-                                  method: "PUT",
-                                  body: JSON.stringify({
-                                    location: item.location,
-                                    schedule: item.schedule,
-                                    time: item.time,
-                                    status: "2",
-                                  }),
-                                  headers: {
-                                    "content-type": "application/json",
-                                  },
-                                }
-                              )
-                                .then(() => {
-                                  alert("Service Request has been Accept.");
-                                })
-                                .catch((error) => {
-                                  console.log("Error has occured");
-                                  console.log(error);
-                                });
-                              this.goRefresh();
+                        {item.status === "3" ? (
+                          <View
+                            style={{
+                              alignItems: "center",
+                              justifyContent: "space-around",
+                              flexDirection: "row",
+                              paddingVertical: 20,
+                              paddingHorizontal: 30,
+                              borderColor: "darkgray",
+                              // marginTop: 5,
                             }}
                           >
-                            <Text style={styles.btnTxt}>Accept</Text>
-                          </TouchableOpacity>
-                          <TouchableOpacity
-                            style={[styles.btns, styles.btnReject]}
-                            onPress={() => alert("rejected")}
+                            <Text
+                              style={{
+                                backgroundColor: "red",
+                                paddingHorizontal: 30,
+                                paddingVertical: 8,
+                                color: "#fff",
+                              }}
+                            >
+                              Service Request Rejected
+                            </Text>
+                          </View>
+                        ) : (
+                          <View
+                            style={{
+                              alignItems: "center",
+                              justifyContent: "space-around",
+                              flexDirection: "row",
+                              paddingVertical: 20,
+                              paddingHorizontal: 30,
+                              borderColor: "darkgray",
+                              // marginTop: 5,
+                            }}
                           >
-                            <Text style={styles.btnTxt}>Reject</Text>
-                          </TouchableOpacity>
-                        </View>
+                            <TouchableOpacity
+                              style={[styles.btns, styles.btnAccept]}
+                              onPress={() => {
+                                // console.log(item._id);
+                                fetch(
+                                  "http://" +
+                                    global.IPaddress +
+                                    ":3000/request/" +
+                                    global.userID +
+                                    "/" +
+                                    item._id,
+                                  {
+                                    method: "PUT",
+                                    body: JSON.stringify({
+                                      location: item.location,
+                                      schedule: item.schedule,
+                                      time: item.time,
+                                      status: "2",
+                                    }),
+                                    headers: {
+                                      "content-type": "application/json",
+                                    },
+                                  }
+                                )
+                                  .then(() => {
+                                    alert("Service Request has been Accept.");
+                                  })
+                                  .catch((error) => {
+                                    console.log("Error has occured");
+                                    console.log(error);
+                                  });
+                                this.componentMount();
+                              }}
+                            >
+                              <Text style={styles.btnTxt}>Accept</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                              style={[styles.btns, styles.btnReject]}
+                              onPress={() => {
+                                fetch(
+                                  "http://" +
+                                    global.IPaddress +
+                                    ":3000/request/" +
+                                    global.userID +
+                                    "/" +
+                                    item._id,
+                                  {
+                                    method: "PUT",
+                                    body: JSON.stringify({
+                                      location: item.location,
+                                      schedule: item.schedule,
+                                      time: item.time,
+                                      status: "3",
+                                    }),
+                                    headers: {
+                                      "content-type": "application/json",
+                                    },
+                                  }
+                                )
+                                  .then(() => {
+                                    alert("Service Request has been Rejected.");
+                                  })
+                                  .catch((error) => {
+                                    console.log("Error has occured");
+                                    console.log(error);
+                                  });
+                                this.componentMount();
+                              }}
+                            >
+                              <Text style={styles.btnTxt}>Reject</Text>
+                            </TouchableOpacity>
+                          </View>
+                        )}
                       </View>
                     )}
                   </View>
