@@ -77,4 +77,28 @@ async function contract_close(id) {
   }
 }
 
+router.route("/completed/:user").get(function (req, res) {
+  Book.find(
+    {
+      $or: [{ recuiterId: req.params.user }, { workerId: req.params.user }],
+      $and: [{ status: "3" }]
+    },
+    function (err, foundRequest) {
+      if (!err) {
+        res.send(foundRequest);
+      } else {
+        res.send(err);
+      }
+    }
+  )
+    .populate({
+      path: "requestId",
+      populate: { path: "workerId" },
+    })
+    .populate({
+      path: "requestId",
+      populate: { path: "recuiterId" },
+    });
+});
+
 module.exports = router;
