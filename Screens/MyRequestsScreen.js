@@ -82,6 +82,7 @@ class MyRequestsScreen extends Component {
             }}
           >
             <FlatList
+              extraData={this.state}
               ListFooterComponent={<View style={{ height: 60 }} />}
               keyExtractor={(item) => item._id}
               data={data}
@@ -97,6 +98,8 @@ class MyRequestsScreen extends Component {
                       borderRadius: 8,
                       elevation: 6,
                       overflow: "hidden",
+                      borderColor: "#1c2541",
+                      borderWidth: 1,
                     }}
                   >
                     {global.userRole == "recruiter" ? (
@@ -204,6 +207,7 @@ class MyRequestsScreen extends Component {
                                       },
                                     ]
                                   );
+                                  this.componentMount();
                                 }}
                               >
                                 <Image
@@ -270,7 +274,7 @@ class MyRequestsScreen extends Component {
                               justifyContent: "center",
                               paddingVertical: 12,
                               borderTopWidth: 1,
-                              borderColor: "darkgray",
+                              borderColor: "#1c2541",
                               // marginTop: 5,
                             }}
                           >

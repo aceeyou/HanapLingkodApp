@@ -2,6 +2,7 @@ import * as React from "react";
 import { Text, View, Image, StatusBar, TouchableOpacity } from "react-native";
 
 import { useNavigation } from "@react-navigation/native";
+import "../global/Global";
 
 function CustomHeader(props) {
   const navigation = useNavigation();
@@ -63,10 +64,17 @@ function CustomHeader(props) {
           <TouchableOpacity
             onPress={() => navigation.navigate("UserProfileScreen")}
           >
-            <Image
-              source={require("../assets/bg.png")}
-              style={{ width: 30, height: 30, borderRadius: 15 }}
-            />
+            {global.userProfilePic ? (
+              <Image
+                source={require("../assets/icons/user-filled.png")}
+                style={{ width: 30, height: 30, borderRadius: 15 }}
+              />
+            ) : (
+              <Image
+                source={require("../assets/icons/user-outline.png")}
+                style={{ width: 30, height: 30, borderRadius: 15 }}
+              />
+            )}
           </TouchableOpacity>
         ) : null}
       </View>

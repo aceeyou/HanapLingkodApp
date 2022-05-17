@@ -1,10 +1,11 @@
 // set IP address
-global.IPaddress = "192.168.1.6";
+global.IPaddress = "192.168.1.7";
 
 // used variables
 global.userID = "";
 global.userRole = "";
 global.selectedWorker = "";
+global.userProfilePicture = "hello";
 
 global.selectedServiceID = "";
 

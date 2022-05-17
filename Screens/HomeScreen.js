@@ -22,9 +22,13 @@ import "../global/Global";
 function HomeScreen(props) {
   const navigation = useNavigation();
 
-  let reqLen = 0;
+  let reqLen;
+  let bookLen;
   const isFocused = useIsFocused();
-  if (isFocused) reqLen = global.requestCount;
+  if (isFocused) {
+    reqLen = global.requestCount;
+    bookLen = global.bookingCount;
+  }
 
   // React.useEffect(() => {
   //   const unsubscribe = props.navigation.addListener("willfocus", () => {
@@ -68,7 +72,7 @@ function HomeScreen(props) {
             style={[styles.btnItem, styles.btnBookings]}
             onPress={() => navigation.navigate("Bookings")}
           >
-            <Text style={styles.btnText}>Bookings (1)</Text>
+            <Text style={styles.btnText}>Bookings ({bookLen})</Text>
           </TouchableOpacity>
         </View>
 

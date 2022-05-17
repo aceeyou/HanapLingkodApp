@@ -23,6 +23,16 @@ function LoginScreen({ navigation }) {
 
   ref_passwInput = useRef();
 
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      setUsername("");
+      setPassword("");
+      //Put your Data loading function here instead of my loadData()
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
   // fetch data from server/database
   const fetchUser = () => {
     fetch("http://" + global.IPaddress + ":3000/login", {
@@ -50,6 +60,9 @@ function LoginScreen({ navigation }) {
       .catch((error) => {
         alert("Incorrect Credentials. Try again");
       });
+
+    setUsername("");
+    setPassword("");
   };
 
   return (
@@ -105,7 +118,7 @@ function LoginScreen({ navigation }) {
             <FloatingLabelInput
               label={"Username"}
               value={username}
-              autoCapitalize={false}
+              autoCapitalize="none"
               keyboarType="text"
               returnKeyType="next"
               onSubmitEditing={() => ref_passwInput.current.focus()}
