@@ -22,6 +22,7 @@ class MyBookingsScreen extends React.Component {
       isLoaded: true,
       data: [],
       comment: "",
+      otpShown: false,
     };
   }
 
@@ -111,7 +112,8 @@ class MyBookingsScreen extends React.Component {
             renderItem={({ item }) => (
               <View
                 style={{
-                  padding: 10,
+                  paddingBottom: 25,
+
                   marginHorizontal: 30,
                   backgroundColor: "#dddcdc",
                   marginTop: 15,
@@ -119,9 +121,50 @@ class MyBookingsScreen extends React.Component {
                   elevation: 6,
                   borderColor: "#1c2541",
                   borderWidth: 1,
+                  overflow: "hidden",
                 }}
               >
-                <View style={{ marginBottom: 10, flexDirection: "row" }}>
+                {global.userRole === "recruiter" ? (
+                  <View>
+                    <View style={{}}>
+                      {item.status == "2" ? (
+                        <View
+                          style={{
+                            backgroundColor: "#2080ff",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            paddingVertical: 10,
+                          }}
+                        >
+                          <Text style={[styles.txtWhite]}>
+                            Worker is on the way!
+                          </Text>
+                        </View>
+                      ) : (
+                        <View
+                          style={{
+                            alignItems: "center",
+                            justifyContent: "center",
+                            backgroundColor: "#1c2541",
+                            paddingVertical: 10,
+                          }}
+                        >
+                          <Text style={[styles.txtWhite]}>
+                            Worker accepted your request!
+                          </Text>
+                        </View>
+                      )}
+                    </View>
+                  </View>
+                ) : null}
+                <View
+                  style={{
+                    marginBottom: 10,
+                    flexDirection: "row",
+                    padding: 15,
+                    paddingBottom: 0,
+                  }}
+                >
                   <View
                     style={{
                       backgroundColor: "#5bc0be",
@@ -162,10 +205,13 @@ class MyBookingsScreen extends React.Component {
                     </View>
                   )}
                 </View>
-                <View style={{ paddingHorizontal: 10, marginTop: 7 }}>
-                  <View style={{ marginBottom: 0 }}>
+                <View style={{ paddingHorizontal: 25, marginTop: 7 }}>
+                  <View style={{ marginBottom: 10 }}>
                     <Text style={[styles.txtDark]}>Recruiter address:</Text>
-                    <Text style={[styles.txtDark, styles.nameTxt]}>
+                    <Text
+                      numberOfLines={3}
+                      style={[styles.txtDark, styles.nameTxt]}
+                    >
                       {item.requestId.location}
                     </Text>
                   </View>
@@ -173,14 +219,13 @@ class MyBookingsScreen extends React.Component {
                 <View
                   style={{
                     marginTop: 10,
-                    marginBottom: 20,
-                    paddingHorizontal: 10,
+                    paddingHorizontal: 25,
                     justifyContent: "flex-start",
                     flexDirection: "row",
                   }}
                 >
-                  <View>
-                    <Text style={{ marginBottom: 7 }}>Schedule: </Text>
+                  <View style={{ marginBottom: 0 }}>
+                    <Text style={{ marginBottom: 7 }}>Date and Time: </Text>
                     <Text style={[styles.txtDark, styles.schedTxt]}>
                       {item.requestId.schedule}, {item.requestId.time}
                     </Text>
@@ -190,45 +235,14 @@ class MyBookingsScreen extends React.Component {
                   </View>
                 </View>
 
-                {global.userRole === "recruiter" ? (
-                  <View style={{}}>
-                    {item.status == "2" ? (
-                      <View
-                        style={{
-                          backgroundColor: "#2080ff",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          paddingVertical: 7,
-                          borderRadius: 6,
-                        }}
-                      >
-                        <Text style={[styles.txtWhite]}>
-                          Worker is on the way!
-                        </Text>
-                      </View>
-                    ) : (
-                      <View
-                        style={{
-                          alignItems: "center",
-                          justifyContent: "center",
-                          backgroundColor: "#1c2541",
-                          paddingVertical: 7,
-                          borderRadius: 6,
-                        }}
-                      >
-                        <Text style={[styles.txtWhite]}>
-                          Worker accepted your request!
-                        </Text>
-                      </View>
-                    )}
-                  </View>
-                ) : (
+                {global.userRole === "recruiter" ? null : (
                   <View
                     style={{
                       flex: 1,
                       alignItems: "center",
                       justifyContent: "center",
-                      marginTop: 10,
+                      marginTop: 20,
+                      paddingHorizontal: 20,
                     }}
                   >
                     {item.status === "2" ? null : (
@@ -251,21 +265,51 @@ class MyBookingsScreen extends React.Component {
                   </View>
                 )}
                 {item.status === "2" ? (
-                  <View>
+                  <View
+                    style={{
+                      marginTop: 20,
+                      marginBottom: 10,
+                      paddingHorizontal: 70,
+                    }}
+                  >
+                    <TouchableOpacity
+                      style={{
+                        alignItems: "center",
+                        backgroundColor: "#1c2541",
+                        paddingVertical: 8,
+                        borderRadius: 6,
+                      }}
+                      onPress={() => {
+                        Alert.alert("One Time Password", item.OTP, [
+                          {
+                            text: "OK",
+                            onPress: () => {
+                              console.log("OK");
+                            },
+                          },
+                        ]);
+                      }}
+                    >
+                      <Text style={[styles.txtWhite]}>Show OTP</Text>
+                    </TouchableOpacity>
+                  </View>
+                ) : null}
+                {item.status === "2" ? (
+                  <View style={{ paddingHorizontal: 20 }}>
                     <View
                       style={{
                         marginTop: 20,
                         backgroundColor: "#fff",
-                        padding: 10,
+                        padding: 5,
                         borderRadius: 6,
+                        elevation: 3,
                       }}
                     >
                       <Text
                         style={{
                           marginVertical: 10,
                           marginLeft: 15,
-                          fontSize: 15,
-                          fontWeight: "bold",
+                          fontSize: 14,
                         }}
                       >
                         Comment/Review
@@ -274,14 +318,15 @@ class MyBookingsScreen extends React.Component {
                         sytle={{
                           flex: 1,
                           borderWidth: 1,
-                          borderColor: "#0b132b",
+                          borderColor: "#1c2541",
                           // borderRadius: 6,
                           padding: 10,
+                          elevation: 5,
                         }}
                       >
                         <TextInput
                           style={{
-                            height: 110,
+                            // height: 110,
                             marginHorizontal: 10,
                             borderWidth: 1,
                             padding: 10,
@@ -290,10 +335,10 @@ class MyBookingsScreen extends React.Component {
                             borderRadius: 6,
                           }}
                           multiline={true}
-                          numberOfLines={5}
                           onChangeText={(text) => {
                             this.setState({ comment: text });
                           }}
+                          placeholder="Write your feedback"
                         />
                       </View>
                     </View>
@@ -304,11 +349,65 @@ class MyBookingsScreen extends React.Component {
                         borderRadius: 6,
                         paddingVertical: 10,
                         alignItems: "center",
+                        elevation: 4,
                       }}
                     >
                       <TouchableOpacity
+                        style={{ width: "100%", alignItems: "center" }}
                         onPress={() => {
-                          alert(this.state.comment);
+                          if (global.userRole === "recruiter") {
+                            fetch(
+                              "http://" +
+                                global.IPaddress +
+                                ":3000/book/" +
+                                global.userID +
+                                "/" +
+                                item._id,
+                              {
+                                method: "PUT",
+                                body: JSON.stringify({
+                                  rConfirm: "2",
+                                }),
+                                headers: {
+                                  "content-type": "application/json",
+                                },
+                              }
+                            )
+                              .then(() => {
+                                alert(item.status);
+                              })
+                              .catch((error) => {
+                                console.log("Error has occured");
+                                console.log(error);
+                              });
+                          } else {
+                            fetch(
+                              "http://" +
+                                global.IPaddress +
+                                ":3000/book/" +
+                                global.userID +
+                                "/" +
+                                item._id,
+                              {
+                                method: "PUT",
+                                body: JSON.stringify({
+                                  wConfirm: "2",
+                                }),
+                                headers: {
+                                  "content-type": "application/json",
+                                },
+                              }
+                            )
+                              .then(() => {
+                                alert(item.status);
+                              })
+                              .catch((error) => {
+                                console.log("Error has occured");
+                                console.log(error);
+                              });
+                          }
+
+                          alert(item.status);
                         }}
                       >
                         <Text style={[styles.txtWhite]}>Service is done!</Text>

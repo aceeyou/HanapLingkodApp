@@ -71,7 +71,7 @@ async function contract_close(id) {
     await Book.updateOne(
       { _id: id },
       {
-        status: "ContractClose",
+        status: "3",
       }
     );
   }
