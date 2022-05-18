@@ -28,7 +28,7 @@ class MyBookingsScreen extends React.Component {
 
   goRefresh() {
     this.focusListener = this.props.navigation.addListener("focus", () => {
-      this.componentMount();
+      this.componentMount;
     });
   }
 
@@ -55,34 +55,7 @@ class MyBookingsScreen extends React.Component {
       });
   }
 
-  updateOTW(itemID) {
-    fetch(
-      "http://" +
-        global.IPaddress +
-        ":3000/book/" +
-        global.userID +
-        "/" +
-        itemID,
-      {
-        method: "PUT",
-        body: JSON.stringify({
-          status: "2",
-        }),
-        headers: {
-          "content-type": "application/json",
-        },
-      }
-    )
-      .then(() => {
-        alert("worker is on the way");
-      })
-      .catch((error) => {
-        alert("error");
-        console.log(error);
-        return;
-      });
-    this.componentMount();
-  }
+  updateOTW(itemID) {}
 
   render() {
     let { data } = this.state;
@@ -271,7 +244,33 @@ class MyBookingsScreen extends React.Component {
                               alignItems: "center",
                             }}
                             onPress={() => {
-                              this.updateOTW(item._id);
+                              // this.updateOTW(item._id);
+                              fetch(
+                                "http://" +
+                                  global.IPaddress +
+                                  ":3000/book/" +
+                                  global.userID +
+                                  "/" +
+                                  item._id,
+                                {
+                                  method: "PUT",
+                                  body: JSON.stringify({
+                                    status: "2",
+                                  }),
+                                  headers: {
+                                    "content-type": "application/json",
+                                  },
+                                }
+                              )
+                                .then(() => {
+                                  alert("worker is on the way");
+                                })
+                                .catch((error) => {
+                                  alert("error");
+                                  console.log(error);
+                                  return;
+                                });
+                              this.componentMount;
                             }}
                           >
                             <Text style={[styles.txtWhite]}>On my way!</Text>
@@ -391,39 +390,41 @@ class MyBookingsScreen extends React.Component {
                                   .then(() => {
                                     alert("Recruiter: Service finished.");
 
-                                    fetch(
-                                      "http://" +
-                                        global.IPaddress +
-                                        ":3000/review/" +
-                                        global.userID +
-                                        "/" +
-                                        item.requestId.workerId._id,
-                                      {
-                                        method: "POST",
-                                        body: JSON.stringify({
-                                          content: this.state.comment,
-                                        }),
-                                        headers: {
-                                          "content-type": "application/json",
-                                        },
-                                      }
-                                    )
-                                      .then(() => {
-                                        alert("Recruiter: Service finished.");
-                                        this.componentMount();
-                                      })
-                                      .catch((error) => {
-                                        console.log(
-                                          "rec review: Error has occured"
-                                        );
-                                        console.log(error);
-                                      });
+                                    if (this.state.comment) {
+                                      fetch(
+                                        "http://" +
+                                          global.IPaddress +
+                                          ":3000/review/" +
+                                          global.userID +
+                                          "/" +
+                                          item.requestId.workerId._id,
+                                        {
+                                          method: "POST",
+                                          body: JSON.stringify({
+                                            content: this.state.comment,
+                                          }),
+                                          headers: {
+                                            "content-type": "application/json",
+                                          },
+                                        }
+                                      )
+                                        .then(() => {
+                                          alert("Recruiter: Service finished.");
+                                          this.componentMount();
+                                        })
+                                        .catch((error) => {
+                                          console.log(
+                                            "rec review: Error has occured"
+                                          );
+                                          console.log(error);
+                                        });
+                                    }
                                   })
                                   .catch((error) => {
                                     console.log("Recruiter: Error has occured");
                                     console.log(error);
                                   });
-                                this.componentMount();
+                                this.componentMount;
                               } else {
                                 fetch(
                                   "http://" +
@@ -444,33 +445,35 @@ class MyBookingsScreen extends React.Component {
                                 )
                                   .then(() => {
                                     // alert("Worker: Service finished.");
-                                    fetch(
-                                      "http://" +
-                                        global.IPaddress +
-                                        ":3000/review/" +
-                                        global.userID +
-                                        "/" +
-                                        item.requestId.recuiterId._id,
-                                      {
-                                        method: "POST",
-                                        body: JSON.stringify({
-                                          content: this.state.comment,
-                                        }),
-                                        headers: {
-                                          "content-type": "application/json",
-                                        },
-                                      }
-                                    )
-                                      .then(() => {
-                                        alert("Recruiter: Service finished.");
-                                        this.componentMount();
-                                      })
-                                      .catch((error) => {
-                                        console.log(
-                                          "worker review: Error has occured"
-                                        );
-                                        console.log(error);
-                                      });
+                                    if (this.state.comment) {
+                                      fetch(
+                                        "http://" +
+                                          global.IPaddress +
+                                          ":3000/review/" +
+                                          global.userID +
+                                          "/" +
+                                          item.requestId.recuiterId._id,
+                                        {
+                                          method: "POST",
+                                          body: JSON.stringify({
+                                            content: this.state.comment,
+                                          }),
+                                          headers: {
+                                            "content-type": "application/json",
+                                          },
+                                        }
+                                      )
+                                        .then(() => {
+                                          alert("Recruiter: Service finished.");
+                                          this.componentMount();
+                                        })
+                                        .catch((error) => {
+                                          console.log(
+                                            "worker review: Error has occured"
+                                          );
+                                          console.log(error);
+                                        });
+                                    }
                                   })
                                   .catch((error) => {
                                     console.log("Worker: Error has occured");
@@ -478,7 +481,7 @@ class MyBookingsScreen extends React.Component {
                                   });
                                 this.componentMount();
                               }
-                              this.componentMount();
+                              this.componentMount;
                             }}
                           >
                             <Text style={[styles.txtWhite]}>

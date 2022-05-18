@@ -41,6 +41,8 @@ import RequestDetailScreen from "./Screens/RequestDetailScreen";
 import "./global/Global";
 import { useNavigation } from "@react-navigation/native";
 import WorkerProfile from "./Screens/WorkerProfile";
+import Comments from "./components/Comments";
+import CommentsProfile from "./Screens/CommentsProfile";
 
 function CustomDrawerContent(props) {
   // const navigation = useNavigation();
@@ -103,7 +105,7 @@ function CustomDrawerContent(props) {
             flexDirection: "row",
             alignItems: "center",
           }}
-          onPress={() => props.navigation.navigate("RequestsScreen")}
+          onPress={() => props.navigation.navigate("Requests")}
         >
           <Image
             source={require("./assets/icons/request.png")}
@@ -231,6 +233,16 @@ function HomeStack() {
         component={WorkerProfile}
         options={navOptionHandler}
       />
+      <StackHome.Screen
+        name="CommentsHome"
+        component={Comments}
+        options={navOptionHandler}
+      />
+      <StackHome.Screen
+        name="CommentsProfileHome"
+        component={CommentsProfile}
+        options={navOptionHandler}
+      />
     </StackHome.Navigator>
   );
 }
@@ -280,7 +292,7 @@ function TabNivagator() {
         tabBarIcon: ({ focused }) => {
           let iconName;
 
-          if (route.name === "Home") {
+          if (route.name === "HomeTab") {
             iconName = focused
               ? require("./assets/icons/home-filled.png")
               : require("./assets/icons/home-outline.png");
@@ -313,22 +325,22 @@ function TabNivagator() {
         },
       })}
     >
-      <Tab.Screen name="Home" component={HomeStack} />
+      <Tab.Screen name="HomeTab" component={HomeStack} />
       <Tab.Screen
         name="ListOfAllWorkersTab"
         component={ListOfAllWorkers}
-        initialParams={{ navigation }}
+        // initialParams={{ navigation }}
       />
       <Tab.Screen name="Search" component={SearchScreen} />
       <Tab.Screen
         name="Messages"
         component={MessagesScreen}
-        options={{ tabBarBadge: 3 }}
+        // options={{ tabBarBadge: 3 }}
       />
       <Tab.Screen
         name="Notifications"
         component={NotificationsScreen}
-        options={{ tabBarBadge: 5 }}
+        // options={{ tabBarBadge: 5 }}
       />
 
       {/* hidden tab navigation buttons */}
@@ -372,6 +384,21 @@ function TabNivagator() {
         component={WorkerProfile}
         options={hiddenTabNavBtn}
       />
+      <Tab.Screen
+        name="CompletedTaskTab"
+        component={CompletedTasksScreen}
+        options={hiddenTabNavBtn}
+      />
+      <Tab.Screen
+        name="CommentsTab"
+        component={Comments}
+        options={hiddenTabNavBtn}
+      />
+      {/* <Tab.Screen
+        name="CommentsProfileTab"
+        component={CommentsProfile}
+        options={hiddenTabNavBtn}
+      /> */}
     </Tab.Navigator>
   );
 }
@@ -427,7 +454,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <StackApp.Navigator initialRouteName="LoginStack">
+      <StackApp.Navigator initialRouteName="LoginScreen">
         <StackApp.Screen
           name="HomeApp"
           component={DrawerNavigator}
@@ -454,7 +481,7 @@ export default function App() {
           options={navOptionHandler}
         />
         <StackApp.Screen
-          name="LoginStack"
+          name="LoginScreen"
           component={LoginStack}
           options={navOptionHandler}
         />

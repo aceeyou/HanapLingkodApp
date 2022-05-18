@@ -145,9 +145,26 @@ export default function WorkerProfile({ navigation }) {
             </View>
 
             {/* birthdate */}
-            <View style={[styles.viewRow]}>
-              <Text style={styles.infoDetail}>Comments</Text>
-              <Text style={styles.infoDetail}></Text>
+            <View>
+              <Text style={{ fontSize: 16, marginBottom: 10 }}>Comments</Text>
+              {/* <Text>This is a comment</Text> */}
+              <View style={{ elevation: 6 }}>
+                <TouchableOpacity
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    paddingHorizontal: 20,
+                    paddingVertical: 7,
+                    borderRadius: 6,
+                    backgroundColor: "#fffeee",
+                  }}
+                  onPress={() => navigation.navigate("CommentsProfileHome")}
+                >
+                  <Text>Read Comments and Reviews</Text>
+                  <Image source={require("../assets/icons/arrow-right.png")} />
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </View>

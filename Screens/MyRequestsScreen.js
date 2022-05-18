@@ -437,7 +437,7 @@ class MyRequestsScreen extends Component {
                                     console.log("Error has occured");
                                     console.log(error);
                                   });
-                                this.componentMount();
+                                this.componentMount;
                               }}
                             >
                               <Text style={styles.btnTxt}>Accept</Text>
