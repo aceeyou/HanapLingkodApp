@@ -20,7 +20,7 @@ function CustomHeader(props) {
         {props.isHome ? (
           <TouchableOpacity onPress={() => navigation.openDrawer()}>
             <Image
-              style={{ width: 23, height: 23, marginLeft: 0 }}
+              style={{ width: 20, height: 20, marginLeft: 0 }}
               source={require("../assets/icons/hamburger.png")}
               resizeMode="contain"
             />
@@ -46,7 +46,7 @@ function CustomHeader(props) {
         <Text
           style={{
             textAlign: "left",
-            fontSize: 20,
+            fontSize: 18,
             fontWeight: "700",
             color: "#0d0d0c",
           }}

@@ -159,7 +159,11 @@ export default function WorkerProfile({ navigation }) {
                     borderRadius: 6,
                     backgroundColor: "#fffeee",
                   }}
-                  onPress={() => navigation.navigate("CommentsProfileHome")}
+                  onPress={() => {
+                    global.userRole === "recruiter"
+                      ? navigation.navigate("CommentsProfileHome")
+                      : navigation.navigate("CommentsProfileLOAWScreen");
+                  }}
                 >
                   <Text>Read Comments and Reviews</Text>
                   <Image source={require("../assets/icons/arrow-right.png")} />

@@ -243,6 +243,16 @@ function HomeStack() {
         component={CommentsProfile}
         options={navOptionHandler}
       />
+      <StackHome.Screen
+        name="ListOfAllWorkersHome"
+        component={ListOfAllWorkers}
+        options={navOptionHandler}
+      />
+      <StackHome.Screen
+        name="WorkerProfileHome"
+        component={WorkerProfile}
+        options={navOptionHandler}
+      />
     </StackHome.Navigator>
   );
 }
@@ -278,6 +288,35 @@ function LoginStack() {
         options={navOptionHandler}
       />
     </StackLogin.Navigator>
+  );
+}
+
+const StackListOfAllWorkers = createNativeStackNavigator();
+
+function ListOfAllWorkersStack() {
+  return (
+    <StackListOfAllWorkers.Navigator initialRouteName="ListOfAllWorkersStackScreen">
+      <StackListOfAllWorkers.Screen
+        name="ListOfAllWorkersStackScreen"
+        component={ListOfAllWorkers}
+        options={navOptionHandler}
+      />
+      <StackListOfAllWorkers.Screen
+        name="WorkerProfileLOAWScreen"
+        component={WorkerProfile}
+        options={navOptionHandler}
+      />
+      <StackListOfAllWorkers.Screen
+        name="RequestFormLOAWScreen"
+        component={RequestForm}
+        options={navOptionHandler}
+      />
+      <StackListOfAllWorkers.Screen
+        name="CommentsProfileLOAWScreen"
+        component={CommentsProfile}
+        options={navOptionHandler}
+      />
+    </StackListOfAllWorkers.Navigator>
   );
 }
 
@@ -328,8 +367,7 @@ function TabNivagator() {
       <Tab.Screen name="HomeTab" component={HomeStack} />
       <Tab.Screen
         name="ListOfAllWorkersTab"
-        component={ListOfAllWorkers}
-        // initialParams={{ navigation }}
+        component={ListOfAllWorkersStack}
       />
       <Tab.Screen name="Search" component={SearchScreen} />
       <Tab.Screen

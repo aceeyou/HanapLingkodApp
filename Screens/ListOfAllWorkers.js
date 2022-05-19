@@ -75,7 +75,11 @@ export default class ListOfAllWorkers extends React.Component {
                     style={styles.btn}
                     onPress={() => {
                       global.selectedWorker = item._id;
-                      this.props.navigation.navigate("RequestFormScreen");
+                      global.userRole === "recruiter"
+                        ? this.props.navigation.navigate("RequestFormHome")
+                        : this.props.navigation.navigate(
+                            "WorkerProfileLOAWScreen"
+                          );
                     }}
                   >
                     <View
