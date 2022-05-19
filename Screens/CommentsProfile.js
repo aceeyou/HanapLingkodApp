@@ -13,6 +13,7 @@ import {
 
 import "../global/Global";
 import CustomHeader from "../components/CustomerHeader";
+import StarRatingComponent from "../components/StarRatingComponent";
 
 export default class CommentsProfile extends React.Component {
   constructor(props) {
@@ -21,6 +22,11 @@ export default class CommentsProfile extends React.Component {
       isLoaded: true,
       dd: {},
     };
+  }
+
+  updateRating(r = 0) {
+    this.state = { rating: r };
+    console.log(this.state.rating);
   }
 
   goRefresh() {
@@ -71,11 +77,12 @@ export default class CommentsProfile extends React.Component {
 
   render() {
     let { dd } = this.state;
+    let gr = 0;
     // this.componentMount();
     return (
       <SafeAreaView style={{ marginTop: StatusBar.currentHeight, flex: 1 }}>
-        {this.goRefresh()}
         {this.state.isLoaded ? this.componentMount() : null}
+        {this.goRefresh()}
         <CustomHeader title="Comments & Reviews" isCreateAccount={true} />
 
         <View style={{ flex: 1 }}>
@@ -131,18 +138,28 @@ export default class CommentsProfile extends React.Component {
                         marginRight: 10,
                       }}
                     />
-                    <View
-                      style={{ flexDirection: "row", alignItems: "baseline" }}
-                    >
-                      <Text
-                        style={{
-                          fontSize: 14,
-                          marginRight: 5,
-                        }}
+                    <View style={{}}>
+                      <View
+                        style={{ flexDirection: "row", alignItems: "baseline" }}
                       >
-                        {item.reviewer.firstname} {item.reviewer.lastname}
-                      </Text>
-                      <Text> said</Text>
+                        <Text
+                          style={{
+                            fontSize: 14,
+                            marginRight: 5,
+                          }}
+                        >
+                          {item.reviewer.firstname} {item.reviewer.lastname}
+                        </Text>
+                        <Text> said</Text>
+                      </View>
+                      <View pointerEvents="none">
+                        <StarRatingComponent
+                          givenRating={(gr = parseFloat(item.stars))}
+                          getR={(r) => this.updateRating(item.stars)}
+                          starSize={15}
+                          commentsSection={true}
+                        />
+                      </View>
                     </View>
                   </View>
 

@@ -24,17 +24,18 @@ class MyBookingsScreen extends React.Component {
       isLoaded: true,
       data: [],
       comment: "",
+      rating: 0,
     };
   }
 
-  updateRating(r) {
-    this.state = { rating: r };
-    console.log(this.state.rating);
-  }
+  // updateRating(r) {
+  //   this.state = { rating: r };
+  //   console.log(this.state.rating);
+  // }
 
   goRefresh() {
     this.focusListener = this.props.navigation.addListener("focus", () => {
-      this.componentMount;
+      this.componentMount();
     });
   }
 
@@ -51,8 +52,8 @@ class MyBookingsScreen extends React.Component {
           isLoaded: false,
           data: responseJson,
         });
-        global.bookingCount = this.state.data.length;
-        console.log("len: ", this.state.data.length);
+        // global.bookingCount = this.state.data.length;
+        // console.log("len: ", this.state.data.length);
         console.log(this.state.data);
       })
       .catch((error) => {
@@ -65,6 +66,7 @@ class MyBookingsScreen extends React.Component {
 
   render() {
     let { data } = this.state;
+    let ratingData = 0;
 
     return (
       <SafeAreaView style={{ flex: 1, marginTop: StatusBar.currentHeight }}>
@@ -342,12 +344,11 @@ class MyBookingsScreen extends React.Component {
                             marginTop: 20,
                           }}
                         >
-                          {/* <StarRating
-                            value={this.state.rating}
-                            onChange={() => this.setState(rating)}
-                          /> */}
                           <StarRatingComponent
-                            getR={(r) => this.updateRating(r)}
+                            getR={(r) => {
+                              ratingData = r.toString();
+                              // console.log(ratingData);
+                            }}
                           />
                         </View>
                         <View style={{ paddingHorizontal: 20 }}>
@@ -410,6 +411,7 @@ class MyBookingsScreen extends React.Component {
                             <TouchableOpacity
                               style={{ width: "100%", alignItems: "center" }}
                               onPress={() => {
+                                console.log("clicked");
                                 if (global.userRole == "recruiter") {
                                   fetch(
                                     "http://" +
@@ -442,6 +444,7 @@ class MyBookingsScreen extends React.Component {
                                           {
                                             method: "POST",
                                             body: JSON.stringify({
+                                              stars: ratingData,
                                               content: this.state.comment,
                                             }),
                                             headers: {
@@ -470,7 +473,7 @@ class MyBookingsScreen extends React.Component {
                                       );
                                       console.log(error);
                                     });
-                                  this.componentMount;
+                                  this.componentMount();
                                 } else {
                                   fetch(
                                     "http://" +
@@ -502,6 +505,7 @@ class MyBookingsScreen extends React.Component {
                                           {
                                             method: "POST",
                                             body: JSON.stringify({
+                                              stars: ratingData,
                                               content: this.state.comment,
                                             }),
                                             headers: {
@@ -530,7 +534,7 @@ class MyBookingsScreen extends React.Component {
                                     });
                                   this.componentMount();
                                 }
-                                this.componentMount;
+                                this.componentMount();
                               }}
                             >
                               <Text style={[styles.txtWhite]}>
