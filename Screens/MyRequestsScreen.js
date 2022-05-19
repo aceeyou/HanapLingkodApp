@@ -41,6 +41,7 @@ class MyRequestsScreen extends Component {
     })
       .then((response) => response.json())
       .then((responseJson) => {
+        // this.updateData(responseJson);
         this.setState({
           isLoaded: false,
           data: responseJson,
@@ -55,24 +56,32 @@ class MyRequestsScreen extends Component {
       });
   }
 
+  updateData(newData) {
+    this.setState({
+      isLoaded: false,
+      data: [...this.state.data, ...newData],
+    });
+  }
+
   render() {
     let { data } = this.state;
 
     return (
       <SafeAreaView style={{ flex: 1, marginTop: StatusBar.currentHeight }}>
-        <CustomHeader title="My Requests" />
+        {/* <CustomHeader title="My Requests" /> */}
         {this.goRefresh()}
+        {/* {this.updateData()} */}
         {this.state.isLoaded ? this.componentMount() : null}
         <View
           style={{
             flex: 1,
             justifyContent: "center",
-            marginTop: 30,
+            // marginTop: 30,
           }}
         >
-          <Text style={{ fontSize: 15, marginLeft: 50, marginBottom: 30 }}>
+          {/* <Text style={{ fontSize: 15, marginLeft: 50, marginBottom: 30 }}>
             Below are the list of requests
-          </Text>
+          </Text> */}
 
           <View
             style={{
@@ -82,6 +91,17 @@ class MyRequestsScreen extends Component {
             }}
           >
             <FlatList
+              ListHeaderComponent={
+                <View>
+                  <CustomHeader title="My Requests" />
+
+                  <Text
+                    style={{ fontSize: 15, marginLeft: 50, marginVertical: 30 }}
+                  >
+                    Below are the list of requests
+                  </Text>
+                </View>
+              }
               extraData={this.state}
               ListFooterComponent={<View style={{ height: 60 }} />}
               keyExtractor={(item) => item._id}
@@ -437,7 +457,7 @@ class MyRequestsScreen extends Component {
                                     console.log("Error has occured");
                                     console.log(error);
                                   });
-                                this.componentMount;
+                                this.componentMount();
                               }}
                             >
                               <Text style={styles.btnTxt}>Accept</Text>
