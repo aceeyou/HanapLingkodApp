@@ -13,6 +13,7 @@ import {
 
 import "../global/Global";
 import CustomHeader from "./CustomerHeader";
+import StarRatingComponent from "./StarRatingComponent";
 
 export default class Comments extends React.Component {
   constructor(props) {
@@ -22,6 +23,11 @@ export default class Comments extends React.Component {
       dd: {},
       commentLen: 0,
     };
+  }
+
+  updateRating(r = 0) {
+    this.state = { rating: r };
+    console.log(this.state.rating);
   }
 
   goRefresh() {
@@ -72,6 +78,8 @@ export default class Comments extends React.Component {
 
   render() {
     let { dd } = this.state;
+    let gr = 0;
+
     // this.componentMount();
     return (
       <SafeAreaView style={{ marginTop: StatusBar.currentHeight, flex: 1 }}>
@@ -132,18 +140,28 @@ export default class Comments extends React.Component {
                         marginRight: 10,
                       }}
                     />
-                    <View
-                      style={{ flexDirection: "row", alignItems: "baseline" }}
-                    >
-                      <Text
-                        style={{
-                          fontSize: 14,
-                          marginRight: 5,
-                        }}
+                    <View style={{}}>
+                      <View
+                        style={{ flexDirection: "row", alignItems: "baseline" }}
                       >
-                        {item.reviewer.firstname} {item.reviewer.lastname}
-                      </Text>
-                      <Text> said</Text>
+                        <Text
+                          style={{
+                            fontSize: 14,
+                            marginRight: 5,
+                          }}
+                        >
+                          {item.reviewer.firstname} {item.reviewer.lastname}
+                        </Text>
+                        <Text> said</Text>
+                      </View>
+                      <View pointerEvents="none">
+                        <StarRatingComponent
+                          givenRating={(gr = parseFloat(item.stars))}
+                          getR={(r) => this.updateRating(item.stars)}
+                          starSize={15}
+                          commentsSection={true}
+                        />
+                      </View>
                     </View>
                   </View>
                   <Text
