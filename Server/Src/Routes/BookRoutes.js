@@ -5,7 +5,7 @@ const Book = require("../Models/Book");
 router.route("/book/:user").get(function (req, res) {
   Book.find(
     {
-      $or: [{ recuiterId: req.params.user }, { workerId: req.params.user }],
+      $or: [{ rId: req.params.user }, { wId: req.params.user }],
     },
     function (err, foundRequest) {
       if (!err) {
@@ -81,7 +81,7 @@ router.route("/completed/:user").get(function (req, res) {
   Book.find(
     {
       $or: [{ recuiterId: req.params.user }, { workerId: req.params.user }],
-      $and: [{ status: "3" }]
+      $and: [{ status: "3" }],
     },
     function (err, foundRequest) {
       if (!err) {
