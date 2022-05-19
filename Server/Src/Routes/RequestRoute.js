@@ -105,9 +105,13 @@ router
     });
   });
 
-function createBook(id) {
+async function createBook(id) {
+  const ID_USERS = await Request.findOne({ _id: id }).exec();
+  console.log(ID_USERS.recuiterId);
   const OTP = Math.random().toString(36).substring(2, 7);
   const newBook = new Book({
+    rId: ID_USERS.recuiterId,
+    wId: ID_USERS.workerId,
     rConfirm: "1",
     wConfirm: "1",
     status: "1",
