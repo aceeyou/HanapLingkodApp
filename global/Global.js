@@ -13,6 +13,9 @@ global.selectedServiceID = "";
 global.requestCount = 0;
 global.bookingCount = 0;
 
+// view request detail | id of selected request;
+global.requestID = "";
+
 // new worker account
 global.workerID = "";
 global.selectedWorkSubCat = "";

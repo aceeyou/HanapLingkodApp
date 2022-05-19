@@ -82,8 +82,8 @@ export default class CompletedTasksScreen extends React.Component {
       <SafeAreaView
         style={{ marginTop: StatusBar.currentHeight, paddingBottom: 100 }}
       >
-        {this.goRefresh()}
         {this.state.isLoaded ? this.componentMount() : null}
+        {this.goRefresh()}
         <CustomHeader title="Completed Tasks" />
         <Text style={{ fontSize: 15, marginLeft: 50, paddingVertical: 20 }}>
           Below are the list of Completed Tasks
@@ -106,7 +106,13 @@ export default class CompletedTasksScreen extends React.Component {
                   backgroundColor: "#dddcdc",
                 }}
               >
-                <TouchableOpacity>
+                <TouchableOpacity
+                // onPress={() => {
+                //   global.selectedWorker = item.workerId._id;
+                //   console.log(global.selectedWorker);
+                //   this.props.navigation.navigate("RequestDetailTab");
+                // }}
+                >
                   <View
                     style={{
                       marginBottom: 10,

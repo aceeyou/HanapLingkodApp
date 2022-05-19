@@ -43,6 +43,7 @@ import { useNavigation } from "@react-navigation/native";
 import WorkerProfile from "./Screens/WorkerProfile";
 import Comments from "./components/Comments";
 import CommentsProfile from "./Screens/CommentsProfile";
+import RequestDetail from "./Screens/RequestDetail";
 
 function CustomDrawerContent(props) {
   // const navigation = useNavigation();
@@ -253,6 +254,11 @@ function HomeStack() {
         component={WorkerProfile}
         options={navOptionHandler}
       />
+      <StackHome.Screen
+        name="RequestDetailHome"
+        component={RequestDetail}
+        options={navOptionHandler}
+      />
     </StackHome.Navigator>
   );
 }
@@ -432,11 +438,11 @@ function TabNivagator() {
         component={Comments}
         options={hiddenTabNavBtn}
       />
-      {/* <Tab.Screen
-        name="CommentsProfileTab"
-        component={CommentsProfile}
+      <Tab.Screen
+        name="RequestDetailTab"
+        component={RequestDetail}
         options={hiddenTabNavBtn}
-      /> */}
+      />
     </Tab.Navigator>
   );
 }

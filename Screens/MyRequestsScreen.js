@@ -109,7 +109,7 @@ class MyRequestsScreen extends Component {
               renderItem={({ item }) => (
                 // Recruiter View
                 <View style={{ flex: 1, paddingHorizontal: 30 }}>
-                  <View
+                  <TouchableOpacity
                     style={{
                       flex: 1,
                       backgroundColor: "#dddcdc",
@@ -120,6 +120,10 @@ class MyRequestsScreen extends Component {
                       overflow: "hidden",
                       borderColor: "#1c2541",
                       borderWidth: 1,
+                    }}
+                    onPress={() => {
+                      global.requestID = item._id;
+                      this.props.navigation.navigate("RequestDetailTab");
                     }}
                   >
                     {global.userRole == "recruiter" ? (
@@ -501,7 +505,7 @@ class MyRequestsScreen extends Component {
                         )}
                       </View>
                     )}
-                  </View>
+                  </TouchableOpacity>
                 </View>
               )}
             />
