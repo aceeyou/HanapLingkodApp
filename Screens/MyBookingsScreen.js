@@ -14,6 +14,8 @@ import {
 import BookingsItem from "../components/BookingsItem";
 import CustomHeader from "../components/CustomerHeader";
 import RequestsItem from "../components/RequestsItem";
+import StarRating from "react-native-star-rating-widget";
+import StarRatingComponent from "../components/StarRatingComponent";
 
 class MyBookingsScreen extends React.Component {
   constructor(props) {
@@ -22,8 +24,12 @@ class MyBookingsScreen extends React.Component {
       isLoaded: true,
       data: [],
       comment: "",
-      otpShown: false,
     };
+  }
+
+  updateRating(r) {
+    this.state = { rating: r };
+    console.log(this.state.rating);
   }
 
   goRefresh() {
@@ -64,9 +70,9 @@ class MyBookingsScreen extends React.Component {
       <SafeAreaView style={{ flex: 1, marginTop: StatusBar.currentHeight }}>
         {this.goRefresh()}
         {this.state.isLoaded ? this.componentMount() : null}
-        <CustomHeader title="My Bookings" />
+        {/* <CustomHeader title="My Bookings" /> */}
         <View style={{ flex: 1, marginHorizontal: 0 }}>
-          <Text
+          {/* <Text
             style={{
               marginTop: 30,
               marginLeft: 50,
@@ -75,9 +81,25 @@ class MyBookingsScreen extends React.Component {
             }}
           >
             Below are the list of bookings
-          </Text>
+          </Text> */}
 
           <FlatList
+            ListHeaderComponent={
+              <View>
+                <CustomHeader title="My Bookings" />
+
+                <Text
+                  style={{
+                    marginTop: 30,
+                    marginLeft: 50,
+                    marginBottom: 10,
+                    fontSize: 16,
+                  }}
+                >
+                  Below are the list of bookings
+                </Text>
+              </View>
+            }
             extraData={data}
             ListFooterComponent={<View style={{ height: 60 }} />}
             keyExtractor={(item) => item._id}
@@ -194,6 +216,7 @@ class MyBookingsScreen extends React.Component {
                       )}
                     </View>
                     <View style={{ paddingHorizontal: 25, marginTop: 7 }}>
+                      <Text>{item.requestId.recuiterId.lastname}</Text>
                       <View style={{ marginBottom: 10 }}>
                         <Text style={[styles.txtDark]}>Recruiter address:</Text>
                         <Text
@@ -264,13 +287,14 @@ class MyBookingsScreen extends React.Component {
                               )
                                 .then(() => {
                                   alert("worker is on the way");
+                                  this.componentMount();
                                 })
                                 .catch((error) => {
                                   alert("error");
                                   console.log(error);
                                   return;
                                 });
-                              this.componentMount;
+                              this.componentMount();
                             }}
                           >
                             <Text style={[styles.txtWhite]}>On my way!</Text>
@@ -309,185 +333,211 @@ class MyBookingsScreen extends React.Component {
                       </View>
                     ) : null}
                     {item.status === "2" ? (
-                      <View style={{ paddingHorizontal: 20 }}>
+                      <View>
                         <View
                           style={{
-                            marginTop: 20,
-                            backgroundColor: "#fff",
-                            padding: 5,
-                            borderRadius: 6,
-                            elevation: 3,
-                          }}
-                        >
-                          <Text
-                            style={{
-                              marginVertical: 10,
-                              marginLeft: 15,
-                              fontSize: 14,
-                            }}
-                          >
-                            Comment/Review
-                          </Text>
-                          <View
-                            sytle={{
-                              flex: 1,
-                              borderWidth: 1,
-                              borderColor: "#1c2541",
-                              // borderRadius: 6,
-                              padding: 10,
-                              elevation: 5,
-                            }}
-                          >
-                            <TextInput
-                              style={{
-                                // height: 110,
-                                marginHorizontal: 10,
-                                borderWidth: 1,
-                                padding: 10,
-                                marginBottom: 10,
-                                textAlignVertical: "top",
-                                borderRadius: 6,
-                              }}
-                              multiline={true}
-                              onChangeText={(text) => {
-                                this.setState({ comment: text });
-                              }}
-                              placeholder="Write your feedback"
-                            />
-                          </View>
-                        </View>
-                        <View
-                          style={{
-                            backgroundColor: "green",
-                            marginTop: 15,
-                            borderRadius: 6,
-                            paddingVertical: 10,
+                            flexDirection: "row",
                             alignItems: "center",
-                            elevation: 4,
+                            justifyContent: "center",
+                            marginTop: 20,
                           }}
                         >
-                          <TouchableOpacity
-                            style={{ width: "100%", alignItems: "center" }}
-                            onPress={() => {
-                              if (global.userRole == "recruiter") {
-                                fetch(
-                                  "http://" +
-                                    global.IPaddress +
-                                    ":3000/book/" +
-                                    global.userID +
-                                    "/" +
-                                    item._id,
-                                  {
-                                    method: "PUT",
-                                    body: JSON.stringify({
-                                      rConfirm: "2",
-                                    }),
-                                    headers: {
-                                      "content-type": "application/json",
-                                    },
-                                  }
-                                )
-                                  .then(() => {
-                                    alert("Recruiter: Service finished.");
-
-                                    if (this.state.comment) {
-                                      fetch(
-                                        "http://" +
-                                          global.IPaddress +
-                                          ":3000/review/" +
-                                          global.userID +
-                                          "/" +
-                                          item.requestId.workerId._id,
-                                        {
-                                          method: "POST",
-                                          body: JSON.stringify({
-                                            content: this.state.comment,
-                                          }),
-                                          headers: {
-                                            "content-type": "application/json",
-                                          },
-                                        }
-                                      )
-                                        .then(() => {
-                                          alert("Recruiter: Service finished.");
-                                          this.componentMount();
-                                        })
-                                        .catch((error) => {
-                                          console.log(
-                                            "rec review: Error has occured"
-                                          );
-                                          console.log(error);
-                                        });
-                                    }
-                                  })
-                                  .catch((error) => {
-                                    console.log("Recruiter: Error has occured");
-                                    console.log(error);
-                                  });
-                                this.componentMount;
-                              } else {
-                                fetch(
-                                  "http://" +
-                                    global.IPaddress +
-                                    ":3000/book/" +
-                                    global.userID +
-                                    "/" +
-                                    item._id,
-                                  {
-                                    method: "PUT",
-                                    body: JSON.stringify({
-                                      wConfirm: "2",
-                                    }),
-                                    headers: {
-                                      "content-type": "application/json",
-                                    },
-                                  }
-                                )
-                                  .then(() => {
-                                    // alert("Worker: Service finished.");
-                                    if (this.state.comment) {
-                                      fetch(
-                                        "http://" +
-                                          global.IPaddress +
-                                          ":3000/review/" +
-                                          global.userID +
-                                          "/" +
-                                          item.requestId.recuiterId._id,
-                                        {
-                                          method: "POST",
-                                          body: JSON.stringify({
-                                            content: this.state.comment,
-                                          }),
-                                          headers: {
-                                            "content-type": "application/json",
-                                          },
-                                        }
-                                      )
-                                        .then(() => {
-                                          alert("Recruiter: Service finished.");
-                                          this.componentMount();
-                                        })
-                                        .catch((error) => {
-                                          console.log(
-                                            "worker review: Error has occured"
-                                          );
-                                          console.log(error);
-                                        });
-                                    }
-                                  })
-                                  .catch((error) => {
-                                    console.log("Worker: Error has occured");
-                                    console.log(error);
-                                  });
-                                this.componentMount();
-                              }
-                              this.componentMount;
+                          {/* <StarRating
+                            value={this.state.rating}
+                            onChange={() => this.setState(rating)}
+                          /> */}
+                          <StarRatingComponent
+                            getR={(r) => this.updateRating(r)}
+                          />
+                        </View>
+                        <View style={{ paddingHorizontal: 20 }}>
+                          <View
+                            style={{
+                              marginTop: 20,
+                              backgroundColor: "#fff",
+                              padding: 5,
+                              borderRadius: 6,
+                              elevation: 3,
                             }}
                           >
-                            <Text style={[styles.txtWhite]}>
-                              Service is done!
+                            <Text
+                              style={{
+                                marginVertical: 10,
+                                marginLeft: 15,
+                                fontSize: 14,
+                              }}
+                            >
+                              Comment/Review
                             </Text>
-                          </TouchableOpacity>
+                            <View
+                              sytle={{
+                                flex: 1,
+                                borderWidth: 1,
+                                borderColor: "#1c2541",
+                                // borderRadius: 6,
+                                padding: 10,
+                                elevation: 5,
+                              }}
+                            >
+                              <TextInput
+                                style={{
+                                  // height: 110,
+                                  marginHorizontal: 10,
+                                  borderWidth: 1,
+                                  padding: 10,
+                                  marginBottom: 10,
+                                  textAlignVertical: "top",
+                                  borderRadius: 6,
+                                }}
+                                multiline={true}
+                                onChangeText={(text) => {
+                                  this.setState({ comment: text });
+                                }}
+                                placeholder="Write your feedback"
+                              />
+                            </View>
+                          </View>
+                          <View
+                            style={{
+                              backgroundColor: "#298965",
+                              marginTop: 15,
+                              borderRadius: 6,
+                              paddingVertical: 10,
+                              alignItems: "center",
+                              elevation: 4,
+                            }}
+                          >
+                            <TouchableOpacity
+                              style={{ width: "100%", alignItems: "center" }}
+                              onPress={() => {
+                                if (global.userRole == "recruiter") {
+                                  fetch(
+                                    "http://" +
+                                      global.IPaddress +
+                                      ":3000/book/" +
+                                      global.userID +
+                                      "/" +
+                                      item._id,
+                                    {
+                                      method: "PUT",
+                                      body: JSON.stringify({
+                                        rConfirm: "2",
+                                      }),
+                                      headers: {
+                                        "content-type": "application/json",
+                                      },
+                                    }
+                                  )
+                                    .then(() => {
+                                      alert("Recruiter: Service finished.");
+
+                                      if (this.state.comment) {
+                                        fetch(
+                                          "http://" +
+                                            global.IPaddress +
+                                            ":3000/review/" +
+                                            global.userID +
+                                            "/" +
+                                            item.requestId.workerId._id,
+                                          {
+                                            method: "POST",
+                                            body: JSON.stringify({
+                                              content: this.state.comment,
+                                            }),
+                                            headers: {
+                                              "content-type":
+                                                "application/json",
+                                            },
+                                          }
+                                        )
+                                          .then(() => {
+                                            alert(
+                                              "Recruiter: Service finished."
+                                            );
+                                            this.componentMount();
+                                          })
+                                          .catch((error) => {
+                                            console.log(
+                                              "rec review: Error has occured"
+                                            );
+                                            console.log(error);
+                                          });
+                                      }
+                                    })
+                                    .catch((error) => {
+                                      console.log(
+                                        "Recruiter: Error has occured"
+                                      );
+                                      console.log(error);
+                                    });
+                                  this.componentMount;
+                                } else {
+                                  fetch(
+                                    "http://" +
+                                      global.IPaddress +
+                                      ":3000/book/" +
+                                      global.userID +
+                                      "/" +
+                                      item._id,
+                                    {
+                                      method: "PUT",
+                                      body: JSON.stringify({
+                                        wConfirm: "2",
+                                      }),
+                                      headers: {
+                                        "content-type": "application/json",
+                                      },
+                                    }
+                                  )
+                                    .then(() => {
+                                      // alert("Worker: Service finished.");
+                                      if (this.state.comment) {
+                                        fetch(
+                                          "http://" +
+                                            global.IPaddress +
+                                            ":3000/review/" +
+                                            global.userID +
+                                            "/" +
+                                            item.requestId.recuiterId._id,
+                                          {
+                                            method: "POST",
+                                            body: JSON.stringify({
+                                              content: this.state.comment,
+                                            }),
+                                            headers: {
+                                              "content-type":
+                                                "application/json",
+                                            },
+                                          }
+                                        )
+                                          .then(() => {
+                                            alert(
+                                              "Recruiter: Service finished."
+                                            );
+                                            this.componentMount();
+                                          })
+                                          .catch((error) => {
+                                            console.log(
+                                              "worker review: Error has occured"
+                                            );
+                                            console.log(error);
+                                          });
+                                      }
+                                    })
+                                    .catch((error) => {
+                                      console.log("Worker: Error has occured");
+                                      console.log(error);
+                                    });
+                                  this.componentMount();
+                                }
+                                this.componentMount;
+                              }}
+                            >
+                              <Text style={[styles.txtWhite]}>
+                                Service is done!
+                              </Text>
+                            </TouchableOpacity>
+                          </View>
                         </View>
                       </View>
                     ) : null}
