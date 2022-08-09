@@ -2,7 +2,7 @@ const express = require("express");
 
 const router = express.Router();
 
-const User = require("../Models/User");
+const User = require("../Models/Worker");
 
 router.route("/worker").get(function (req, res) {
   User.find({ role: "worker" }, function (err, foundRequest) {

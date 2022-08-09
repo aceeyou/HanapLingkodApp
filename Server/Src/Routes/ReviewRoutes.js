@@ -1,8 +1,8 @@
 const bodyParser = require("body-parser");
 const express = require("express");
 const router = express.Router();
-const Review = require("../Models/Reviews");
-const User = require("../Models/User");
+const Review = require("../Models/Comments");
+const User = require("../Models/Worker");
 
 router.route("/review/:reviewer/:reviewee").post(function (req, res) {
   console.log(req.params);

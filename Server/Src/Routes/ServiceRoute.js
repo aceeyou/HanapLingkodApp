@@ -1,7 +1,7 @@
 const bodyParser = require("body-parser");
 const express = require("express");
 const router = express.Router();
-const Service = require("../Models/SpecificService");
+const Service = require("../Models/ServiceCategory");
 
 router
   .route("/service")
