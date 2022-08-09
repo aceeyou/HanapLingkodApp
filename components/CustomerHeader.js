@@ -71,7 +71,7 @@ function CustomHeader(props) {
               />
             ) : (
               <Image
-                source={require("../assets/icons/user-outline.png")}
+                source={require("../assets/icons/user-filled.png")}
                 style={{ width: 30, height: 30, borderRadius: 15 }}
               />
             )}

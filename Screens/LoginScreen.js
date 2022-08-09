@@ -90,10 +90,10 @@ function LoginScreen({ navigation }) {
           }}
         >
           <Image
-            source={require("../assets/bg.png")}
-            style={{ width: 120, height: 120, borderRadius: 60 }}
+            source={require("../assets/logo/HANAPLINGKOD_LOADING_SCREEN.png")}
+            style={{ width: 200, height: 140, marginRight: 10 }}
           />
-          <Text
+          {/* <Text
             style={{
               fontSize: 20,
               fontWeight: "700",
@@ -102,7 +102,7 @@ function LoginScreen({ navigation }) {
             }}
           >
             HanapLingkod
-          </Text>
+          </Text> */}
           <Text style={{ color: "darkgray" }}>#1🏆 App for Home Services</Text>
         </View>
 

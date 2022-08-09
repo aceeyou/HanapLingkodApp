@@ -87,15 +87,8 @@ export default class ListOfWorkers extends React.Component {
           </View>
 
           {this.goRefresh()}
-
           {/* {this.state.isLoaded ? this.componentMount() : null} */}
-          {/* {global.selectedWorkSubCat == this.state.data.category
-            ? null
-            : this.componentMount} */}
-          {/* {toTrue ? this.componentMount() : this.isScreenFocused} */}
-          {/* {toTrue ? this.componentMount() : (toTrue = true)} */}
 
-          {/* {isFocused ? this.componentMount() : null} */}
           <View
             style={{
               flex: 1,
@@ -131,7 +124,7 @@ export default class ListOfWorkers extends React.Component {
                     >
                       <Image
                         source={{
-                          uri: "https://pbs.twimg.com/media/EXayM80U4AAst8O.jpg",
+                          uri: "https://img.freepik.com/free-vector/generic-man-portrait-default-male-gender-avatar_543062-419.jpg?w=2000",
                         }}
                         style={{ width: "100%", height: "100%" }}
                       />

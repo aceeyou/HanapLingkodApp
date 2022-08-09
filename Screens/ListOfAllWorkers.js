@@ -91,10 +91,16 @@ export default class ListOfAllWorkers extends React.Component {
                       }}
                     >
                       <Image
-                        source={{
-                          uri: "https://pbs.twimg.com/media/EXayM80U4AAst8O.jpg",
+                        source={require("../assets/logo/HANAPLINGKOD_LOADING_SCREEN.jpg")}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          // borderWidth: 1,
+                          // borderColor: "#000",
+                          // borderTopLeftRadius: 6,
+                          // borderBottomLeftRadius: 6,
+                          // borderRight: "none",
                         }}
-                        style={{ width: "100%", height: "100%" }}
                       />
                     </View>
                     <View style={{ flex: 2, padding: 15 }}>
@@ -193,5 +199,7 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     overflow: "hidden",
     flexDirection: "row",
+    borderWidth: 1,
+    borderColor: "#000",
   },
 });

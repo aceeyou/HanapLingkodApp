@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import BookingsItem from "../components/BookingsItem";
 import CustomHeader from "../components/CustomerHeader";
-import RequestsItem from "../components/RequestsItem";
+import RequestsItem from "../components/RequestsItem_Recruiter";
 import StarRating from "react-native-star-rating-widget";
 import StarRatingComponent from "../components/StarRatingComponent";
 

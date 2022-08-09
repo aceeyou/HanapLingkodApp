@@ -361,7 +361,7 @@ function CreateAccountForm_Worker(props, { navigation }) {
                 value={confirmpassword}
                 ref={ref_confirmpass}
                 keyboardType="default"
-                returnKeyType="submit"
+                returnKeyType="none"
                 onChangeText={(value) => setConfirmPassword(value)}
                 containerStyles={{
                   borderWidth: 0,

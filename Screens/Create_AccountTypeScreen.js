@@ -20,7 +20,10 @@ function Create_AccountTypeScreen({ navigation }) {
           style={styles.btn}
           onPress={() => navigation.navigate("CAF_Recruiter")}
         >
-          <Image source={require("../assets/bg.png")} style={styles.image} />
+          <Image
+            source={require("../assets/logo/HANAPLINGKOD_LOGO.png")}
+            style={styles.image}
+          />
           <View style={{ flex: 1 }}>
             <Text style={styles.header}>Recruiter Account</Text>
             <Text>For user who are searching for on-demand home services</Text>
@@ -31,7 +34,10 @@ function Create_AccountTypeScreen({ navigation }) {
           style={[styles.btn, styles.btnWorker]}
           onPress={() => navigation.navigate("CAF_Worker")}
         >
-          <Image source={require("../assets/bg2.png")} style={styles.image} />
+          <Image
+            source={require("../assets/logo/HANAPLINGKOD_LOGO.png")}
+            style={styles.image}
+          />
           <View style={{ flex: 1 }}>
             <Text style={[styles.header, styles.headerWhite]}>
               Worker Account
@@ -69,6 +75,7 @@ const styles = StyleSheet.create({
     height: 70,
     borderRadius: 35,
     marginRight: 20,
+    backgroundColor: "#fff",
   },
   textHeader: {
     textAlign: "center",

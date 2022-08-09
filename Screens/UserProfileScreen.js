@@ -129,8 +129,14 @@ export default class UserProfilePage extends React.Component {
           <View style={styles.mainContainer}>
             <View style={styles.imgContainer}>
               <Image
-                source={require("../Server/Src/public/uploads/16520229485852ce02904-301f-4774-936f-7ada34c7527a.jpg")}
-                style={{ width: 90, height: 90, borderRadius: 45 }}
+                source={{
+                  uri: "https://media.istockphoto.com/vectors/male-profile-picture-man-face-image-web-avatar-vector-id1390051313?b=1&k=20&m=1390051313&s=612x612&w=0&h=qDej5q848g6jA_xLnZBfqEc2wQQVQThFUWifktBbkf8=",
+                }}
+                style={{
+                  width: 90,
+                  height: 90,
+                  borderRadius: 45,
+                }}
               />
 
               <View style={styles.nameBlock}>

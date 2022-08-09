@@ -1,5 +1,8 @@
 // set IP address
-global.IPaddress = "192.168.1.7";
+global.IPaddress = "192.168.55.102";
+
+// fonts
+export const LexendDeca = "LexendDeca-VariableFont_wght";
 
 // used variables
 global.userID = "";
@@ -19,3 +22,8 @@ global.requestID = "";
 // new worker account
 global.workerID = "";
 global.selectedWorkSubCat = "";
+
+
+// image source require
+global.imageUri = "../Server/Src/public/uploads/"
+global.filename = ""

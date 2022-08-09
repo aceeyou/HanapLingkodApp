@@ -12,7 +12,6 @@ import {
   Alert,
 } from "react-native";
 import CustomHeader from "../components/CustomerHeader";
-import RequestsItem from "../components/RequestsItem";
 import Worker_RequestItem from "../components/Worker_RequestItem";
 
 class MyRequestsScreen extends Component {
@@ -25,6 +24,8 @@ class MyRequestsScreen extends Component {
       workerLastName: "",
     };
   }
+
+  
 
   goRefresh() {
     this.focusListener = this.props.navigation.addListener("focus", () => {

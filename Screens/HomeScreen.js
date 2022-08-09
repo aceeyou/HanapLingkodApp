@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
     // paddingVertical: 25,
     marginTop: StatusBar.currentHeight,
-    backgroundColor: "#eee",
+    // backgroundColor: "#eee",
   },
   pageTitle: {
     fontSize: 20,
